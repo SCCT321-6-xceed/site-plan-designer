@@ -100,7 +100,7 @@ function Registration() {
         >
           Create Account
         </Button>
-          <Link href="/Login">
+          <Link href="/" style={{paddingTop:"10px", paddingBottom:"10px"}}>
             Already have an account?
           </Link>
       </Box>

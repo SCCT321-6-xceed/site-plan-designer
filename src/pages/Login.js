@@ -74,6 +74,7 @@ function Login() {
             ),
           }}
         />
+
         <Button
           variant="contained"
           size="medium"
@@ -88,7 +89,7 @@ function Login() {
           Login
         </Button>
 
-        <Link href="forgot-password"> Forgot Password </Link>
+        <Link href="forgot-password" style={{paddingTop:"10px", paddingBottom:"10px"}}> Forgot Password </Link>
         <Link href="/Registration">Create an Account</Link>
       </Box>
     </div>
