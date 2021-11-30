@@ -9,8 +9,7 @@ import Main from './component/Main';
 const App = () => {
  
   return (
-    <div><Topbar/></div>,
-    <div><Main/></div>
+    <div><Topbar/><Main/></div>
    
   )
 }
