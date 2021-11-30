@@ -1,5 +1,5 @@
-import React from 'react';
-import './Registration.css';
+import React from "react";
+import "./Registration.css";
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -7,12 +7,23 @@ import { AccountCircle, LockRounded } from "@material-ui/icons";
 import { InputAdornment } from "@mui/material";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+import { theme } from "../theme";
 
+const useStyles = makeStyles((theme) => ({
+  textfield: {
+    margin: "normal",
+    size: "small",
+    variant: "outlined",
+    color: "primary",
+    paddingBottom: "10px",
+  },
+}));
 
 function Registration() {
-    return (
-        <div className="registration-form">
+  const classes = useStyles();
+  return (
+    <div className="registration-form">
       <Box
         height="75px"
         alignItems="center"
@@ -24,20 +35,24 @@ function Registration() {
         <img src={img1} alt="" />
       </Box>
       <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        marginTop="10px"
-        padding="20px"
+        sx={{
+          margin: "auto",
+          border: 1,
+          borderRadius: "10%",
+          width: "25rem",
+          height: "25rem",
+          justifyContent: "center",
+          marginTop: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <TextField
-          margin="normal"
-          size="small"
-          variant="outlined"
-          color="primary"
           type="email"
           placeholder="Email"
           label="Email"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -47,13 +62,10 @@ function Registration() {
           }}
         />
         <TextField
-          margin="normal"
-          size="small"
-          variant="outlined"
-          color="primary"
           type="password"
           placeholder="Password"
           label="Password"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -63,13 +75,10 @@ function Registration() {
           }}
         />
         <TextField
-          margin="normal"
-          size="small"
-          variant="outlined"
-          color="primary"
           type="password"
           placeholder="Confirm Password"
           label="Confirm Password"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -78,17 +87,25 @@ function Registration() {
             ),
           }}
         />
-        <Button variant="contained" size="medium">
+        <Button
+          variant="contained"
+          size="medium"
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            minWidth: "225px",
+            minHeight: "30px",
+            maxWidth: "225px",
+            maxHeight: "30px",
+          }}
+        >
           Create Account
         </Button>
-        <Router>
-          <Link component={RouterLink} to="/Login">
-              Already have an account?
+          <Link href="/Login">
+            Already have an account?
           </Link>
-        </Router>
       </Box>
     </div>
   );
 }
 
-export default Registration
+export default Registration;
