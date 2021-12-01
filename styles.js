@@ -1,9 +1,10 @@
 import { ThemeProvider, makeStyles } from '@mui/styles';
-import { padding } from '@mui/system';
+import { createTheme, height, padding, spacing } from '@mui/system';
 import { deepOrange, deepPurple } from '@mui/material/colors';
+
 const useStyles = makeStyles((theme) => ({
     container: {
-      padding: '0 30px',
+      padding: '20px 30px',
     },
     ava:{
         backgroundColor: deepOrange[500],
@@ -23,5 +24,25 @@ const useStyles = makeStyles((theme) => ({
     cardContent:{
         flexGrow:1
     },
+
+    /*left bar*/
+    leftcontainer:{
+        paddingTop: '20px',
+        backgroundColor:'#93cb40',
+        height:'100%',
+    },
+    divItem:{
+        display: 'flex',
+        alignItems:'center',
+        paddingBottom: '30px',
+        cursor: 'pointer'
+    },
+    iconItem:{
+        marginRight:'15px'
+    },
+    textItem:{
+        fontWeight:'700px',
+        fontSize:'20px'
+    }
 }));
 export default useStyles;

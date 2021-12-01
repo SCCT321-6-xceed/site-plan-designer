@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar } from '@mui/material';
 import Stack from '@mui/material/Stack';
-
+import {theme} from '../theme';
 
 export default function ButtonAppBar() {
   return (
@@ -27,8 +27,11 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             SitePlan Design
           </Typography>
-          <Stack direction="row" spacing={2}>
-          <Button color="inherit">Upload</Button>
+          <Stack direction="row" spacing={1}>
+            
+            <Button color="inherit" variant='outline' size='small'>Upload</Button>
+            <Button color="inherit" variant='outline' size='small'>Create new project</Button>
+          
           <IconButton 
           size="large"
           edge="start"

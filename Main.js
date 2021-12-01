@@ -36,9 +36,9 @@ const cards=[1,2,3,4,5,6,7,8,9]
                <Typography variant='h7'>Date</Typography>
              </CardContent>
              <CardActions>
-               <Button size='small'>View</Button>
-               <Button size='small'>Edit</Button>
-               <Button size='small'>Delete</Button>
+               <Button size='small' variant='outlined'>View</Button>
+               <Button size='small' variant='outlined'>Edit</Button>
+               <Button size='small'variant='outlined'>Delete</Button>
              </CardActions>
            </Card>
             </Grid>
