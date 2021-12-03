@@ -1,33 +1,33 @@
 import React from 'react';
-import { Container,ThemeProvider,Typography } from '@mui/material';
-import { makeStyles } from '@mui/material';
+import { Container, ThemeProvider, Typography } from '@mui/material';
+import Link from "@mui/material/Link";
 import BurstModeIcon from '@mui/icons-material/BurstMode';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import useStyles from '../styles';
-  
- const Leftbar = () => {
+
+const Leftbar = () => {
   const classes = useStyles();
-    return (
-      
-        <Container className={classes.leftcontainer}>
+  return (
+
+    <Container className={classes.leftcontainer}>
       <div className={classes.divItem} >
-        <DashboardIcon className={classes.iconItem}/>
-        <Typography  className={classes.textItem}
+        <DashboardIcon className={classes.iconItem} />
+        <Typography className={classes.textItem}
         >Dashboard</Typography>
       </div>
       <div className={classes.divItem} >
-        <BurstModeIcon className={classes.iconItem}/>
-        <Typography className={classes.textItem}>Legend library</Typography>
+        <BurstModeIcon className={classes.iconItem} />
+        <Typography className={classes.textItem}><Link href='./Library'>Legend library</Link></Typography>
       </div>
       <div className={classes.divItem} >
-        <ExitToAppIcon className={classes.iconItem}/>
+        <ExitToAppIcon className={classes.iconItem} />
         <Typography
-        className={classes.textItem}>Export</Typography>
+          className={classes.textItem}>Export</Typography>
       </div>
-     
-     
+
+
     </Container>
-    )
+  )
 }
 export default Leftbar;

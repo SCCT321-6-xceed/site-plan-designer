@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,9 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import Link from "@mui/material/Link";
-
-export default function ButtonAppBar() {
+const TopLib = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -24,12 +22,11 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>SitePlan Design
-
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            SitePlan Design
           </Typography>
           <Stack direction="row" spacing={1}>
-            <Button color="inherit" variant='outline' size='small'>Upload</Button>
-            <Button color="inherit" variant='outline' size='small'>Create new project</Button>
+            <Button color="inherit" variant='outline' size='small'>Upload item</Button>
 
             <IconButton
               size="large"
@@ -44,5 +41,7 @@ export default function ButtonAppBar() {
         </Toolbar>
       </AppBar>
     </Box>
-  );
+  )
 }
+
+export default TopLib
