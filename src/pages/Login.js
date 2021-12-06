@@ -7,9 +7,21 @@ import { AccountCircle, LockRounded } from "@material-ui/icons";
 import { InputAdornment } from "@mui/material";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+import { theme } from "../theme";
+
+const useStyles = makeStyles((theme) => ({
+  textfield: {
+    margin: "normal",
+    size: "small",
+    variant: "outlined",
+    color: "primary",
+    paddingBottom: "10px",
+  },
+}));
 
 function Login() {
+  const classes = useStyles();
   return (
     <div className="login-form">
       <Box
@@ -23,19 +35,24 @@ function Login() {
         <img src={img1} alt="" />
       </Box>
       <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        marginTop="10px"
-        padding="20px"
+        sx={{
+          margin: "auto",
+          border: 1,
+          borderRadius: "10%",
+          width: "25rem",
+          height: "25rem",
+          justifyContent: "center",
+          marginTop: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <TextField
-          size="small"
-          variant="outlined"
-          color="primary"
           type="email"
           placeholder="Email"
           label="Email"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -45,13 +62,10 @@ function Login() {
           }}
         />
         <TextField
-          margin="normal"
-          size="small"
-          variant="outlined"
-          color="primary"
           type="password"
           placeholder="Password"
           label="Password"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -60,17 +74,23 @@ function Login() {
             ),
           }}
         />
-        <Button variant="contained" size="medium">
+
+        <Button
+          variant="contained"
+          size="medium"
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            minWidth: "225px",
+            minHeight: "30px",
+            maxWidth: "225px",
+            maxHeight: "30px",
+          }}
+        >
           Login
         </Button>
 
-        <Link href="#"> Forgot Password </Link>
-        
-        <Router>
-          <Link component={RouterLink} to="/Registration">
-            Create an Account
-          </Link>
-        </Router>
+        <Link href="forgot-password" style={{paddingTop:"10px", paddingBottom:"10px"}}> Forgot Password </Link>
+        <Link href="/Registration">Create an Account</Link>
       </Box>
     </div>
   );
