@@ -1,33 +1,41 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@mui/icons-material/Home";
 import { Avatar } from "@mui/material";
 import Stack from "@mui/material/Stack";
+import { Link } from 'react-router-dom';
+import { theme } from "../theme";
 
-export default function ButtonAppBar() {
+const TopLib = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: theme.palette.secondary.main}}>
         <Toolbar>
-          <IconButton
+          <IconButton component={Link} to="/dashboard"
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <HomeIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SitePlan Design
+            Site Plan Designer
           </Typography>
-          <Stack direction="row" spacing={2}>
-            <Button color="inherit">Upload</Button>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, justifyContent: "center" }}>
+            Library
+          </Typography>
+          <Stack direction="row" spacing={1}>
+            <Button color="inherit" variant="outline" size="small">
+              Upload item
+            </Button>
+
             <IconButton
               size="large"
               edge="start"
@@ -42,4 +50,6 @@ export default function ButtonAppBar() {
       </AppBar>
     </Box>
   );
-}
+};
+
+export default TopLib;

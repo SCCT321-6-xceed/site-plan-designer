@@ -98,11 +98,12 @@ function Registration() {
             maxHeight: "30px",
           }}
         >
-          Create Account
+          <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Create Account</Link>
         </Button>
-          <Link href="/" style={{paddingTop:"10px", paddingBottom:"10px"}}>
-            Already have an account?
-          </Link>
+        
+        <Link href="/" style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+          Already have an account?
+        </Link>
       </Box>
     </div>
   );

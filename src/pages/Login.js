@@ -48,6 +48,8 @@ function Login() {
           alignItems: "center",
         }}
       >
+ 
+
         <TextField
           type="email"
           placeholder="Email"
@@ -78,6 +80,7 @@ function Login() {
         <Button
           variant="contained"
           size="medium"
+          
           style={{
             backgroundColor: theme.palette.primary.main,
             minWidth: "225px",
@@ -86,10 +89,15 @@ function Login() {
             maxHeight: "30px",
           }}
         >
-          Login
+          <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Login</Link>
         </Button>
 
-        <Link href="forgot-password" style={{paddingTop:"10px", paddingBottom:"10px"}}> Forgot Password </Link>
+        <Link
+          href="forgot-password"
+          style={{ paddingTop: "10px", paddingBottom: "10px",  }}
+        >
+          Forgot Password
+        </Link>
         <Link href="/Registration">Create an Account</Link>
       </Box>
     </div>
