@@ -80,7 +80,6 @@ function Login() {
         <Button
           variant="contained"
           size="medium"
-          
           style={{
             backgroundColor: theme.palette.primary.main,
             minWidth: "225px",
