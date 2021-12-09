@@ -9,35 +9,52 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 
 function Upload(props) {
-
-  function cancelHandler () {
+  function cancelHandler() {
     props.onCancel();
   }
 
-  function confirmHandler () {
+  function confirmHandler() {
     props.onConfirm();
   }
-
-
 
   const classes = useStyles();
   return (
     <div className={classes.modal}>
       <Stack>
-        <Typography align="center" variant="h4" style={{ paddingTop: "10px", color: "black" }}>
+        <Typography
+          align="center"
+          variant="h4"
+          style={{ paddingTop: "10px", color: "black" }}
+        >
           Upload Site Plan
         </Typography>
 
         <div className={classes.modItem}>
-          <FileUploadIcon fontSize="large" className={classes.modIcon} style={{color: "black"}}/>
-          <Button color="primary" variant="outlined" size="medium" style={{color: "blue"}}>
+          <FileUploadIcon
+            fontSize="large"
+            className={classes.modIcon}
+            style={{ color: "black" }}
+          />
+          <Button
+            color="primary"
+            variant="outlined"
+            size="medium"
+            style={{ color: "blue" }}
+          >
             Upload New Project
           </Button>
         </div>
         <Box>
-          <Typography variant="body1" style={{ paddingLeft: "15px", color: "black" }}>
-            Title:
-            <TextField className={classes.textfield}></TextField>
+          <Typography
+            variant="body1"
+            style={{ paddingLeft: "15px", color: "black" }}
+          >
+            <label>Title: </label>
+            <TextField className={classes.textfield} />
+            <label>Client: </label>
+            <TextField className={classes.textfield} />
+            <label>Date:</label>
+            <TextField className={classes.textfield} />
           </Typography>
         </Box>
       </Stack>

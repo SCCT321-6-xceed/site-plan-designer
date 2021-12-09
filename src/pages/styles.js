@@ -43,12 +43,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "700px",
     fontSize: "20px",
   },
+
   //dashboard button
   dashButton: {
     paddingRight: "20px",
     paddingLeft: "20px",
     marginRight: 10,
   },
+  
   //modal.js's size and position
   modal: {
     backgroundColor: "#f9f9f9",
