@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid} from '@mui/material';
-import TopLib from './libaryComponent/TopLib';
-import MainLib from './libaryComponent/MainLib';
-import LeftLib from './libaryComponent/LeftLib';
+import TopLib from './TopLib';
+import MainLib from './MainLib';
+import LeftLib from './LeftLib';
 
 const Library = () => {
     return (
