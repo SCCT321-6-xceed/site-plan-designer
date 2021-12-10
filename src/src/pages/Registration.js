@@ -1,5 +1,5 @@
 import React from "react";
-import "./Login.css";
+import "./Registration.css";
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login() {
+function Registration() {
   const classes = useStyles();
   return (
-    <div className="login-form">
+    <div className="registration-form">
       <Box
         height="75px"
         alignItems="center"
@@ -74,7 +74,19 @@ function Login() {
             ),
           }}
         />
-
+        <TextField
+          type="password"
+          placeholder="Confirm Password"
+          label="Confirm Password"
+          className={classes.textfield}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockRounded />
+              </InputAdornment>
+            ),
+          }}
+        />
         <Button
           variant="contained"
           size="medium"
@@ -86,14 +98,15 @@ function Login() {
             maxHeight: "30px",
           }}
         >
-          Login
+          <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Create Account</Link>
         </Button>
-
-        <Link href="forgot-password" style={{paddingTop:"10px", paddingBottom:"10px"}}> Forgot Password </Link>
-        <Link href="/Registration">Create an Account</Link>
+        
+        <Link href="/" style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+          Already have an account?
+        </Link>
       </Box>
     </div>
   );
 }
 
-export default Login;
+export default Registration;

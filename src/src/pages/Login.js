@@ -1,5 +1,5 @@
 import React from "react";
-import "./Registration.css";
+import "./Login.css";
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Registration() {
+function Login() {
   const classes = useStyles();
   return (
-    <div className="registration-form">
+    <div className="login-form">
       <Box
         height="75px"
         alignItems="center"
@@ -48,6 +48,8 @@ function Registration() {
           alignItems: "center",
         }}
       >
+ 
+
         <TextField
           type="email"
           placeholder="Email"
@@ -74,22 +76,11 @@ function Registration() {
             ),
           }}
         />
-        <TextField
-          type="password"
-          placeholder="Confirm Password"
-          label="Confirm Password"
-          className={classes.textfield}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LockRounded />
-              </InputAdornment>
-            ),
-          }}
-        />
+
         <Button
           variant="contained"
           size="medium"
+          
           style={{
             backgroundColor: theme.palette.primary.main,
             minWidth: "225px",
@@ -98,14 +89,19 @@ function Registration() {
             maxHeight: "30px",
           }}
         >
-          Create Account
+          <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Login</Link>
         </Button>
-          <Link href="/" style={{paddingTop:"10px", paddingBottom:"10px"}}>
-            Already have an account?
-          </Link>
+
+        <Link
+          href="forgot-password"
+          style={{ paddingTop: "10px", paddingBottom: "10px",  }}
+        >
+          Forgot Password
+        </Link>
+        <Link href="/Registration">Create an Account</Link>
       </Box>
     </div>
   );
 }
 
-export default Registration;
+export default Login;

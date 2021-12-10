@@ -8,22 +8,23 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
-import useStyles from "./styles";
+import useStyles from "../pages/styles";
+import { theme } from "../theme";
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const Main = () => {
+const cards = [1, 2, 3, 4, 5, 6];
+const MainLib = () => {
   const classes = useStyles();
   return (
     <>
       <div className={classes.container}>
         <Container maxWidth="sm">
           <Typography
-            variant="h2"
+            variant="h4"
             align="center"
             color="text.primary"
             gutterBottom
           >
-            All Projects
+            Legend Items Library
           </Typography>
         </Container>
       </div>
@@ -36,18 +37,23 @@ const Main = () => {
                   <CardMedia
                     className={classes.cardMedia}
                     title="Image Title"
-                    image="https://wcs.smartdraw.com/floor-plan/img/template-floor-plan.png?bn=15100111810"
+                    image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ29-_8BhhnSgYMAxpehVq-6dO1wMbOREra9A&usqp=CAU"
                   />
                   <CardContent className={classes.cardContent}>
-                    <Typography variant="h6">Project name</Typography>
-                    <Typography variant="h7">Client</Typography>
+                    <Typography variant="h6">Legend name</Typography>
+                    <Typography variant="h7">Price</Typography>
                     <br />
-                    <Typography variant="h7">Date</Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                    <Button size="small">Delete</Button>
+                    <Button size="small" variant="contained" style={{background: theme.palette.primary.main}}>
+                      View
+                    </Button>
+                    <Button size="small" variant="contained" style={{background: theme.palette.secondary.main}}>
+                      Edit
+                    </Button>
+                    <Button size="small" variant="contained" style={{background: "#ba181b"}}>
+                      Delete
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -58,4 +64,4 @@ const Main = () => {
     </>
   );
 };
-export default Main;
+export default MainLib;
