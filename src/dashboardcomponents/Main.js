@@ -41,16 +41,13 @@ const cards=[1,2,3,4,5,6,7,8,9]
                <Typography variant='h7'> Date </Typography>
              </CardContent>
              <CardActions>
-               <Button component={Link} to="/plandesign" size='small' 
-               variant='outlined' 
-               startIcon={<VisibilityIcon/>}
-               style={{border:'1.5px solid #044474', color:'#044474', fontWeight:'bold'}} > View </Button>
+               
                <Button 
                component={Link} to="/plandesign"
                size='small' 
                variant='outlined'
                startIcon={<EditIcon/>}
-               style={{border:'1.5px solid #1a962a', color:'black', marginRight:'5px', fontWeight:'bold'}}> Edit </Button>
+               style={{border:'1.5px solid #0367a6', color:'#083359', marginRight:'5px', fontWeight:'bold'}}> Edit </Button>
                <Button size='small'
                variant='outlined'
                startIcon={<DeleteIcon/>}

@@ -32,15 +32,15 @@ const useStyles = makeStyles((theme) => ({
    listButton:{
      marginTop:theme.spacing(1),
  marginBottom: theme.spacing(1),
- 
+ ':hover':{ backgroundColor:'#bcd6f4'},
    },
  listIcon:{
  color: theme.palette.secondary.main,
  },
    listText:{
-     color: 'white',
+     color: theme.palette.secondary.main,
      fontSize: '19px',
-     fontWeight:'530'
+     fontWeight:'550'
    },
    active:{
 backgroundColor:'red',
@@ -59,7 +59,7 @@ const LeftLib = () => {
     
       <List className={classes.list}>
         <ListItemButton
-        sx={{':hover':{ bgcolor: '#85b83b'}}}  className={classes.listButton}
+          className={classes.listButton}
           selected={selectedIndex === 0}
           onClick={(event) => handleListItemClick(event, 0)}
           classes={{selected: classes.active}}>
@@ -70,7 +70,7 @@ const LeftLib = () => {
         </ListItemButton>
 
         <ListItemButton
-        sx={{':hover':{ bgcolor: '#85b83b'}}}  className={classes.listButton}
+         className={classes.listButton}
           selected={selectedIndex === 1}
           onClick={(event) => handleListItemClick(event, 1)}>
           <ListItemIcon className={classes.listIcon}>
@@ -80,7 +80,7 @@ const LeftLib = () => {
         </ListItemButton>
 
         <ListItemButton
-        sx={{':hover':{ bgcolor: '#85b83b'}}}  className={classes.listButton}
+          className={classes.listButton}
           selected={selectedIndex === 2}
           onClick={(event) => handleListItemClick(event, 2)}>
           <ListItemIcon className={classes.listIcon}>
@@ -90,7 +90,7 @@ const LeftLib = () => {
         </ListItemButton>
 
         <ListItemButton
-        sx={{':hover':{ bgcolor: '#85b83b'}}}  className={classes.listButton}
+         className={classes.listButton}
           selected={selectedIndex === 3}
           onClick={(event) => handleListItemClick(event, 3)}>
           <ListItemIcon className={classes.listIcon}>
@@ -100,7 +100,7 @@ const LeftLib = () => {
         </ListItemButton>
         <Divider/>
         <ListItemButton
-        sx={{':hover':{ bgcolor: '#85b83b'}}}  className={classes.listButton}
+          className={classes.listButton}
           selected={selectedIndex === 3}
           onClick={(event) => handleListItemClick(event, 3)}>
           <ListItemIcon className={classes.listIcon}>

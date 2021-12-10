@@ -62,8 +62,14 @@ const TopLib = () => {
             </label> */}
 
             <Button
-              color="inherit"
-              variant="outline"
+              style={{
+                background: theme.palette.primary.light,
+                color: theme.palette.secondary.main,
+                minHeight: "40px",
+                maxHeight: "50px",
+                fontWeight:'550'
+              }}
+              variant="contained"
               size="small"
               startIcon={<AddCircleIcon />}
               onClick={openHandler}

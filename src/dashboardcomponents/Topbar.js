@@ -63,15 +63,16 @@ export default function ButtonAppBar() {
             </label> */}
      <Button
                 
-                variant="outline"
+                variant="contained"
                 size="small"
                 startIcon={<AddCircleIcon/>}
                 onClick={openHandler}
                 style={{
-                  border:'3px solid white',
-                  color: 'white',
+                  background: theme.palette.primary.light,
+                  color: theme.palette.secondary.main,
                   minHeight: "40px",
                   maxHeight: "50px",
+                  fontWeight:'550'
                 }}
               >
                  New Project
