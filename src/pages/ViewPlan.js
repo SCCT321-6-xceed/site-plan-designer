@@ -19,10 +19,10 @@ const ViewPlan = () => {
         <div>
             <TopPlan />
              <Grid container spacing={1}>
-                <Grid item xs={2} sm={3} md={2}>
+                <Grid item xs={2} sm={3} md={2.5}>
                     <LeftPlan/>
                 </Grid>
-                <Grid item xs={8} sm={7} md={8}>
+                <Grid item xs={8} sm={7} md={7.5}>
                     <MainPlan/>
                 </Grid>
                 <Grid item xs={2} sm={2} md={2}>
