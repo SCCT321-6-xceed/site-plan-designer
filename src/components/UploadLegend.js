@@ -7,71 +7,48 @@ import TextField from "@material-ui/core/TextField";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { styled } from "@mui/material/styles";
-import PickDate from "./PickDate";
-function Upload(props) {
-  function cancelHandler() {
+import { styled } from '@mui/material/styles'
+
+function UploadLegend(props) {
+
+  function cancelHandler () {
     props.onCancel();
   }
 
-  function confirmHandler() {
+  function confirmHandler () {
     props.onConfirm();
   }
 
-  const Input = styled("input")({
-    display: "none",
+  const Input = styled('input')({
+    display: 'none',
   });
 
   const classes = useStyles();
   return (
     <div className={classes.modal}>
       <Stack>
-        <Typography
-          align="center"
-          variant="h4"
-          style={{ paddingTop: "10px", color: "black" }}
-        >
-          Upload Site Plan
+        <Typography align="center" variant="h4" style={{ paddingTop: "10px", color: "black" }}>
+        Upload Legend Item
         </Typography>
 
         <div className={classes.modItem}>
-          <label htmlFor="contained-button-file">
-            <Input
-              accept="image/*"
-              id="contained-button-file"
-              multiple
-              type="file"
-            />
-            <FileUploadIcon
-              fontSize="large"
-              className={classes.modIcon}
-              style={{ color: "black" }}
-            />
-            <Button
-              component="span"
-              color="primary"
-              variant="outlined"
-              size="medium"
-              style={{ color: "blue" }}
-            >
-              Upload New Project
-            </Button>
-          </label>
+        <label htmlFor='contained-button-file'>
+              <Input accept='image/*' id='contained-button-file' multiple type='file'/>
+          <FileUploadIcon fontSize="large" className={classes.modIcon} style={{color: "black"}}/>
+          <Button component='span' color="primary" variant="outlined" size="medium" style={{color: "blue"}}>
+            Upload Item
+          </Button></label>
         </div>
         <Box>
           <Typography
             variant="body1"
             style={{ paddingLeft: "15px", color: "black" }}
           >
-            <label>Title: </label>
+            <label>Name: </label>
             <TextField className={classes.textfield} />
-            <label>Client: </label>
-            <TextField className={classes.textfield} />
-            <label>Address:</label>
+            <label>Price: </label>
             <TextField className={classes.textfield} />
           </Typography>
-          <div></div>
-          <PickDate />
         </Box>
       </Stack>
 
@@ -99,4 +76,4 @@ function Upload(props) {
   );
 }
 
-export default Upload;
+export default UploadLegend;

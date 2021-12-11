@@ -28,7 +28,7 @@ const Navbar = () => {
             <HomeIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SitePlan Design{" "}
+            SitePlan Design
           </Typography>
           <div>
             <Typography>Export</Typography>
