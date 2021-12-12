@@ -9,10 +9,11 @@ import {
   CardMedia,
 } from "@mui/material";
 import useStyles from "../pages/styles";
-import { Search } from "../components/SearchLegend";
+import { Search } from "./SearchLegend";
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+
 const cards = [1, 2, 3, 4, 5, 6];
 const MainLib = () => {
   const classes = useStyles();
@@ -30,7 +31,7 @@ const MainLib = () => {
           </Typography>
         </Container>
       </div>
-      <div className={classes.searchBar}><Search/></div>
+      <div className={classes.searchBar} style={{marginLeft:'850px'}}><Search/></div>
       <div>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>

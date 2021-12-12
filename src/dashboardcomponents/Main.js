@@ -4,10 +4,12 @@ import { Grid, Container } from '@mui/material';
 import { Button, Card, CardActions,CardContent, CardMedia } from '@mui/material';
 import useStyles from '../pages/styles';
 import { Link } from 'react-router-dom';
-import { Search } from '../components/SearchProject';
+import { Search } from './SearchProject';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
 const cards=[1,2,3,4,5,6,7,8,9]
  const Main = () => {
     const classes = useStyles();
@@ -20,7 +22,7 @@ const cards=[1,2,3,4,5,6,7,8,9]
        align='center'
        color='text.primary'
        gutterBottom>
-         All Projects
+         Dashboard
        </Typography>
      </Container>
      </div>
@@ -48,6 +50,12 @@ const cards=[1,2,3,4,5,6,7,8,9]
                variant='outlined'
                startIcon={<EditIcon/>}
                style={{border:'1.5px solid #0367a6', color:'#083359', marginRight:'5px', fontWeight:'bold'}}> Edit </Button>
+               <Button 
+               component={Link} to="/export"
+               size='small' 
+               variant='outlined'
+               startIcon={<ExitToAppIcon/>}
+               style={{border:'1.5px solid #0367a6', color:'#083359', marginRight:'5px', fontWeight:'bold'}}> Export </Button>
                <Button size='small'
                variant='outlined'
                startIcon={<DeleteIcon/>}

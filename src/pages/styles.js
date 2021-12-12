@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     paddingBottom: "20px",
-    paddingTop: "30px",
+    paddingTop: "20px",
     cursor: "pointer",
   },
 
@@ -74,9 +74,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "700px",
     fontSize: "20px",
   },
+
   //searchField
   searchBar: {
-    marginLeft: '850px',
+    marginLeft: '500px',
     [theme.breakpoints.down('sm')]: {
       marginLeft: '0px'
     },

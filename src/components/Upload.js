@@ -51,7 +51,7 @@ function Upload(props) {
             <label>Address:</label>
             <TextField className={classes.textfield} />
           </Typography>
-          <div></div><PickDate/>
+          <div style={{marginLeft:'15px', paddingTop: '8px'}}><PickDate/></div>
         </Box>
       </Stack>
 

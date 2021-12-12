@@ -11,7 +11,7 @@ import Stack from "@mui/material/Stack";
 import { Link } from 'react-router-dom';
 import { theme } from "../theme";
 import { styled } from '@mui/material/styles'
-import UploadLegend from "../components/UploadLegend";
+import UploadLegend from "./UploadLegend";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from "react";
 
@@ -74,7 +74,7 @@ const TopLib = () => {
               startIcon={<AddCircleIcon />}
               onClick={openHandler}
             >
-              Add Legend
+              New Legend
             </Button>
             {modalIsOpen && <UploadLegend onCancel={closeHandler} onConfirm={closeHandler} />}
           </Stack>

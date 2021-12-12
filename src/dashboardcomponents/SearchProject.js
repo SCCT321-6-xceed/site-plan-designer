@@ -9,7 +9,7 @@ export const Search = () => {
         id="project-search"
         options={project}
         popupIcon={<SearchIcon/>}
-        sx={{ width: 300 }}
+        sx={{ width: 400 }}
         renderInput={(params) => <TextField {...params} label="Search project" />}
       />
     )

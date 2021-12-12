@@ -18,7 +18,7 @@ const MainPlan = () => {
           borderColor: "black",
           height: "100",
           justifyContent: "center",
-          marginTop: 5,
+          marginTop: 2,
           display: "flex",
         }}
       >

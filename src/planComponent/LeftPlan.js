@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, makeStyles, Typography } from "@material-ui/core";
+import { Container, Divider, makeStyles, Typography } from "@material-ui/core";
 import LightIcon from "@mui/icons-material/Light";
 import OutletIcon from "@mui/icons-material/Outlet";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
@@ -12,17 +12,22 @@ import CropSquareIcon from '@mui/icons-material/CropSquare';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import EditIcon from "@mui/icons-material/Edit";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import { CleaningServices } from '@mui/icons-material';
+import { Box } from '@mui/system';
+import {Search} from './SearchIcon'
+
 const useStyles = makeStyles((theme) => ({
     container: {
         height: "100%",
         paddingTop: theme.spacing(0.5),
-        backgroundColor: "#93cb40",
+        backgroundColor: theme.palette.primary.light,
         position: "sticky",
         top: 0,
         [theme.breakpoints.up("sm")]: {
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.light,
             border: "1px solid #ece7e7",
         },
+        
     },
 
 }))
@@ -37,20 +42,30 @@ const LeftPlan = () => {
     };
     return (
         <Container className={classes.container}>
-             <ButtonGroup variant='contained' sx={{ display: 'flex' }}>
-              <Button><CropSquareIcon /></Button>
-              <Button><EditIcon /></Button>
-              <Button><TextFieldsIcon /></Button>
-
+            <Box
+            sx={{ paddingTop: 1, paddingBottom: 2 }}>
+                <Typography style={{color:'#044474', fontWeight:'bold'}}> Drawing Tools</Typography>
+            <ButtonGroup variant='contained' >
+              <Button size='medium' style={{color:'#044474', backgroundColor: '#adcaee'}}><CropSquareIcon /></Button>
+              <Button size='medium' style={{color:'#044474', backgroundColor: '#adcaee'}}><EditIcon /></Button>
+              <Button size='medium' style={{color:'#044474', backgroundColor: '#adcaee'}}><TextFieldsIcon /></Button>
+              <Button size='medium' style={{color:'#044474', backgroundColor: '#adcaee'}}><CleaningServices /></Button>
             </ButtonGroup>
+            </Box>
+             
+
             <List
-                sx={{ width: '100%', bgcolor: 'background.paper' }}
+                sx={{ width: '100%', bgcolor: 'background.paper', paddingTop:'10px' }}
                 subheader={
-                    <ListSubheader component='div'>
+                    <ListSubheader component='div'
+                    style={{color:'#044474', fontSize:'18px'}}>
                         Icons
                     </ListSubheader>
                 }
             >
+                <Divider/>
+                 <div><Search/></div>
+                
                 {/* light icon */}
                 <ListItemButton onClick={handleClick}>
                     <ListItemIcon><LightIcon /></ListItemIcon>

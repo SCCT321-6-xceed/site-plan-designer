@@ -46,12 +46,12 @@ const Leftbar = () => {
         <ListItemText><Typography className={classes.listText}>Legend library</Typography></ListItemText>
       </ListItemButton>
 
-      <ListItemButton  component={Link} to='/export'>
+      {/* <ListItemButton  component={Link} to='/export'>
         <ListItemIcon className={classes.listIcon}>
           <ExitToAppIcon />
         </ListItemIcon>
         <ListItemText><Typography className={classes.listText}>Export</Typography></ListItemText>
-      </ListItemButton>
+      </ListItemButton> */}
     </List>
 
 
