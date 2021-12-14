@@ -68,9 +68,7 @@ const ExportNav = () => {
           <Stack direction="row" spacing={1}>
             <Box sx={{ "& button": { m: 1.5 } }}>
               <div>
-                <Button variant="contained">
-                  <Typography>The estimated cost is : $</Typography>
-                </Button>
+                
                 <Button variant="contained">
                   <EditIcon />
                   Edit

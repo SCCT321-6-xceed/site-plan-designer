@@ -1,32 +1,134 @@
 import React from "react";
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 import LightIcon from "@mui/icons-material/Light";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import OutletIcon from "@mui/icons-material/Outlet";
-import useStyles from "../pages/styles";
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { makeStyles } from '@material-ui/core';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Divider } from "@mui/material";
+import AddCategory from "../components/AddCategory";
+import { useState } from "react";
+
+const useStyles = makeStyles((theme) => ({
+  // leftcontainer: {
+  //   paddingTop: '20px',
+  //   backgroundColor: '#93cb40',
+  //   height: '100%',
+  // },
+  // divItem: {
+  //   alignItems: 'center',
+  //   paddingBottom: '30px',
+
+  // },
+  list: {
+    width: '100%',
+    maxWidth: 360,
+    height: '100%',
+    backgroundColor: theme.palette.primary.light,
+  },
+  listButton: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    ':hover': { backgroundColor: '#bcd6f4' },
+  },
+  listIcon: {
+    color: theme.palette.secondary.main,
+  },
+  listText: {
+    color: theme.palette.secondary.main,
+    fontSize: '19px',
+    fontWeight: '550'
+  },
+  active: {
+    backgroundColor: 'red',
+
+  }
+}));
 
 const LeftLib = () => {
+  //Active item
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+  //upload item
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function openHandler() {
+    setModalIsOpen(true);
+  }
+
+  function closeHandler() {
+    setModalIsOpen(false);
+  }
+
   const classes = useStyles();
   return (
-    <Container className={classes.leftcontainer}>
-      <div className={classes.divItem}>
-        <LightIcon className={classes.iconItem} />
-        <Typography className={classes.textItem}>Lighting</Typography>
-      </div>
-      <div className={classes.divItem}>
-        <OutletIcon className={classes.iconItem} />
-        <Typography className={classes.textItem}>Power Points</Typography>
-      </div>
-      <div className={classes.divItem}>
-        <VideoCameraBackIcon className={classes.iconItem} />
-        <Typography className={classes.textItem}>CCTV</Typography>
-      </div>
-      <div className={classes.divItem}>
-        <NotificationsActiveIcon className={classes.iconItem} />
-        <Typography className={classes.textItem}>Alarm</Typography>
-      </div>
-    </Container>
+
+    <List className={classes.list}>
+      <ListItemButton
+        className={classes.listButton}
+        selected={selectedIndex === 0}
+        onClick={(event) => handleListItemClick(event, 0)}
+        classes={{ selected: classes.active }}>
+        <ListItemIcon className={classes.listIcon}>
+          <LightIcon />
+        </ListItemIcon>
+        <ListItemText><Typography className={classes.listText}>Lighting</Typography></ListItemText>
+      </ListItemButton>
+
+      <ListItemButton
+        className={classes.listButton}
+        selected={selectedIndex === 1}
+        onClick={(event) => handleListItemClick(event, 1)}>
+        <ListItemIcon className={classes.listIcon}>
+          <OutletIcon />
+        </ListItemIcon>
+        <ListItemText><Typography className={classes.listText}>Power Points</Typography></ListItemText>
+      </ListItemButton>
+
+      <ListItemButton
+        className={classes.listButton}
+        selected={selectedIndex === 2}
+        onClick={(event) => handleListItemClick(event, 2)}>
+        <ListItemIcon className={classes.listIcon}>
+          <VideoCameraBackIcon />
+        </ListItemIcon>
+        <ListItemText><Typography className={classes.listText}>CCTV</Typography></ListItemText>
+      </ListItemButton>
+
+      <ListItemButton
+        className={classes.listButton}
+        selected={selectedIndex === 3}
+        onClick={(event) => handleListItemClick(event, 3)}>
+        <ListItemIcon className={classes.listIcon}>
+          <NotificationsActiveIcon />
+        </ListItemIcon>
+        <ListItemText><Typography className={classes.listText}>Alarm</Typography></ListItemText>
+      </ListItemButton>
+      <Divider />
+      <ListItemButton
+        className={classes.listButton}
+
+        onClick={openHandler}>
+        <ListItemIcon className={classes.listIcon}>
+          <AddCircleIcon />
+        </ListItemIcon>
+        <ListItemText><Typography className={classes.listText}>Add Category</Typography></ListItemText>
+
+      </ListItemButton>
+      {modalIsOpen && <AddCategory onCancel={closeHandler} onConfirm={closeHandler} />}
+
+    </List>
+
+
+
   );
 };
 export default LeftLib;
