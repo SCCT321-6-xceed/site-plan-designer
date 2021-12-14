@@ -1,28 +1,12 @@
 import React from "react";
 import { Container, makeStyles, Typography } from "@material-ui/core";
-import LightIcon from "@mui/icons-material/Light";
-import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import OutletIcon from "@mui/icons-material/Outlet";
-//import useStyles from "../pages/styles";
-//import { Button } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-//import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-//import ExpandLess from "@mui/icons-material/ExpandLess";
-//import ExpandMore from "@mui/icons-material/ExpandMore";
-import Stack from "@mui/material/Stack";
-
-/*
-export default function NestedList(){
-    const [open, setOpen] = React.useState(true);
-
-    const handleClick=()=>{
-        setOpen(!open)
-    }
-}
-*/
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -32,104 +16,94 @@ const useStyles = makeStyles((theme) => ({
     position: "sticky",
     top: 0,
     [theme.breakpoints.up("sm")]: {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.primary.light,
       border: "1px solid #ece7e7",
     },
-
-    //style: { width: "100%", maxWidth: 360, bgcolor: "background.paper" },
-    //width: "100%",
-    //maxWidth: 360,
-    //bgcolor: "background.paper",
   },
 }));
-const style = {
-  // width: "100%",
-  //maxWidth: 360,
-  bgcolor: "#BDC3C7 ",
-};
 
-const ExportRightBar = () => {
+const GST = 0.1;
+
+function dollar(num) {
+  return `${num.toFixed(2)}`;
+}
+
+function pricerow(quantity, unitprice) {
+  return quantity * unitprice;
+}
+
+function createRow(itemdesc, quantity, unit) {
+  const price = pricerow(quantity, unit);
+  return { itemdesc, quantity, unit, price };
+}
+
+function subtotal(items) {
+  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+}
+
+const rows = [
+  createRow("LED down lights", 50, 2),
+  createRow("Switch", 20, 10),
+  createRow("Power point", 15, 7.5),
+  createRow("Light Sensor", 4, 20),
+  createRow("Main Switchboard", 1, 50)
+];
+
+const invoiceSubtotal = subtotal(rows);
+const invoiceTax = GST * invoiceSubtotal;
+const invoiceTotal = invoiceTax + invoiceSubtotal;
+
+function ExportTable() {
   const classes = useStyles();
   return (
     <Container className={classes.container}>
-      <List sx={style} component="nav" aria-labelledby="nested-list-subheader">
-        <ListItem>Legend Count: 200</ListItem>
-        <ListItem button width="100%">
-          <Stack direction="row" spacing={2}>
-            <div className={classes.divItem}>
-              <LightIcon className={classes.iconItem} />
-              <Typography className={classes.textItem}>Lighting</Typography>
-            </div>
-          </Stack>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>
-            108 Led down Lights
-          </Typography>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>
-            06 Pendant lights
-          </Typography>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>
-            10 Outdoor Wall Lights
-          </Typography>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>
-            00 Internal Wall Lights
-          </Typography>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>04 Light Sensor</Typography>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>06 LED Strips</Typography>
-        </ListItem>
-        <Divider />
-        <ListItem
-          button
-          divider /*onClick={handleClick}{open ? <ExpandLess /> : <ExpandMore}*/
+      <TableContainer component={Paper}>
+        <Table
+          sx={{ minWidth: 500 }}
+          aria-label="Spanning table"
+          style={{ backgroundColor: "#f9f9f9", }}
         >
-          <div className={classes.divItem}>
-            <OutletIcon className={classes.iconItem} />
-            <Typography className={classes.textItem}>Power Points</Typography>
-          </div>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>58 Power Points</Typography>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>
-            02 Outdoor Power Points
-          </Typography>
-        </ListItem>
-        <ListItem button>
-          <div className={classes.divItem}>
-            <VideoCameraBackIcon className={classes.iconItem} />
-            <Typography className={classes.textItem}>CCTV</Typography>
-          </div>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>04 CCTV Cameras</Typography>
-        </ListItem>
-        <Divider light />
-        <ListItem button>
-          <div className={classes.divItem}>
-            <NotificationsActiveIcon className={classes.iconItem} />
-            <Typography className={classes.textItem}>Alarm</Typography>
-          </div>
-        </ListItem>
-        <ListItem>
-          <Typography className={classes.textItem}>
-            02 Outdoor Power Points
-          </Typography>
-        </ListItem>
-      </List>
+          <TableHead>
+            <TableRow>
+              <TableCell align="center" colSpan={4}>
+                <Typography variant="h5">Invoice</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell><Typography variant="h6">Item Description</Typography></TableCell>
+              <TableCell align="right"><Typography variant="h6">Quantity</Typography></TableCell>
+              <TableCell align="right"><Typography variant="h6">Price</Typography></TableCell>
+              <TableCell align="right"><Typography variant="h6">Sum</Typography></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.itemdesc}>
+                <TableCell>{row.itemdesc}</TableCell>
+                <TableCell align="right">{row.quantity}</TableCell>
+                <TableCell align="right">{row.unit}</TableCell>
+                <TableCell align="right">{dollar(row.price)}</TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell rowSpan={3} />
+              <TableCell colSpan={2}>Subtotal</TableCell>
+              <TableCell align="right">{dollar(invoiceSubtotal)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>GST</TableCell>
+              <TableCell align="right">{`${(GST * 100).toFixed(0)} %`}</TableCell>
+              <TableCell align="right">{dollar(invoiceTax)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell align="right">{dollar(invoiceTotal)}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Container>
   );
-};
+}
 
-export default ExportRightBar;
+export default ExportTable;
