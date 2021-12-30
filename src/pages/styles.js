@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
 
   container: {
     padding: '20px 30px',
+    
   },
 
 
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#eaf0e6',
+    backgroundColor: '#f2f2f2',
 
   },
   cardMedia: {
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     paddingBottom: "20px",
-    paddingTop: "30px",
+    paddingTop: "20px",
     cursor: "pointer",
   },
 
@@ -75,13 +76,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "700px",
     fontSize: "20px",
   },
+
   //searchField
   searchBar: {
-    marginLeft: '850px',
     [theme.breakpoints.down('sm')]: {
-      marginLeft: '0px'
+      // marginLeft: '0px'
     },
-    paddingBottom: '20px'
+    paddingBottom: '20px',
+    display: 'flex',
+    justifyContent: "center"
   },
 
 }));

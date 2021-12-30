@@ -20,15 +20,15 @@ const useStyles = makeStyles((theme) => ({
   listButton: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-
+':hover':{ backgroundColor:'#bcd6f4'},
   },
   listIcon: {
     color: theme.palette.secondary.main,
   },
   listText: {
-    color: 'white',
+    color: theme.palette.secondary.main,
     fontSize: '19px',
-    fontWeight: '530'
+    fontWeight: '550'
   }
 }));
 
@@ -39,19 +39,19 @@ const Leftbar = () => {
 
     <List className={classes.list}>
 
-      <ListItemButton sx={{ ':hover': { bgcolor: '#85b83b' } }} className={classes.listButton} component={Link} to='/library'>
+      <ListItemButton  className={classes.listButton} component={Link} to='/library'>
         <ListItemIcon className={classes.listIcon}>
           <BurstModeIcon />
         </ListItemIcon>
         <ListItemText><Typography className={classes.listText}>Legend library</Typography></ListItemText>
       </ListItemButton>
 
-      <ListItemButton sx={{ ':hover': { bgcolor: '#85b83b' } }} component={Link} to='/export'>
+      {/* <ListItemButton  component={Link} to='/export'>
         <ListItemIcon className={classes.listIcon}>
           <ExitToAppIcon />
         </ListItemIcon>
         <ListItemText><Typography className={classes.listText}>Export</Typography></ListItemText>
-      </ListItemButton>
+      </ListItemButton> */}
     </List>
 
 

@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import { makeStyles } from "@material-ui/core";
 import { theme } from "../theme";
 
+
 const useStyles = makeStyles((theme) => ({
   textfield: {
     margin: "normal",
@@ -48,8 +49,7 @@ function Login() {
           alignItems: "center",
         }}
       >
- 
-
+        
         <TextField
           type="email"
           placeholder="Email"
@@ -63,6 +63,7 @@ function Login() {
             ),
           }}
         />
+        
         <TextField
           type="password"
           placeholder="Password"

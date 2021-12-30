@@ -9,6 +9,9 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@material-ui/core";
 import { theme } from "../theme";
+import AbcIcon from '@mui/icons-material/Abc';
+import { useState } from "react";
+import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   textfield: {
@@ -22,6 +25,22 @@ const useStyles = makeStyles((theme) => ({
 
 function Registration() {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [firstName, setFName] = useState("");
+  const [lastName, setLName] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const addUser = () => {
+    Axios.post("http://localhost:3001/create", {
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      password: password,
+    }).then(() => {
+      console.log("success");
+    });
+  };
+
   return (
     <div className="registration-form">
       <Box
@@ -60,6 +79,38 @@ function Registration() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {setEmail(event.target.value);
+          }}
+        />
+        <TextField
+          type="firstname"
+          placeholder="First name"
+          label="firstname"
+          className={classes.textfield}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AbcIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={(event) => {setFName(event.target.value);
+          }}
+        />
+        <TextField
+          type="lastname"
+          placeholder="Last name"
+          label="lastname"
+          className={classes.textfield}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AbcIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={(event) => {setLName(event.target.value);
+          }}
         />
         <TextField
           type="password"
@@ -73,8 +124,10 @@ function Registration() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {setPassword(event.target.value);
+          }}
         />
-        <TextField
+        {/* <TextField
           type="password"
           placeholder="Confirm Password"
           label="Confirm Password"
@@ -86,7 +139,7 @@ function Registration() {
               </InputAdornment>
             ),
           }}
-        />
+        /> */}
         <Button
           variant="contained"
           size="medium"
@@ -97,8 +150,9 @@ function Registration() {
             maxWidth: "225px",
             maxHeight: "30px",
           }}
+          onClick={addUser}
         >
-          <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Create Account</Link>
+          {/* <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Create Account</Link> */}
         </Button>
         
         <Link href="/" style={{ paddingTop: "10px", paddingBottom: "10px" }}>

@@ -61,7 +61,7 @@ function ExportTable() {
         <Table
           sx={{ minWidth: 500 }}
           aria-label="Spanning table"
-          style={{ backgroundColor: "#EFF2F1" }}
+          style={{ backgroundColor: "#f9f9f9", }}
         >
           <TableHead>
             <TableRow>
