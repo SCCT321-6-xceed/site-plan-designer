@@ -17,7 +17,7 @@ import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import MainPlan from "../planComponent/MainPlan";
-import LegendCount from "../exportComponent/LegendCount";
+import LegendCount from "./LegendCount";
 
 const ExportNav = () => {
   const style = {

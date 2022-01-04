@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   list: {
     width: '100%',
     maxWidth: 360,
-    height: '100%',
+    height: '100vh',
     backgroundColor: theme.palette.primary.light,
   },
   listButton: {
@@ -70,7 +70,6 @@ const LeftLib = () => {
 
   const classes = useStyles();
   return (
-
     <List className={classes.list}>
       <ListItemButton
         className={classes.listButton}
@@ -126,8 +125,6 @@ const LeftLib = () => {
       {modalIsOpen && <AddCategory onCancel={closeHandler} onConfirm={closeHandler} />}
 
     </List>
-
-
 
   );
 };

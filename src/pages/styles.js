@@ -1,9 +1,11 @@
 import { makeStyles } from '@material-ui/core';
 import MuiButton from '@material-ui/core'
+
 const useStyles = makeStyles((theme) => ({
 
   container: {
     padding: '20px 30px',
+    
   },
 
 
@@ -77,11 +79,12 @@ const useStyles = makeStyles((theme) => ({
 
   //searchField
   searchBar: {
-    marginLeft: '500px',
     [theme.breakpoints.down('sm')]: {
-      marginLeft: '0px'
+      // marginLeft: '0px'
     },
-    paddingBottom: '20px'
+    paddingBottom: '20px',
+    display: 'flex',
+    justifyContent: "center"
   },
 
 }));
