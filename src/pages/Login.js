@@ -9,6 +9,8 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@material-ui/core";
 import { theme } from "../theme";
+import { useState, useEffect } from "react";
+import Axios from "axios";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +24,48 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState(false);
   const classes = useStyles();
+
+  Axios.defaults.withCredentials = true;
+
+  const login = () => {
+    Axios.post("http://localhost:3001/login", {
+      email: email,
+      password: password,
+    }).then((response) => {
+      if (!response.data.auth) {
+        setLoginStatus(false);
+      } else {
+        localStorage.setItem("token", response.data.token)
+        setLoginStatus(true);
+      }
+    });
+  };
+
+
+  // //Check if User is already signed in
+  // useEffect(() => {
+  //   Axios.get("http://localhost:3001/login").then((response) => {
+  //     if (response.data.loggedIn == true) {
+  //       setLoginStatus(response.data.user[0].email);
+  //     }
+  //   })
+  // }, []);
+
+
+  const userAuthenticated = () => {
+    Axios.get("http://localhost:3001/UserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+    }
+  }).then((response) => {
+      console.log(response);
+    });
+  };
+
   return (
     <div className="login-form">
       <Box
@@ -62,6 +105,8 @@ function Login() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {setEmail(event.target.value);
+          }}
         />
         
         <TextField
@@ -76,6 +121,8 @@ function Login() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {setPassword(event.target.value);
+          }}
         />
 
         <Button
@@ -88,16 +135,13 @@ function Login() {
             maxWidth: "225px",
             maxHeight: "30px",
           }}
+          onClick={login}
         >
-          <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Login</Link>
+          {/* <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Login</Link> */}
         </Button>
 
-        <Link
-          href="forgot-password"
-          style={{ paddingTop: "10px", paddingBottom: "10px",  }}
-        >
-          Forgot Password
-        </Link>
+          <Box><h1>{loginStatus && (<Button onClick={userAuthenticated}>Check</Button>)}</h1></Box>
+
         <Link href="/Registration">Create an Account</Link>
       </Box>
     </div>
