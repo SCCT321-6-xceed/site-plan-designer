@@ -6,7 +6,6 @@ import useStyles from '../pages/styles';
 import { Link } from 'react-router-dom';
 import { Search } from './SearchProject';
 import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 

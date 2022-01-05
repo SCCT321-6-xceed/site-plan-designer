@@ -21,6 +21,7 @@ app.use(
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//cookie
 app.use(
   session({
     key: "userID",
@@ -66,12 +67,14 @@ app.post("/register", (req, res) => {
   });
 });
 
+//verify user
 const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
 
   if (!token) {
     res.send("Requires token");
   } else {
+    // store the secret in env "scct321-6-ex..." for more security
     jwt.verify(token, "scct321-6-exceedelectrical", (err, decoded) => {
       if (err) {
         res.json({ auth: false, message: "Failed to Authenticate" });
@@ -102,11 +105,12 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  // sql query to get email
   db.query("SELECT * FROM users WHERE email = ?;", email, (err, result) => {
     if (err) {
       res.send({ err: err });
     }
-
+    // if user exist then compare password 
     if (result.length > 0) {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
@@ -123,6 +127,7 @@ app.post("/login", (req, res) => {
             message: "Wrong Username or Password Combination",
           });
         }
+     
       });
     } else {
       res.json({ auth: false, message: "No User Exist" });

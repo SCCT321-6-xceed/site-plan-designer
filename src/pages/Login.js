@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core";
 import { theme } from "../theme";
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import { useNavigate } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,45 +24,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("null");
+  const [password, setPassword] = useState("null");
   const [loginStatus, setLoginStatus] = useState(false);
   const classes = useStyles();
 
+  let history = useNavigate();
+
   Axios.defaults.withCredentials = true;
 
+  //Login handler
   const login = () => {
     Axios.post("http://localhost:3001/login", {
       email: email,
       password: password,
     }).then((response) => {
+      if(response.data.message) {
+        console.log(response.data.message);
+      } 
       if (!response.data.auth) {
         setLoginStatus(false);
+        history("/"); 
       } else {
-        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("token", response.data.token);
         setLoginStatus(true);
+        history("/dashboard");
       }
     });
   };
 
+  //Check if User is already signed in
+  useEffect(() => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      if (response.data.loggedIn === true) {
+        setLoginStatus(response.data.user[0].email);
+        history("/dashboard");
+      }
+    });
+  }, []);
 
-  // //Check if User is already signed in
-  // useEffect(() => {
-  //   Axios.get("http://localhost:3001/login").then((response) => {
-  //     if (response.data.loggedIn == true) {
-  //       setLoginStatus(response.data.user[0].email);
-  //     }
-  //   })
-  // }, []);
-
-
+  //Checks if user has the correct token
   const userAuthenticated = () => {
     Axios.get("http://localhost:3001/UserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
-    }
-  }).then((response) => {
+      },
+    }).then((response) => {
       console.log(response);
     });
   };
@@ -92,7 +102,6 @@ function Login() {
           alignItems: "center",
         }}
       >
-        
         <TextField
           type="email"
           placeholder="Email"
@@ -105,10 +114,10 @@ function Login() {
               </InputAdornment>
             ),
           }}
-          onChange={(event) => {setEmail(event.target.value);
+          onChange={(event) => {
+            setEmail(event.target.value);
           }}
         />
-        
         <TextField
           type="password"
           placeholder="Password"
@@ -121,10 +130,10 @@ function Login() {
               </InputAdornment>
             ),
           }}
-          onChange={(event) => {setPassword(event.target.value);
+          onChange={(event) => {
+            setPassword(event.target.value);
           }}
         />
-
         <Button
           variant="contained"
           size="medium"
@@ -135,12 +144,14 @@ function Login() {
             maxWidth: "225px",
             maxHeight: "30px",
           }}
-          onClick={login}
+          onClick={() => {
+            login();
+            userAuthenticated();
+          }}
         >
-          {/* <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Login</Link> */}
+          Login
         </Button>
-
-          <Box><h1>{loginStatus && (<Button onClick={userAuthenticated}>Check</Button>)}</h1></Box>
+        
 
         <Link href="/Registration">Create an Account</Link>
       </Box>
