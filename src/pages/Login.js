@@ -9,10 +9,9 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@material-ui/core";
 import { theme } from "../theme";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Axios from "axios";
 import { useNavigate } from 'react-router-dom'
-
 
 const useStyles = makeStyles((theme) => ({
   textfield: {
@@ -29,8 +28,12 @@ function Login() {
   const [email, setEmail] = useState("null");
   const [password, setPassword] = useState("null");
   const [loginStatus, setLoginStatus] = useState(false);
+
+  
+
   const classes = useStyles();
 
+  //Uses react router dom v6, use this to redirect to another page
   let history = useNavigate();
 
   Axios.defaults.withCredentials = true;
@@ -55,7 +58,7 @@ function Login() {
     });
   };
 
-  //Check if User is already signed in
+  //Check if user is already signed in, if true redirect to /dashboard
   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
       if (response.data.loggedIn === true) {
@@ -65,7 +68,7 @@ function Login() {
     });
   }, []);
 
-  //Checks if user has the correct token
+  //Checks verification if user has the correct token
   const userAuthenticated = () => {
     Axios.get("http://localhost:3001/UserAuth", {
       headers: {

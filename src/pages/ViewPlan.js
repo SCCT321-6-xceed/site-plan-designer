@@ -5,6 +5,9 @@ import RightPlan from '../planComponent/RightPlan'
 import MainPlan from '../planComponent/MainPlan'
 import { makeStyles } from '@material-ui/core';
 import LeftPlan from '../planComponent/LeftPlan';
+import { useState, useEffect } from "react";
+import Axios from "axios";
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     right: {
@@ -13,8 +16,27 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   }));
+
+ 
 const ViewPlan = () => {
   const classes = useStyles();
+  
+  const [loginStatus, setLoginStatus] = useState(false);
+  let history = useNavigate();
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      if (response.data.loggedIn === true) {
+        setLoginStatus(response.data.user[0].email);
+        setLoginStatus(true);
+      }
+      else {
+        setLoginStatus(false);
+        history('/')
+      }
+    });
+  }, []);
+
     return (
         <div>
             <Navbar />

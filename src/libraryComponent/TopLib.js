@@ -8,11 +8,11 @@ import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
 import { Avatar } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { theme } from "../theme";
-import { styled } from '@mui/material/styles'
+import { styled } from "@mui/material/styles";
 import UploadLegend from "./UploadLegend";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useState } from "react";
 
 // const Input = styled('input')({
@@ -30,9 +30,14 @@ const TopLib = () => {
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: theme.palette.secondary.main }}>
+      <AppBar
+        position="static"
+        style={{ background: theme.palette.secondary.main }}
+      >
         <Toolbar>
-          <IconButton component={Link} to="/dashboard"
+          <IconButton
+            component={Link}
+            to="/dashboard"
             size="large"
             edge="start"
             color="inherit"
@@ -44,7 +49,11 @@ const TopLib = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Site Plan Designer
           </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, justifyContent: "center" }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, justifyContent: "center" }}
+          >
             Legend Library
           </Typography>
           <Stack direction="row" spacing={1}>
@@ -67,7 +76,7 @@ const TopLib = () => {
                 color: theme.palette.secondary.main,
                 minHeight: "40px",
                 maxHeight: "50px",
-                fontWeight:'550'
+                fontWeight: "550",
               }}
               variant="contained"
               size="small"
@@ -76,7 +85,9 @@ const TopLib = () => {
             >
               New Legend
             </Button>
-            {modalIsOpen && <UploadLegend onCancel={closeHandler} onConfirm={closeHandler} />}
+            {modalIsOpen && (
+              <UploadLegend onCancel={closeHandler} onConfirm={closeHandler} />
+            )}
           </Stack>
           <IconButton
             size="large"

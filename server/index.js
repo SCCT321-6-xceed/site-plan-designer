@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+//random strings
 const saltRounds = 10;
 
 app.use(express.json());
@@ -21,11 +22,11 @@ app.use(
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//cookie
+// cookie
 app.use(
   session({
-    key: "userID",
-    secret: "xceedelectrical",
+    key: "user",
+    secret: "xceedelectrical-wsu-321-6",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -87,11 +88,12 @@ const verifyJWT = (req, res, next) => {
   }
 };
 
+// checks if user is verified
 app.get("/UserAuth", verifyJWT, (req, res) => {
   res.send("Authenticated");
 });
 
-//GET for User details
+//GET for User details & stores session user
 app.get("/login", (req, res) => {
   if (req.session.user) {
     res.send({ loggedIn: true, user: req.session.user });
@@ -110,7 +112,7 @@ app.post("/login", (req, res) => {
     if (err) {
       res.send({ err: err });
     }
-    // if user exist then compare password 
+    // if user exist then compare password
     if (result.length > 0) {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
@@ -127,7 +129,6 @@ app.post("/login", (req, res) => {
             message: "Wrong Username or Password Combination",
           });
         }
-     
       });
     } else {
       res.json({ auth: false, message: "No User Exist" });

@@ -20,6 +20,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { Logout } from "@mui/icons-material";
 import { ListItemIcon } from "@mui/material";
+
 // const Input = styled('input')({
 //   display: 'none',
 // });
@@ -50,6 +51,7 @@ export default function ButtonAppBar() {
       >
         <Toolbar>
           <IconButton
+            to="/dashboard"
             size="large"
             edge="start"
             color="inherit"

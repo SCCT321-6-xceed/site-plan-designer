@@ -4,8 +4,26 @@ import { Grid } from "@mui/material";
 import ExportTable from "../exportComponent/ExportTable";
 import MainPlan from "../planComponent/MainPlan";
 import { Typography } from "@material-ui/core";
+import { useState, useEffect } from "react";
+import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Export() {
+  const [loginStatus, setLoginStatus] = useState(false);
+  let history = useNavigate();
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      if (response.data.loggedIn === true) {
+        setLoginStatus(response.data.user[0].email);
+        setLoginStatus(true);
+      }
+      else {
+        setLoginStatus(false);
+        history('/')
+      }
+    });
+  }, []);
   return (
     <div>
       <ExportNav />
