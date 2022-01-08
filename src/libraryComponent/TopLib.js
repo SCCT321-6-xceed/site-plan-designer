@@ -14,12 +14,23 @@ import { styled } from "@mui/material/styles";
 import UploadLegend from "./UploadLegend";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useState } from "react";
+import { Person } from "@mui/icons-material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
+import { Logout } from "@mui/icons-material";
+import { ListItemIcon } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Axios from "axios";
 
 // const Input = styled('input')({
 //   display: 'none',
 // });
 const TopLib = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [loginStatus, setLoginStatus] = useState(false);
+  let history = useNavigate();
+
 
   function openHandler() {
     setModalIsOpen(true);
@@ -28,6 +39,23 @@ const TopLib = () => {
   function closeHandler() {
     setModalIsOpen(false);
   }
+  // ava function
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logout = () => {
+    Axios.post("http://localhost:3001/logout", {});
+    history("/");
+    localStorage.removeItem("token");
+    setLoginStatus(false);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -89,15 +117,41 @@ const TopLib = () => {
               <UploadLegend onCancel={closeHandler} onConfirm={closeHandler} />
             )}
           </Stack>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, marginLeft: 2 }}
-          >
-            <Avatar>R</Avatar>
-          </IconButton>
+      
+            <div style={{ marginLeft: "10px" }}>
+            <IconButton
+              id="fade-button"
+              aria-controls="fade-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <Avatar>R</Avatar>
+            </IconButton>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <Person />
+                </ListItemIcon>
+                My account
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <Logout onClick={logout} />
+                </ListItemIcon>
+                <Button onClick={logout}> Logout</Button>
+              </MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

@@ -29,8 +29,6 @@ function Login() {
   const [password, setPassword] = useState("null");
   const [loginStatus, setLoginStatus] = useState(false);
 
-  
-
   const classes = useStyles();
 
   //Uses react router dom v6, use this to redirect to another page
@@ -58,26 +56,31 @@ function Login() {
     });
   };
 
-  //Check if user is already signed in, if true redirect to /dashboard
-  useEffect(() => {
-    Axios.get("http://localhost:3001/login").then((response) => {
-      if (response.data.loggedIn === true) {
-        setLoginStatus(response.data.user[0].email);
-        history("/dashboard");
-      }
-    });
-  }, []);
 
-  //Checks verification if user has the correct token
-  const userAuthenticated = () => {
-    Axios.get("http://localhost:3001/UserAuth", {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    }).then((response) => {
-      console.log(response);
-    });
-  };
+  // //Check if user is already signed in, if true redirect to /dashboard
+  // useEffect(() => {
+  //   Axios.get("http://localhost:3001/login").then((response) => {
+  //     if (response.data.loggedIn === true) {
+  //       setLoginStatus(response.data.user[0].email);
+  //     } else {
+  //       if (response.data.loggedIn === false) {
+  //         setLoginStatus(false);
+  //         history("/");
+  //       }
+  //     }
+  //   });
+  // }, []);
+
+  // Console log verification if user has the correct token
+  // const userAuthenticated = () => {
+  //   Axios.get("http://localhost:3001/UserAuth", {
+  //     headers: {
+  //       "x-access-token": localStorage.getItem("token"),
+  //     },
+  //   }).then((response) => {
+  //     console.log(response);
+  //   });
+  // };
 
   return (
     <div className="login-form">
@@ -149,7 +152,7 @@ function Login() {
           }}
           onClick={() => {
             login();
-            userAuthenticated();
+            // userAuthenticated();
           }}
         >
           Login

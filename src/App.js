@@ -16,7 +16,6 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Login />}/>
             <Route exact path="/registration" element={<Registration />}/>
-
             <Route exact path="/dashboard" element ={<Dashboard />}/>
             <Route exact path="/library" element={<Library />} />
             <Route exact path="/plandesign" element={<ViewPlan />}/>

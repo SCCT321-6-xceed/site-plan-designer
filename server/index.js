@@ -30,7 +30,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60 * 24,
+      maxAge: 2592000
     },
   })
 );
@@ -119,7 +119,7 @@ app.post("/login", (req, res) => {
           //Create token after logging in
           const id = result[0].id;
           const token = jwt.sign({ id }, "scct321-6-exceedelectrical", {
-            expiresIn: 300,
+            expiresIn: "24h",
           });
           req.session.user = result;
           res.json({ auth: true, token: token, result: result });
@@ -135,6 +135,14 @@ app.post("/login", (req, res) => {
     }
   });
 });
+
+
+app.post("/logout", (req, res) => {
+  if (req.session.user) {
+    res.send({ loggedIn: false, user: req.session.user });
+  } 
+});
+
 
 //Backend is listening (on)
 app.listen(3001, () => {

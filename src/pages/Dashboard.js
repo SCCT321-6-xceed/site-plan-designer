@@ -6,39 +6,18 @@ import React from "react";
 import Topbar from "../dashboardComponent/Topbar";
 import Main from "../dashboardComponent/Main";
 import { useState, useEffect } from "react";
-import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [loginStatus, setLoginStatus] = useState(false);
   let history = useNavigate();
 
-//   useEffect(() => {
-//     Axios.get("http://localhost:3001/login").then((response) => {
-//       if (response.data.loggedIn === true) {
-//         setLoginStatus(response.data.user[0].email);
-//       } else {
-//         setLoginStatus(false);
-//         history("/dashboard");
-//       }
-//     });
-//   }, []);
-
-useEffect(() => {
-    Axios.get("http://localhost:3001/login", {
-        headers: {
-            "x-access-token": localStorage.getItem("token"),
-        }
-    }).then((response) => {
-      if (response.data.loggedIn === false) {
-        setLoginStatus(false);
-        history("/");
-      } else {
-        setLoginStatus(true);
-        history("/dashboard");
-      }
-    });
-  }, []);
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      setLoginStatus(false);
+      history("/");
+    }
+  });
 
   return (
     <div>
