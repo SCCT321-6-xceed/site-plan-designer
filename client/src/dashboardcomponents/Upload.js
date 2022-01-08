@@ -48,7 +48,8 @@ function Upload(props) {
 
   }
 
-  const [isSucces, setSuccess] = useState(null);
+ 
+  const [isSucces, setSuccess] = useState(false);
   const saveImage = () => {
     const formdata = new FormData();
     formdata.append('siteplan', imageFile.file);
@@ -72,12 +73,11 @@ function Upload(props) {
       address: address,
       date: newdate,
 
-
     })
       .then(res => { // then print response status
         console.warn(res);
         if (res.data.success === 1) {
-          setSuccess("Create project successfully");
+          setSuccess(true);
         }
 
       })
@@ -183,7 +183,7 @@ function Upload(props) {
           </LocalizationProvider>
         </Box>
       </Stack>
-      {isSucces !== null ? <h6> {isSucces} </h6> : null}
+      {/* {isSucces !== null ? <h6> {isSucces} </h6> : null} */}
       {/* action button */}
       <Box textAlign="center">
         {/* confirm button */}
@@ -194,6 +194,7 @@ function Upload(props) {
           onClick={() => {
             saveImage();
             addProject();
+            cancelHandler();
           }}
           style={{ background: theme.palette.primary.main, minWidth: "150px" }}
         >

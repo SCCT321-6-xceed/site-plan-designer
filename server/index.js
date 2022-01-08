@@ -15,14 +15,15 @@ password:'master', //change to your password
 database:'siteplandesigner',
 });
 
+//store image
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, '../public_html/', 'uploads'),
+    destination: path.join(__dirname, './localStorage', 'uploads'),
     filename: function (req, file, cb) {        
         // null as first argument means no error
         cb(null, Date.now() + '-' + file.originalname )
     }
 })
-
+//insert image into mysql
 app.post('/imageupload', async (req, res) => {	
     try {
         // 'siteplan' is the name of our file input field in the HTML form
@@ -56,7 +57,6 @@ app.post('/imageupload', async (req, res) => {
 
     }catch (err) {console.log(err)}
 })
-
 
 
 
@@ -116,6 +116,17 @@ app.post("/addItem", (req,res) => {
         }
         );
    });
+//retrieve image from mysql
+module.exports = {
+    displayImage: function(cb){
+        
+   var sql='SELECT images FROM sitemap';
+   db.query(sql,function (err, data, fields) {
+   if(err) throw err
+   return cb(data);
+    })
+}}
+
 //retrive project from mysql
 app.get("/getProject", (req,res) => {
     

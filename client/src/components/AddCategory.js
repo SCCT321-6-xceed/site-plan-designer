@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import { theme } from "../theme";
 import Button from "@mui/material/Button";
@@ -7,6 +7,9 @@ import TextField from "@material-ui/core/TextField";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { IconButton } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+
 function AddCategory(props) {
 
     function cancelHandler() {
@@ -15,26 +18,18 @@ function AddCategory(props) {
 
     const [name, setName] = useState("");
     const addCategory = () => {
-        
+
         axios.post("http://localhost:3001/addCategory", {
-    
-          name: name,
-         
-    
+            name: name,
         })
-          .then(res => { // then print response status
-            console.warn(res);
-            if (res.data.success === 1) {
-              setSuccess("Create project successfully");
-            }
-    
-          })
-      }
-      const [isSucces, setSuccess] = useState(null);
+            .then(res => { // then print response status
+                console.log('Success')
+            })
+    }
+
     const classes = useStyles();
     return (
-       
-<div
+        <div
             style={{
                 backgroundColor: "#f9f9f9",
                 position: "fixed",
@@ -46,9 +41,21 @@ function AddCategory(props) {
                 height: "300px",
                 padding: "1rem",
                 zIndex: "1",
-                
+
             }}>
             <Stack>
+                <IconButton
+                    aria-label="close"
+                    onClick={cancelHandler}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.primary.main,
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
                 <Typography align="center" variant="h4" style={{ paddingTop: "10px", color: "black" }}>
                     New category
                 </Typography>
@@ -59,8 +66,8 @@ function AddCategory(props) {
                         style={{ paddingLeft: "10px", color: "black", paddingTop: '10px' }}
                     >
                         <label>Title: </label>
-                        <TextField className={classes.textfield} style={{width:'450px'}} 
-                        onChange={(event) => { setName(event.target.value); }}/>
+                        <TextField className={classes.textfield} style={{ width: '450px' }}
+                            onChange={(event) => { setName(event.target.value); }} />
                     </Typography>
                 </Box>
             </Stack>
@@ -70,7 +77,10 @@ function AddCategory(props) {
                     size="medium"
                     variant="contained"
                     className={classes.modButton}
-                    onClick={addCategory}
+                    onClick={() => {
+                        addCategory();
+                        cancelHandler(); 
+                    }}
                     style={{ background: theme.palette.primary.main, minWidth: "150px" }}
                 >
                     Save
@@ -84,12 +94,11 @@ function AddCategory(props) {
                 >
                     Cancel
                 </Button>
-                {isSucces !== null ? <h4> {isSucces} </h4> : null}
             </Box>
-            </div>
-     
-        
-       
+        </div>
+
+
+
     );
 }
 
