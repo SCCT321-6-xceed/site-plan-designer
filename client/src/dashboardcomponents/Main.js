@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { Grid, Container } from '@mui/material';
 import { Button, Card, CardActions,CardContent, CardMedia } from '@mui/material';
 import useStyles from '../pages/styles';
@@ -8,14 +8,55 @@ import { Search } from './SearchProject';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import axios from 'axios';
+import { ListItem, Paper, ListItemText } from '@mui/material';
 
-const cards=[1,2]
+// export default function Main (){
+//   const [project, setProject] = useState([]);
+  
+
+//   const getAllProject = () => {
+//     axios.get('http://localhost:3001/getProject')
+//     .then ((response) => {
+//       console.log(response);
+//       const projectList = response.data;
+//       setProject(projectList);
+//     })
+//   };
+
+//   React.useEffect(() => {
+//     getAllProject();
+//   }, []);
+//   return(
+//     <div>
+//       <Paper>
+//         {project.map((projects)=>(
+//           <List key={projects.id}>
+//             <ListItem>
+//               <ListItemText primary={projects.title}
+//               secondary={project.client}></ListItemText>
+//             </ListItem>
+
+//           </List>
+//         ))}
+//       </Paper>
+//     </div>
+//   )
+// }
+
+
+
+const cards=[1]
  const Main = () => {
     const classes = useStyles();
-    // const [projectList, setProjectList] = useState([]); 
-    // {projectList.map((val,key) =>{
-      
-    // })}
+    const [project, setProject] = useState([])
+    React.useEffect(()=>{
+      axios.get(`http://localhost:3001/getProject`)
+        .then(response => {
+          setProject (response.data)
+        })
+    },[])
+    
     return (
       <>
       <div className ={classes.container}>
@@ -39,7 +80,7 @@ const cards=[1,2]
           <Card className={classes.card}>
            <CardMedia className={classes.cardMedia}
            title='Image Title'
-           image='https://wcs.smartdraw.com/floor-plan/img/template-floor-plan.png?bn=15100111810'/>
+           image='https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg'/>
            <CardContent className={classes.cardContent}>
              <Typography variant='h6'> Project name:  </Typography>
              <Typography variant='h7'> Client: </Typography><br/>

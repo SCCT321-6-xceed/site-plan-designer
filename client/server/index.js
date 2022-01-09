@@ -17,12 +17,14 @@ database:'siteplandesigner',
 
 //store image
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, './localStorage', 'uploads'),
+    destination: path.join(__dirname, '../sitemap'),
     filename: function (req, file, cb) {        
         // null as first argument means no error
-        cb(null, Date.now() + '-' + file.originalname )
+        cb(null, Date.now() + '-' + file.originalname)
     }
 })
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 //insert image into mysql
 app.post('/imageupload', async (req, res) => {	
     try {
@@ -57,8 +59,6 @@ app.post('/imageupload', async (req, res) => {
 
     }catch (err) {console.log(err)}
 })
-
-
 
 
 //insert project in mysql table
@@ -116,23 +116,28 @@ app.post("/addItem", (req,res) => {
         }
         );
    });
+
 //retrieve image from mysql
-module.exports = {
-    displayImage: function(cb){
-        
-   var sql='SELECT images FROM sitemap';
-   db.query(sql,function (err, data, fields) {
-   if(err) throw err
-   return cb(data);
+app.get("/getSitemap",(req,res) =>{
+    const id = 1;
+    const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;"
+    db.query (sql, [id], 
+        (err,result)=>{
+            if (err) {
+                console.log(err);
+              } else {
+                res.send(
+                    {siteplan: result[0].siteplan,}
+                );
+              }
     })
-}}
+});
 
 //retrive project from mysql
 app.get("/getProject", (req,res) => {
     
     db.query(
         'SELECT * FROM project ', 
-        
         (err, result) =>{
             if (err) {
                 console.log(err);
@@ -173,5 +178,5 @@ app.get("/getCategory", (req,res) => {
         );
    });
 app.listen(3001, () => {
-    console.log("It's running bro")
+    console.log("Listening on port 3001")
 });

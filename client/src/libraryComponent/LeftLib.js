@@ -13,8 +13,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Divider } from "@mui/material";
 import AddCategory from "../components/AddCategory";
 import { useState } from "react";
-import fetchCategory from "./fetchCategory"
-
+import axios from "axios"
 
 const useStyles = makeStyles((theme) => ({
 
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listButton: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(0.5),
     ':hover': { backgroundColor: '#bcd6f4' },
   },
   listIcon: {
@@ -46,8 +45,19 @@ const useStyles = makeStyles((theme) => ({
 
 
 const LeftLib = () => {
-  
-  
+  const [category, setCategory] = useState([])
+  const getAllCategory = () => {
+    axios.get('http://localhost:3001/getCategory')
+    .then ((response) => {
+      console.log(response);
+      const categoryList = response.data;
+      setCategory(categoryList);
+    })
+  };
+
+  React.useEffect(() => {
+    getAllCategory();
+  }, []);
   //Active item
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -67,10 +77,12 @@ const LeftLib = () => {
 
   const classes = useStyles();
   return (
-    
-    <List className={classes.list}>
+    <div>
+<List className={classes.list} > 
 
- <ListItemButton
+{category.map((categories)=>(
+  
+    <ListItemButton key={categories.id}
         className={classes.listButton}
         selected={selectedIndex === 0}
         onClick={(event) => handleListItemClick(event, 0)}
@@ -78,65 +90,25 @@ const LeftLib = () => {
         <ListItemIcon className={classes.listIcon}>
           <LightIcon />
         </ListItemIcon>
-        <ListItemText><Typography className={classes.listText}>Lighting</Typography></ListItemText>
+        <ListItemText><Typography className={classes.listText}>{categories.name}</Typography></ListItemText>
       </ListItemButton>
-       
-     {/* <ListItemButton
-//         className={classes.listButton}
-//         selected={selectedIndex === 0}
-//         onClick={(event) => handleListItemClick(event, 0)}
-//         classes={{ selected: classes.active }}>
-//         <ListItemIcon className={classes.listIcon}>
-//           <LightIcon />
-//         </ListItemIcon>
-//         <ListItemText><Typography className={classes.listText}>Light</Typography></ListItemText>
-//       </ListItemButton> */}
-
-       {/* <ListItemButton
-//         className={classes.listButton}
-//         selected={selectedIndex === 1}
-//         onClick={(event) => handleListItemClick(event, 1)}>
-//         <ListItemIcon className={classes.listIcon}>
-//           <OutletIcon />
-//         </ListItemIcon>
-//         <ListItemText><Typography className={classes.listText}>Power Points</Typography></ListItemText>
-//       </ListItemButton>
-
-//       <ListItemButton
-//         className={classes.listButton}
-//         selected={selectedIndex === 2}
-//         onClick={(event) => handleListItemClick(event, 2)}>
-//         <ListItemIcon className={classes.listIcon}>
-//           <VideoCameraBackIcon />
-//         </ListItemIcon>
-//         <ListItemText><Typography className={classes.listText}>CCTV</Typography></ListItemText>
-//       </ListItemButton>
-
-//       <ListItemButton
-//         className={classes.listButton}
-//         selected={selectedIndex === 3}
-//         onClick={(event) => handleListItemClick(event, 3)}>
-//         <ListItemIcon className={classes.listIcon}>
-//           <NotificationsActiveIcon />
-//         </ListItemIcon>
-//         <ListItemText><Typography className={classes.listText}>Alarm</Typography></ListItemText>
-//       </ListItemButton> */}
-
+      ))}
       
-      
-    <Divider />
- <ListItemButton
+  <Divider/>
+  <ListItemButton
          className={classes.listButton}
          onClick={openHandler}>
          <ListItemIcon className={classes.listIcon}>
-           <AddCircleIcon />
-         </ListItemIcon>
+          <AddCircleIcon />
+          </ListItemIcon>
          <ListItemText><Typography className={classes.listText}>Add Category</Typography></ListItemText>
 
        </ListItemButton>
-       {modalIsOpen && <AddCategory onCancel={closeHandler} onConfirm={closeHandler} />}
-      
-     </List>
+        {modalIsOpen && <AddCategory onCancel={closeHandler} onConfirm={closeHandler} />}
+       </List>
+     
+    </div>
+   
 
   );
 };

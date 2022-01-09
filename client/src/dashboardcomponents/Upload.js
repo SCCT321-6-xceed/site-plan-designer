@@ -32,7 +32,7 @@ function Upload(props) {
   const date = new Date(selectedDate).toLocaleDateString() //convert date time string to local date
   const newdate = date.split("/").reverse().join("/"); //covert to yyyy/MM/dd format to insert to mysql
 
-  const [projectList, setProjectList] = useState([]);
+
   // upload image func
   const [imageFile, setimageFile] = useState({
     file: [],
@@ -48,8 +48,7 @@ function Upload(props) {
 
   }
 
- 
-  const [isSucces, setSuccess] = useState(false);
+
   const saveImage = () => {
     const formdata = new FormData();
     formdata.append('siteplan', imageFile.file);
@@ -63,7 +62,7 @@ function Upload(props) {
         console.log('suceess');
       })
   }
-
+  const [projectList, setProjectList] = useState([]);
   const addProject = () => {
 
     axios.post("http://localhost:3001/create", {
@@ -74,12 +73,15 @@ function Upload(props) {
       date: newdate,
 
     })
-      .then(res => { // then print response status
-        console.warn(res);
-        if (res.data.success === 1) {
-          setSuccess(true);
-        }
-
+      .then(() => {
+        setProjectList([
+          ...projectList, {
+            title: title,
+            client: client,
+            address: address,
+            date: newdate,
+          },
+        ])
       })
   }
   const getProject = () => {
@@ -205,14 +207,19 @@ function Upload(props) {
           size="medium"
           variant="contained"
           className={classes.modButton}
-          onClick={cancelHandler}
+          onClick={getProject}
           style={{ background: "#d00000" }}
         >
           Cancel
         </Button>
         {/* testing db */}
         {projectList.map((val, key) => {
-          return <div style={{ backgroundColor: 'green' }}>{val.title}</div>
+          return (<div style={{ backgroundColor: 'green' }}>
+            {val.title}
+            {val.name}
+            {val.date}
+          </div>)
+
         })}
       </Box>
 
