@@ -62,7 +62,7 @@ function Upload(props) {
         console.log('suceess');
       })
   }
-  const [projectList, setProjectList] = useState([]);
+
   const addProject = () => {
 
     axios.post("http://localhost:3001/create", {
@@ -74,22 +74,10 @@ function Upload(props) {
 
     })
       .then(() => {
-        setProjectList([
-          ...projectList, {
-            title: title,
-            client: client,
-            address: address,
-            date: newdate,
-          },
-        ])
+        console.log('Success')
       })
   }
-  const getProject = () => {
-    axios.get("http://localhost:3001/getProject").then((response) => {
-      setProjectList(response.data);
-
-    });
-  };
+  
   const classes = useStyles();
 
   return (
@@ -207,20 +195,11 @@ function Upload(props) {
           size="medium"
           variant="contained"
           className={classes.modButton}
-          onClick={getProject}
+          onClick={cancelHandler}
           style={{ background: "#d00000" }}
         >
           Cancel
         </Button>
-        {/* testing db */}
-        {projectList.map((val, key) => {
-          return (<div style={{ backgroundColor: 'green' }}>
-            {val.title}
-            {val.name}
-            {val.date}
-          </div>)
-
-        })}
       </Box>
 
     </div>

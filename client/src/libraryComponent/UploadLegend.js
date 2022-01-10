@@ -108,7 +108,10 @@ function UploadLegend(props) {
           size="medium"
           variant="contained"
           className={classes.modButton}
-          onClick={addItem}
+          onClick={() =>{
+            addItem();
+            cancelHandler();
+          }}
           style={{ background: theme.palette.primary.main, minWidth: "150px" }}
         >
           Confirm

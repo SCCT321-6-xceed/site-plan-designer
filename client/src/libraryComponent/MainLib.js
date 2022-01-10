@@ -13,10 +13,24 @@ import { Search } from "./SearchLegend";
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
 
-const cards = [1, 2, 3, 4, 5, 6];
 const MainLib = () => {
   const classes = useStyles();
+
+  const [item, setItem] = React.useState([]);
+  const getAllItem = () => {
+    axios.get('http://localhost:3001/getItem')
+    .then ((response) => {
+      console.log(response);
+      const itemList = response.data;
+      setItem(itemList);
+    })
+  };
+  React.useEffect(() => {
+    getAllItem();
+  }, []);
+    
   return (
     <>
       <div className={classes.container}>
@@ -35,8 +49,8 @@ const MainLib = () => {
       <div>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {item.map((items) => (
+              <Grid item key={items.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
@@ -44,8 +58,8 @@ const MainLib = () => {
                     image="https://5.imimg.com/data5/YI/VX/MY-56782338/jaquar-6w-led-downlight-250x250.jpg"
                   />
                   <CardContent className={classes.cardContent}>
-                    <Typography variant="h6">LED Recesesd Down Lights</Typography>
-                    <Typography variant="h7">Price</Typography>
+                    <Typography variant="h6">{items.legend_name}</Typography>
+                    <Typography variant="h7">Price: ${items.price}</Typography>
                     <br />
                   </CardContent>
                   <CardActions>

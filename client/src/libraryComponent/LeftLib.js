@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Typography, Box } from "@mui/material";
-import LightIcon from "@mui/icons-material/Light";
-import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import OutletIcon from "@mui/icons-material/Outlet";
+// import LightIcon from "@mui/icons-material/Light";
+// import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
+// import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+// import OutletIcon from "@mui/icons-material/Outlet";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -14,6 +14,7 @@ import { Divider } from "@mui/material";
 import AddCategory from "../components/AddCategory";
 import { useState } from "react";
 import axios from "axios"
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -88,7 +89,7 @@ const LeftLib = () => {
         onClick={(event) => handleListItemClick(event, 0)}
         classes={{ selected: classes.active }}>
         <ListItemIcon className={classes.listIcon}>
-          <LightIcon />
+          <LabelImportantIcon />
         </ListItemIcon>
         <ListItemText><Typography className={classes.listText}>{categories.name}</Typography></ListItemText>
       </ListItemButton>

@@ -6,56 +6,29 @@ import useStyles from '../pages/styles';
 import { Link } from 'react-router-dom';
 import { Search } from './SearchProject';
 import EditIcon from '@mui/icons-material/Edit';
+import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import axios from 'axios';
-import { ListItem, Paper, ListItemText } from '@mui/material';
 
-// export default function Main (){
-//   const [project, setProject] = useState([]);
+
+ const Main = () => {
+  const classes = useStyles();
+  const [project, setProject] = useState([]);
   
 
-//   const getAllProject = () => {
-//     axios.get('http://localhost:3001/getProject')
-//     .then ((response) => {
-//       console.log(response);
-//       const projectList = response.data;
-//       setProject(projectList);
-//     })
-//   };
-
-//   React.useEffect(() => {
-//     getAllProject();
-//   }, []);
-//   return(
-//     <div>
-//       <Paper>
-//         {project.map((projects)=>(
-//           <List key={projects.id}>
-//             <ListItem>
-//               <ListItemText primary={projects.title}
-//               secondary={project.client}></ListItemText>
-//             </ListItem>
-
-//           </List>
-//         ))}
-//       </Paper>
-//     </div>
-//   )
-// }
-
-
-
-const cards=[1]
- const Main = () => {
-    const classes = useStyles();
-    const [project, setProject] = useState([])
-    React.useEffect(()=>{
-      axios.get(`http://localhost:3001/getProject`)
-        .then(response => {
-          setProject (response.data)
-        })
-    },[])
+  const getAllProject = () => {
+    axios.get('http://localhost:3001/getProject')
+    .then ((response) => {
+      console.log(response);
+      const projectList = response.data;
+      setProject(projectList);
+    })
+  };
+  React.useEffect(() => {
+    getAllProject();
+  }, []);
+    
     
     return (
       <>
@@ -74,17 +47,18 @@ const cards=[1]
    <div>
    <Container className ={classes.cardGrid} maxWidth='auto'>
      <Grid container spacing={4}>
-       {cards.map((card)=>(
-        <Grid item key={card} xs={12} sm={6} md={4}>
+       {project.map((projects)=>(
+        <Grid item key={projects.id} xs={12} sm={6} md={4}>
           
           <Card className={classes.card}>
            <CardMedia className={classes.cardMedia}
            title='Image Title'
            image='https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg'/>
            <CardContent className={classes.cardContent}>
-             <Typography variant='h6'> Project name:  </Typography>
-             <Typography variant='h7'> Client: </Typography><br/>
-             <Typography variant='h7'> Date: </Typography>
+             <Typography variant='h6'> Project name: {projects.title} </Typography>
+             <Typography variant='h7'> Client: {projects.client} </Typography><br/>
+             <Typography variant='h7'> Address: {projects.address} </Typography><br/>
+             <Typography variant='h7'> Date: {projects.date} </Typography>
            </CardContent>
            <CardActions>
              
@@ -92,7 +66,7 @@ const cards=[1]
              component={Link} to="/plandesign"
              size='small' 
              variant='outlined'
-             startIcon={<EditIcon/>}
+             startIcon={<DesignServicesIcon/>}
              style={{border:'1.5px solid #0367a6', color:'#083359', fontWeight:'bold'}}> Design </Button>
              <Button 
              component={Link} to="/plandesign"
