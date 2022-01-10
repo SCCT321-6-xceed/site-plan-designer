@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import MuiButton from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
 
   container: {
@@ -92,8 +91,41 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       marginLeft: '0px'
     },
-    paddingBottom: '20px'
+    paddingBottom: '10px'
   },
-
+  searchBox: {
+   borderRadius: 16,
+    display: "flex",
+  },
+  searchInputs: {
+    backgroundColor: '#f9f9f9',
+    border: 0,
+    borderRadius: '2px',
+    fontSize: '18px',
+    padding: '15px',
+    height: '30px',
+    width: '300px',
+    '&:focus':{outline: "none"}
+  },
+  searchIcon: {
+    height: '60px',
+    width: '35px',
+    backgroundColor: '#f9f9f9',
+    display: 'grid',
+    alignItems:'center',
+  },
+  dataResult: {
+    borderRadius:8,
+    marginTop: '5px',
+    width: '300px',
+    height: '200px',
+    backgroundColor: '#f9f9f9',
+    // overflow: 'hidden',
+    overflowY: "scroll",
+    '&::-webkit-scrollbar':{
+      display:'none'
+    }
+  },
+  
 }));
 export default useStyles;
