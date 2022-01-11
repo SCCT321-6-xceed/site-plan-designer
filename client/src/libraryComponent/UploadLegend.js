@@ -8,6 +8,9 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+
 function UploadLegend(props) {
 
   function cancelHandler () {
@@ -32,7 +35,6 @@ function UploadLegend(props) {
 
   }
 
-  const [isSucces, setSuccess] = useState(null);
 
   const addItem = () => {
     // const formdata = new FormData();
@@ -44,23 +46,31 @@ function UploadLegend(props) {
       price: price,
 
     })
-      .then(res => { // then print response status
-        console.warn(res);
-        if (res.data.success === 1) {
-          setSuccess("Create project successfully");
-        }
-
+      .then(() => {
+        console.log('Success')
       })
   }
 
   const classes = useStyles();
   return (
     <div className={classes.modal}>
+       <IconButton
+        aria-label="close"
+        onClick={cancelHandler}
+        sx={{
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          color: (theme) => theme.palette.primary.main,
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
       <Stack>
         <Typography align="center" variant="h4" style={{ paddingTop: "10px", color: "black" }}>
           Upload Legend Item
         </Typography>
-        {isSucces !== null ? <h4> {isSucces} </h4> : null}
+        
         {/* upload image */}
         <div className={classes.modItem}>
           <Stack spacing={2}>
