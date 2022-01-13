@@ -30,7 +30,16 @@ const MainLib = () => {
   React.useEffect(() => {
     getAllItem();
   }, []);
-    
+
+  const deleteItem = (id) => {
+    axios.delete(`http://localhost:3001/deleteItem/${id}`).then((response) => {
+      setItem(
+        item.filter((items) => {
+          return items.id !== id;
+        })
+      );
+    });
+  };
   return (
     <>
       <div className={classes.container}>
@@ -74,6 +83,9 @@ const MainLib = () => {
                <Button size='small'
                variant='outlined'
                startIcon={<DeleteIcon/>}
+               onClick={() => {
+                deleteItem(items.id);
+              }}
                style={{border:'1.5px solid #d11a2a', color:'#d11a2a', fontWeight:'bold'}} > Delete </Button>
              </CardActions>
                 </Card>

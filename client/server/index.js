@@ -268,7 +268,7 @@ app.get("/getSitemap", (req, res) => {
 app.get("/getProject", (req, res) => {
 
   db.query(
-    'SELECT * FROM project ',
+    'SELECT * FROM project ORDER BY id DESC',
     (err, result) => {
       if (err) {
         console.log(err);
@@ -282,7 +282,7 @@ app.get("/getProject", (req, res) => {
 app.get("/getItem", (req, res) => {
 
   db.query(
-    'SELECT * FROM legend_item ',
+    'SELECT * FROM legend_item ORDER BY id DESC',
 
     (err, result) => {
       if (err) {
@@ -340,9 +340,21 @@ app.put("/updateProject", (req, res) => {
     }
   );
 });
+//DELETE project on Dashboard page
 app.delete("/deleteProject/:id", (req, res) => {
   const id = req.params.id;
   db.query("DELETE FROM project WHERE id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//DELETE legend item in category on Library page
+app.delete("/deleteItem/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM legend_item WHERE id = ?", id, (err, result) => {
     if (err) {
       console.log(err);
     } else {
