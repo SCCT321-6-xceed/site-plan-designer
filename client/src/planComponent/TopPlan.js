@@ -34,7 +34,7 @@ export default function ButtonAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ background: theme.palette.secondary.main}}>
         <Toolbar>
-        <IconButton component={Link} to="/dashboard"
+        <IconButton component={Link} href="/dashboard"
             size="large"
             edge="start"
             color="inherit"

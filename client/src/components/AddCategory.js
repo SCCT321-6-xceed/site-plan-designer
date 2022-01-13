@@ -24,6 +24,8 @@ function AddCategory(props) {
         })
             .then(res => { // then print response status
                 console.log('Success')
+                window.location.reload();
+
             })
     }
 

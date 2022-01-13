@@ -6,9 +6,55 @@ import { AccountCircle, LockRounded } from "@material-ui/icons";
 import { InputAdornment } from "@mui/material";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+import { theme } from "../theme";
+import { useState, useEffect, useContext } from "react";
+import Axios from "axios";
+import { useNavigate } from 'react-router-dom'
+
+const useStyles = makeStyles((theme) => ({
+  textfield: {
+    margin: "normal",
+    size: "small",
+    variant: "outlined",
+    color: "primary",
+    paddingBottom: "10px",
+  },
+}));
+
 
 function Login() {
+  const [email, setEmail] = useState("null");
+  const [password, setPassword] = useState("null");
+  const [loginStatus, setLoginStatus] = useState(false);
+
+  const classes = useStyles();
+
+  //Uses react router dom v6, use this to redirect to another page
+  let history = useNavigate();
+
+  Axios.defaults.withCredentials = true;
+
+  //Login handler
+  const login = () => {
+    Axios.post("http://localhost:3001/login", {
+      email: email,
+      password: password,
+    }).then((response) => {
+      
+      if (!response.data.auth) {
+        setLoginStatus(false);
+        setLoginStatus(response.data.message)
+        history("/"); 
+      } else {
+        localStorage.setItem("token", response.data.token);
+        setLoginStatus(true);
+        history("/dashboard");
+      }
+    });
+  };
+
+
   return (
     <div className="login-form">
       <Box
@@ -22,19 +68,24 @@ function Login() {
         <img src={img1} alt="" />
       </Box>
       <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        marginTop="10px"
-        padding="20px"
+        sx={{
+          margin: "auto",
+          border: 1,
+          borderRadius: "10%",
+          width: "25rem",
+          height: "25rem",
+          justifyContent: "center",
+          marginTop: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <TextField
-          size="small"
-          variant="outlined"
-          color="primary"
           type="email"
           placeholder="Email"
           label="Email"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -42,15 +93,15 @@ function Login() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
         />
         <TextField
-          margin="normal"
-          size="small"
-          variant="outlined"
-          color="primary"
           type="password"
           placeholder="Password"
           label="Password"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -58,18 +109,32 @@ function Login() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {
+            setPassword(event.target.value);
+          }}
         />
-        <Button variant="contained" size="medium">
+        <Button
+          variant="contained"
+          size="medium"
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            minWidth: "225px",
+            minHeight: "30px",
+            maxWidth: "225px",
+            maxHeight: "30px",
+            marginBottom:'20px',
+            marginTop:'15px'
+          }}
+          onClick={() => {
+            login();
+            // userAuthenticated();
+          }}
+        >
           Login
         </Button>
-
-        <Link href="#"> Forgot Password </Link>
         
-        <Router>
-          <Link component={RouterLink} to="/Registration">
-            Create an Account
-          </Link>
-        </Router>
+
+        <Link href="/Registration">Create an Account</Link>
       </Box>
     </div>
   );

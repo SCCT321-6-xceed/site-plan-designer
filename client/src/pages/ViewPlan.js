@@ -5,6 +5,8 @@ import RightPlan from '../planComponent/RightPlan'
 import MainPlan from '../planComponent/MainPlan'
 import { makeStyles } from '@material-ui/core';
 import LeftPlan from '../planComponent/LeftPlan';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     right: {
@@ -14,6 +16,17 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 const ViewPlan = () => {
+  
+  const [loginStatus, setLoginStatus] = useState(false);
+  let history = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      setLoginStatus(false);
+      history("/");
+    }
+  });
+
   const classes = useStyles();
     return (
         <div>

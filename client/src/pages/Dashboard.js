@@ -3,8 +3,20 @@ import { Grid } from "@mui/material";
 import Topbar from "../dashboardcomponents/Topbar";
 import Main from "../dashboardcomponents/Main";
 // import Leftbar from "../dashboardcomponents/Leftbar";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const dashboard = () => {
+const Dashboard = () => {
+  const [loginStatus, setLoginStatus] = useState(false);
+  let history = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      setLoginStatus(false);
+      history("/");
+    }
+  });
+
   return (
     <div>
       <Topbar />
@@ -22,4 +34,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default Dashboard;

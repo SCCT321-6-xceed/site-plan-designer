@@ -48,6 +48,8 @@ function UploadLegend(props) {
     })
       .then(() => {
         console.log('Success')
+        window.location.reload();
+
       })
   }
 

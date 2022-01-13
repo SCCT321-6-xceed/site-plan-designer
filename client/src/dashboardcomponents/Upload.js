@@ -60,6 +60,7 @@ function Upload(props) {
     })
       .then(() => {
         console.log('suceess');
+
       })
   }
 
@@ -75,6 +76,8 @@ function Upload(props) {
     })
       .then(() => {
         console.log('Success')
+        window.location.reload();
+
       })
   }
   

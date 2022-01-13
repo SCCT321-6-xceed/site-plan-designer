@@ -4,7 +4,19 @@ import { Grid } from "@mui/material";
 import { Typography } from "@material-ui/core";
 import MainPlan from "../planComponent/MainPlan";
 import ExportRightBar from "../exportComponent/ExportRightbar";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Export() {
+  const [loginStatus, setLoginStatus] = useState(false);
+  let history = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      setLoginStatus(false);
+      history("/");
+    }
+  });
   return (
     <div>
       <ExportNav />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -6,12 +6,43 @@ import { AccountCircle, LockRounded } from "@material-ui/icons";
 import { InputAdornment } from "@mui/material";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+import { theme } from "../theme";
+import AbcIcon from '@mui/icons-material/Abc';
+import { useState } from "react";
+import Axios from "axios";
 
+
+const useStyles = makeStyles((theme) => ({
+  textfield: {
+    margin: "normal",
+    size: "small",
+    variant: "outlined",
+    color: "primary",
+    paddingBottom: "15px",
+  },
+}));
 
 function Registration() {
-    return (
-        <div className="registration-form">
+  const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [firstName, setFName] = useState("");
+  const [lastName, setLName] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const addUser = () => {
+    Axios.post("http://localhost:3001/register", {
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      password: password,
+    }).then(() => {
+      console.log("success");
+    });
+  };
+
+  return (
+    <div className="registration-form">
       <Box
         height="75px"
         alignItems="center"
@@ -23,20 +54,24 @@ function Registration() {
         <img src={img1} alt="" />
       </Box>
       <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        marginTop="10px"
-        padding="20px"
+        sx={{
+          margin: "auto",
+          border: 1,
+          borderRadius: "10%",
+          width: "25rem",
+          height: "25rem",
+          justifyContent: "center",
+          marginTop: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <TextField
-          margin="normal"
-          size="small"
-          variant="outlined"
-          color="primary"
           type="email"
           placeholder="Email"
           label="Email"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -44,15 +79,44 @@ function Registration() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {setEmail(event.target.value);
+          }}
         />
         <TextField
-          margin="normal"
-          size="small"
-          variant="outlined"
-          color="primary"
+          type="firstname"
+          placeholder="First name"
+          label="firstname"
+          className={classes.textfield}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AbcIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={(event) => {setFName(event.target.value);
+          }}
+        />
+        <TextField
+          type="lastname"
+          placeholder="Last name"
+          label="lastname"
+          className={classes.textfield}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AbcIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={(event) => {setLName(event.target.value);
+          }}
+        />
+        <TextField
           type="password"
           placeholder="Password"
           label="Password"
+          className={classes.textfield}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -60,34 +124,31 @@ function Registration() {
               </InputAdornment>
             ),
           }}
-        />
-        <TextField
-          margin="normal"
-          size="small"
-          variant="outlined"
-          color="primary"
-          type="password"
-          placeholder="Confirm Password"
-          label="Confirm Password"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LockRounded />
-              </InputAdornment>
-            ),
+          onChange={(event) => {setPassword(event.target.value);
           }}
         />
-        <Button variant="contained" size="medium">
-          Create Account
+  
+        <Button
+          variant="contained"
+          size="medium"
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            minWidth: "225px",
+            minHeight: "30px",
+            maxWidth: "225px",
+            maxHeight: "30px",
+          }}
+          onClick={addUser}
+        >
+          <Link href="/" style={{textDecoration: 'inherit', color: 'inherit'}}>Create Account</Link>
         </Button>
-        <Router>
-          <Link component={RouterLink} to="/Login">
-              Already have an account?
-          </Link>
-        </Router>
+        
+        <Link href="/" style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+          Already have an account?
+        </Link>
       </Box>
     </div>
   );
 }
 
-export default Registration
+export default Registration;
