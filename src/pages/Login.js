@@ -1,5 +1,5 @@
 import React from "react";
-import "./Login.css";
+
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -9,7 +9,7 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@material-ui/core";
 import { theme } from "../theme";
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from 'react-router-dom'
 
@@ -42,45 +42,22 @@ function Login() {
       email: email,
       password: password,
     }).then((response) => {
-      if(response.data.message) {
-        console.log(response.data.message);
-      } 
       if (!response.data.auth) {
         setLoginStatus(false);
+        //This gets the response error from index.js after auth error
+        setLoginStatus(response.data.message);
         history("/"); 
       } else {
+        // get token
         localStorage.setItem("token", response.data.token);
         setLoginStatus(true);
+        // Redirect to /dashboard after login is successful
         history("/dashboard");
       }
     });
   };
 
 
-  // //Check if user is already signed in, if true redirect to /dashboard
-  // useEffect(() => {
-  //   Axios.get("http://localhost:3001/login").then((response) => {
-  //     if (response.data.loggedIn === true) {
-  //       setLoginStatus(response.data.user[0].email);
-  //     } else {
-  //       if (response.data.loggedIn === false) {
-  //         setLoginStatus(false);
-  //         history("/");
-  //       }
-  //     }
-  //   });
-  // }, []);
-
-  // Console log verification if user has the correct token
-  // const userAuthenticated = () => {
-  //   Axios.get("http://localhost:3001/UserAuth", {
-  //     headers: {
-  //       "x-access-token": localStorage.getItem("token"),
-  //     },
-  //   }).then((response) => {
-  //     console.log(response);
-  //   });
-  // };
 
   return (
     <div className="login-form">
@@ -152,11 +129,11 @@ function Login() {
           }}
           onClick={() => {
             login();
-            // userAuthenticated();
           }}
         >
           Login
         </Button>
+        <h4>{loginStatus}</h4>
         
 
         <Link href="/Registration">Create an Account</Link>

@@ -11,7 +11,7 @@ import Stack from "@mui/material/Stack";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { theme } from "../theme";
 import { BurstModeOutlined } from "@mui/icons-material";
-import Upload from "../components/Upload";
+import Upload from "./Upload";
 import { useState } from "react";
 import { Link } from "@mui/material";
 import { Person } from "@mui/icons-material";

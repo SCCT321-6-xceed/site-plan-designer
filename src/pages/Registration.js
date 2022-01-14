@@ -1,5 +1,4 @@
 import React from "react";
-import "./Registration.css";
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -28,16 +27,18 @@ const useStyles = makeStyles((theme) => ({
 function Registration() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [firstName, setFName] = useState("");
   const [lastName, setLName] = useState("");
-  const [password, setPassword] = useState("");
+
   
   const addUser = () => {
     Axios.post("http://localhost:3001/register", {
       email: email,
+      password: password,
       firstName: firstName,
       lastName: lastName,
-      password: password,
+ 
     }).then(() => {
       console.log("success");
     });
