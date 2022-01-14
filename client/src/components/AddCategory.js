@@ -40,9 +40,10 @@ function AddCategory(props) {
                 marginTop: "-50px",
                 marginLeft: "-50px",
                 width: "500px",
-                height: "300px",
+                height: "auto",
                 padding: "1rem",
                 zIndex: "1",
+                borderRadius:16
 
             }}>
             <Stack>

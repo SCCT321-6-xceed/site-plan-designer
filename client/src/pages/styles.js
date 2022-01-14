@@ -36,10 +36,11 @@ const useStyles = makeStyles((theme) => ({
     left: "calc(50% - 15rem)",
     marginTop: "-50px",
     marginLeft: "-50px",
-    width: "650px",
+    width: "600px",
     height: "auto",
     padding: "1rem",
     zIndex: "1",
+    borderRadius: 16
 
   },
   modButton: {

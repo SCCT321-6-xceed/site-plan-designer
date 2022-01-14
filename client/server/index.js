@@ -283,7 +283,6 @@ app.get("/getItem", (req, res) => {
 
   db.query(
     'SELECT * FROM legend_item ORDER BY id DESC',
-
     (err, result) => {
       if (err) {
         console.log(err);
@@ -312,7 +311,7 @@ app.get("/getCategory", (req, res) => {
 app.get("/searchProject", (req, res) => {
 
   db.query(
-    'SELECT id, title, client FROM project ',
+    'SELECT id, title FROM project ',
     (err, result) => {
       if (err) {
         console.log(err);
