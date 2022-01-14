@@ -8,17 +8,8 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import axios from "axios";
-import {
-  List,
-  ListSubheader,
-  ListItemIcon,
-  ListItemButton,
-  ListItemText,
-  ListItem,
-} from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
@@ -45,6 +36,7 @@ function UploadLegend(props) {
   };
 
   const [category, setCategory] = useState([]);
+  const [categoryValue, setcategoryValue] = useState("");
   const getAllCategory = () => {
     axios.get("http://localhost:3001/getCategory").then((response) => {
       console.log(response);
@@ -52,6 +44,10 @@ function UploadLegend(props) {
       setCategory(categoryList);
     });
   };
+
+  React.useEffect(() => {
+    getAllCategory();
+  }, []);
 
   const [isSucces, setSuccess] = useState(null);
 
@@ -62,6 +58,7 @@ function UploadLegend(props) {
       .post("http://localhost:3001/addItem", {
         legend_name: legend_name,
         price: price,
+        category: categoryValue,
       })
       .then((res) => {
         // then print response status
@@ -75,6 +72,11 @@ function UploadLegend(props) {
   const [open, setOpen] = React.useState(true);
   const handleClick = () => {
     setOpen(!open);
+  };
+
+ 
+  const handleChange = (event) => {
+    setcategoryValue(event.target.value);
   };
   const classes = useStyles();
   return (
@@ -115,6 +117,23 @@ function UploadLegend(props) {
           </Stack>
         </div>
         <Box>
+          <FormControl sx={{width: "250px", height: "50px", paddingLeft: "10px"}}>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <Select sx={{paddingLeft: "10px"}}
+              labelId="category"
+              id="category"
+              value={categoryValue}
+              label="category"
+              onChange={handleChange}
+            >
+              {category.map((categories) => (
+                <MenuItem  value={categories.id}>
+                  {categories.categoryName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <Typography
             variant="body1"
             style={{ paddingLeft: "15px", color: "black" }}

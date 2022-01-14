@@ -248,7 +248,7 @@ app.post("/CategoryItem", (req, res) => {
   console.log(req.body.selectedIndex)
   
   db.query(
-    "SELECT * FROM category_item, category, item WHERE category_id = ? AND category_item.category_id = category.id AND category_item.item_id = item.id"
+    "SELECT * FROM category, item WHERE category_id = ? AND category.id = item.category_id"
     , [selectedIndex],
     (err, result) => {
       if (err) {
@@ -268,10 +268,11 @@ app.post("/addItem", (req, res) => {
 
   const name = req.body.legend_name;
   const price = req.body.price;
+  const category_id = req.body.category;
 
   db.query(
-    "INSERT INTO item (name, price) VALUES (?,?)",
-    [name, price],
+    "INSERT INTO item (name, price, category_id) VALUES (?,?,?)",
+    [name, price, category_id],
     (err, result) => {
       if (err) {
         console.error(err);

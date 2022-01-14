@@ -58,7 +58,6 @@ const LeftLib = () => {
   // Acquire the click value
   const handleListItemClick = (event, index) => {
       setSelectedIndex(index);
-     
   };
   // Sends value to backend
   const handleCategoryClick = () => {
