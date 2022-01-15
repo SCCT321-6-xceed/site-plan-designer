@@ -21,16 +21,14 @@ import LegendCount from "./LegendCount";
 
 const ExportNav = () => {
   const style = {
-    position: "absolute",
+    position: "fixed",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "80%",
-    height: "100%",
     bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
+    padding: "50px",
+    zIndex: 1000,
+    overflow: "auto",
   };
 
   const [open, setOpen] = React.useState(false);
@@ -68,7 +66,6 @@ const ExportNav = () => {
           <Stack direction="row" spacing={1}>
             <Box sx={{ "& button": { m: 1.5 } }}>
               <div>
-                
                 <Button variant="contained">
                   <EditIcon />
                   Edit
@@ -93,13 +90,18 @@ const ExportNav = () => {
                         Export Summary
                       </Typography>
                       <MainPlan />
-                      <Button>Save</Button>
+                      <Typography>LOREM IP SMSAF DIASOD ASJD ASKDAS</Typography>
+                      <Button
+                        size="medium"
+                        variant="contained"
+                        style={{
+                          background: theme.palette.primary.main,
+                          minWidth: "150px",
+                        }}
+                      >
+                        Save
+                      </Button>
                       <Button>Return</Button>
-                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor
-                        ligula.
-                      </Typography>
-                      <LegendCount />
                     </Box>
                   </Container>
                 </Modal>
