@@ -1,5 +1,5 @@
 import React from "react";
-import "./Login.css";
+
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -9,7 +9,9 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@material-ui/core";
 import { theme } from "../theme";
-
+import { useState } from "react";
+import Axios from "axios";
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   textfield: {
@@ -21,8 +23,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function Login() {
+  const [email, setEmail] = useState("null");
+  const [password, setPassword] = useState("null");
+  const [loginStatus, setLoginStatus] = useState(false);
+
   const classes = useStyles();
+
+  //Uses react router dom v6, use this to redirect to another page
+  let history = useNavigate();
+
+  Axios.defaults.withCredentials = true;
+
+  //Login handler
+  const login = () => {
+    Axios.post("http://localhost:3001/login", {
+      email: email,
+      password: password,
+    }).then((response) => {
+      if (!response.data.auth) {
+        setLoginStatus(false);
+        //This gets the response error from index.js after auth error
+        setLoginStatus(response.data.message);
+        history("/"); 
+      } else {
+        // get token
+        localStorage.setItem("token", response.data.token);
+        setLoginStatus(true);
+        // Redirect to /dashboard after login is successful
+        history("/dashboard");
+      }
+    });
+  };
+
+
+
   return (
     <div className="login-form">
       <Box
@@ -49,7 +85,6 @@ function Login() {
           alignItems: "center",
         }}
       >
-        
         <TextField
           type="email"
           placeholder="Email"
@@ -62,8 +97,10 @@ function Login() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
         />
-        
         <TextField
           type="password"
           placeholder="Password"
@@ -76,8 +113,10 @@ function Login() {
               </InputAdornment>
             ),
           }}
+          onChange={(event) => {
+            setPassword(event.target.value);
+          }}
         />
-
         <Button
           variant="contained"
           size="medium"
@@ -88,16 +127,15 @@ function Login() {
             maxWidth: "225px",
             maxHeight: "30px",
           }}
+          onClick={() => {
+            login();
+          }}
         >
-          <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Login</Link>
+          Login
         </Button>
+        <h4>{loginStatus}</h4>
+        
 
-        <Link
-          href="forgot-password"
-          style={{ paddingTop: "10px", paddingBottom: "10px",  }}
-        >
-          Forgot Password
-        </Link>
         <Link href="/Registration">Create an Account</Link>
       </Box>
     </div>
