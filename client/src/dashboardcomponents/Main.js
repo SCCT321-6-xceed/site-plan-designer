@@ -20,7 +20,7 @@ const Main = () => {
   const classes = useStyles();
   const [project, setProject] = useState([]);
 
-
+//Display data
   const getAllProject = () => {
     axios.get('http://localhost:3001/getProject')
       .then((response) => {
@@ -32,14 +32,30 @@ const Main = () => {
   React.useEffect(() => {
     getAllProject();
   }, []);
-
-  const deleteProject = (id) => {
-    axios.delete(`http://localhost:3001/deleteProject/${id}`).then((response) => {
+//delete project
+// const deleteAlert = () =>{
+//   confirmAlert({
+//     title: 'Delete project',
+//     message: 'Are you sure?',
+//     buttons: [
+//       {
+//         label: 'Yes',
+//         onClick: () => {deleteProject}
+//       },
+//       {
+//         label: 'No',
+//         onClick: () => {return }
+//       }
+//     ]
+//   });
+// }
+  const deleteProject = (projectID) => {
+    axios.delete(`http://localhost:3001/deleteProject/${projectID}`).then((response) => {
       setProject(
-        project.filter((projects) => {
-          return projects.id !== id;
-        })
-      );
+              project.filter((projects) => {
+                return projects.projectID !== projectID;
+              })
+            );
     });
   };
 
@@ -52,7 +68,13 @@ const Main = () => {
   function openHandler() {
     setModalIsOpen(true);
   }
-
+  const[getID, setID] = useState([])
+const getprojectID = (projectID) => {
+  axios.get('http://localhost:3001/getProjectID/${projectID}').then((response) => {
+console.log(response);
+setID(response.data);
+  })
+}
 
  //Search filter
   const [filteredData, setFilteredData] = React.useState([]);
@@ -125,7 +147,7 @@ const Main = () => {
                       variant='outlined'
                       startIcon={<EditIcon />}
                       style={{ border: '1.5px solid #0367a6', color: '#083359', fontWeight: 'bold', marginLeft:'10px' }}
-                      onClick={openHandler}> Edit </Button>
+                      onClick={()=> {openHandler(); getprojectID()} }> Edit </Button>
                     {modalIsOpen && (
                       <UpdateModal onCancel={closeHandler} onConfirm={closeHandler} />
                     )}
@@ -139,7 +161,7 @@ const Main = () => {
                       variant='outlined'
                       startIcon={<DeleteIcon />}
                       onClick={() => {
-                        deleteProject(projects.id);
+                        deleteProject(projects.projectID);
                       }}
                       style={{ border: '1.5px solid #d11a2a', color: '#d11a2a', fontWeight: 'bold' }} > Delete </Button>
                   </CardActions>
@@ -180,7 +202,10 @@ const Main = () => {
                       style={{ border: '1.5px solid #0367a6', color: '#083359', fontWeight: 'bold', marginLeft:'10px' }}
                       onClick={openHandler}> Edit </Button>
                     {modalIsOpen && (
-                      <UpdateModal onCancel={closeHandler} onConfirm={closeHandler} />
+                      <UpdateModal 
+                      
+                      onCancel={closeHandler} 
+                      onConfirm={closeHandler} />
                     )}
                     <Button
                       component={Link} to="/export"
@@ -192,7 +217,7 @@ const Main = () => {
                       variant='outlined'
                       startIcon={<DeleteIcon />}
                       onClick={() => {
-                        deleteProject(projects.id);
+                        deleteProject(projects.projectID);
                       }}
                       style={{ border: '1.5px solid #d11a2a', color: '#d11a2a', fontWeight: 'bold' }} > Delete </Button>
                   </CardActions>

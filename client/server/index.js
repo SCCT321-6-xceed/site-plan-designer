@@ -268,7 +268,7 @@ app.get("/getSitemap", (req, res) => {
 app.get("/getProject", (req, res) => {
 
   db.query(
-    'SELECT * FROM project ORDER BY id DESC',
+    'SELECT * FROM project ORDER BY projectID DESC',
     (err, result) => {
       if (err) {
         console.log(err);
@@ -311,7 +311,7 @@ app.get("/getCategory", (req, res) => {
 app.get("/searchProject", (req, res) => {
 
   db.query(
-    'SELECT id, title FROM project ',
+    'SELECT projectID, title FROM project ',
     (err, result) => {
       if (err) {
         console.log(err);
@@ -321,15 +321,26 @@ app.get("/searchProject", (req, res) => {
     }
   );
 });
+//UPDATE project
+app.get("/getProjectID/:projectID", (req, res) => {
+  const projectID = req.params.projectID;
+  db.query("SELECT title, client, address, date FROM project WHERE projectID = ?", projectID, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 app.put("/updateProject", (req, res) => {
-  const id = req.body.id;
+  const projectID = req.body.projectID;
   const title = req.body.title;
   const client = req.body.client;
   const address = req.body.address;
   const date = req.body.date;
   db.query(
-    "UPDATE project SET title = ?, client = ?, address = ?, date = ? WHERE id = ?",
-    [title, client, address, date, id],
+    "UPDATE project SET title = ?, client = ?, address = ?, date = ? WHERE projectID = ?",
+    [title, client, address, date, projectID],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -340,9 +351,9 @@ app.put("/updateProject", (req, res) => {
   );
 });
 //DELETE project on Dashboard page
-app.delete("/deleteProject/:id", (req, res) => {
-  const id = req.params.id;
-  db.query("DELETE FROM project WHERE id = ?", id, (err, result) => {
+app.delete("/deleteProject/:projectID", (req, res) => {
+  const projectID = req.params.projectID;
+  db.query("DELETE FROM project WHERE projectID = ?", projectID, (err, result) => {
     if (err) {
       console.log(err);
     } else {
