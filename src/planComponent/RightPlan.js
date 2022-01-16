@@ -1,140 +1,217 @@
-import React from 'react'
-import { Container, makeStyles } from "@material-ui/core";
-import { theme } from "../theme";
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import { FixedSizeList } from 'react-window';
-
-
-
-
-
+import React from "react";
+import { Container, makeStyles, Typography } from "@material-ui/core";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import RedoIcon from "@mui/icons-material/Redo";
+import UndoIcon from "@mui/icons-material/Undo";
+import {
+  List,
+  ListItemIcon,
+  ListItemButton,
+  ListItemText,
+  Stack,
+} from "@mui/material";
+import { Collapse} from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import LightIcon from "@mui/icons-material/Light";
+import OutletIcon from "@mui/icons-material/Outlet";
+import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        height: "100vh",
-        paddingTop: theme.spacing(0.5),
-        backgroundColor: "#93cb40",
-        position: "sticky",
-        top: 0,
-        [theme.breakpoints.up("sm")]: {
-            backgroundColor: theme.palette.primary.main,
-            border: "1px solid #ece7e7",
-        },
+  container: {
+    height: "100vh",
+    paddingTop: theme.spacing(2),
+    backgroundColor: theme.palette.primary.light,
+    position: "sticky",
+    top: 0,
+    [theme.breakpoints.up("sm")]: {
+      backgroundColor: theme.palette.primary.light,
+      border: "1px solid #ece7e7",
     },
+  },
+}));
 
-}))
 const RightPlan = () => {
-    const classes = useStyles();
-    return (
-        <Container className={classes.container}>
+  const [open, setOpen] = React.useState(true);
+  const [open2, setOpen2] = React.useState(true);
+  const [open3, setOpen3] = React.useState(true);
+  const [open4, setOpen4] = React.useState(true);
 
-<Box
-      sx={{
-        width: 420,
-        height: 700,
-        backgroundColor: '',
-        '': {
-          backgroundColor: '',
-          opacity: [0.9, 0.8, 0.7],
-        },
-      }} 
-    
+  const handlerClick = () => {
+    setOpen(!open);
+  };
+  const handlerClick2 = () => {
+    setOpen2(!open2);
+  };
+  const handlerClick3 = () => {
+    setOpen3(!open3);
+  };
+  const handlerClick4 = () => {
+    setOpen4(!open4);
+  };
+  const classes = useStyles();
+  return (
+    <Container className={classes.container}>
+      <Box
+        sx={{
+          border: 1,
+          borderColor: "#adcaee",
+          width:'100%',
+backgroundColor:'#adcaee',
+         
 
+        }}
+      >
+        <Stack direction='row' spacing={11}>
+        <Typography variant="h6" style={{marginLeft:'12px', }}>History</Typography>
+        <div><IconButton size='small' style={{color: '#044474'}}>
+              <UndoIcon />
+            </IconButton>
+            <IconButton size='small' style={{color: '#044474'}}>
+              <RedoIcon />
+            </IconButton></div>
+        
+        </Stack>
+        
+      </Box>
+      <List
+        sx={{
+          maxHeight: "30%",
+          overflow: "auto",
+          width: "100%",
+          maxWidth: 360,
+          bgcolor: "background.paper",
+          // border: 1,
+          borderColor: "black",
+          padding: 1,
+          paddingBottom:'20px'
+        }}
+        // subheader={
+        //   <ListSubheader
+        //     component="div"
+        //     id="nested-list-subheader"
+        //     sx={{
+        //       border: 1,
+        //       borderColor: "black",
+        //       fontSize: "20px",
+        //       fontWeight:'500',
+        //       color: "black",
+        //       borderRadius: 2
+        //     }}
+        //   >
+        //     History
+        //     <IconButton color="primary">
+        //       <UndoIcon />
+        //     </IconButton>
+        //     <IconButton color="primary">
+        //       <RedoIcon />
+        //     </IconButton>
+        //   </ListSubheader>
+        // }
+      >
+        <ListItemText primary="[1] - Line" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[2] Circle" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[3] Item - Led Light" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[4] - Red Line" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[5] Black Circle" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[6] Item - Led Light" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[7] - Line" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[8] Circle" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[9] Item - Led Light" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[10] - Line" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[11] Circle" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[12] Item - Led Light" sx={{ borderBottom: 1 }} />
+      </List>
+      <Box
+        sx={{
+          border: 1,
+          borderColor: "#adcaee",
+          marginTop: "35px",
+          padding: 1,
+          backgroundColor: "#adcaee",
+         
+        }}
+      >
+        <Typography variant="h6">Legend Count: 11</Typography>
+      </Box>
 
-      > <Button variant="contained" color="success" size="small"> Legend Count </Button> 
-      <br></br> <br></br> <Button variant="contained" color="success" size="small"> Lighting </Button><br></br> 
-       <List> <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="10 Legend Item name" />
-            </ListItemButton>
-
-          </ListItem>
-          
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="10 Legend Item name" />
-            </ListItemButton>
-
-            </ListItem>
-
-            <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="12 Legend Item name" />
-            </ListItemButton>
-
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="50 Legend Item name" />
-            </ListItemButton>
-
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="12 Legend Item name" /> 
-            </ListItemButton>
-
-          </ListItem>
-
-
+      <List
+        sx={{ width: "100%", bgcolor: "background.paper", maxHeight: "50%",
+        overflow: "auto", padding: 1}}
+        
+      >
+        {/* light icon */}
+        <ListItemButton onClick={handlerClick}>
+          <ListItemIcon>
+            <LightIcon />
+          </ListItemIcon>
+          <ListItemText>Lighting</ListItemText>
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemText primary="[1] - Line" sx={{ borderBottom: 1 }} />
+            <ListItemText
+              primary="[3] Item - Led Light"
+              sx={{ borderBottom: 1 }}
+            />
+            <ListItemText primary="[4] - Red Line" sx={{ borderBottom: 1 }} />
           </List>
+        </Collapse>
 
-      <br></br><Button variant="contained" color="success" size="small" >Power Point</Button> 
+        <ListItemButton onClick={handlerClick2}>
+          <ListItemIcon>
+            <OutletIcon />
+          </ListItemIcon>
+          <ListItemText>Power Points</ListItemText>
+          {open2 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open2} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemText primary="[5] Black Circle" sx={{ borderBottom: 1 }} />
+            <ListItemText
+              primary="[6] Item - Led Light"
+              sx={{ borderBottom: 1 }}
+            />
+            <ListItemText primary="[7] - Line" sx={{ borderBottom: 1 }} />
+          </List>
+        </Collapse>
 
-      <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="10 Legend Item name" />
-            </ListItemButton>
+        <ListItemButton onClick={handlerClick3}>
+          <ListItemIcon>
+            <VideoCameraBackIcon />
+          </ListItemIcon>
+          <ListItemText>CCTV</ListItemText>
+          {open3 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open3} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemText primary="[8] Circle" sx={{ borderBottom: 1 }} />
+            <ListItemText
+              primary="[9] Item - Led Light"
+              sx={{ borderBottom: 1 }}
+            />
+            <ListItemText primary="[10] - Line" sx={{ borderBottom: 1 }} />
+          </List>
+        </Collapse>
 
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="02 Legend Item name" />
-            </ListItemButton>
-
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="10 Legend Item name" />
-            </ListItemButton>
-
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="12 Legend Item name" />
-            </ListItemButton>
-
-          </ListItem>
-
-
-      
-
-      
-</Box>
-
-
-
-
-
-
+        <ListItemButton onClick={handlerClick4}>
+          <ListItemIcon>
+            <NotificationsActiveIcon />
+          </ListItemIcon>
+          <ListItemText>Alarm</ListItemText>
+          {open4 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open4} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemText primary="[11] Circle" sx={{ borderBottom: 1 }} />
+          </List>
+        </Collapse>
+      </List>
     </Container>
+  );
+};
 
-    
-
-
-    )
-}
-
-export default RightPlan
+export default RightPlan;
