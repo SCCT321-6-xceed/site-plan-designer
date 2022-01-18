@@ -15,7 +15,6 @@ import 'react-datepicker/dist/react-datepicker.css'
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
-
 function Upload(props) {
   // cancel function
   function cancelHandler() {
@@ -31,7 +30,7 @@ function Upload(props) {
   const [selectedDate, setSelectDate] = useState("")
 
   const date = new Date(selectedDate).toLocaleDateString() //convert date time string to local date
-  const newdate = date.split("/").reverse().join("/"); //convert to yyyy/MM/dd format to insert to mysql
+  const newdate = date.split("/").reverse().join("/"); //covert to yyyy/MM/dd format to insert to mysql
 
 
   // upload image func
@@ -49,6 +48,7 @@ function Upload(props) {
 
   }
 
+
   const saveImage = () => {
     const formdata = new FormData();
     formdata.append('siteplan', imageFile.file);
@@ -59,21 +59,25 @@ function Upload(props) {
 
     })
       .then(() => {
-        console.log('suceess');
+        console.log('success');
+
       })
   }
 
   const addProject = () => {
 
     axios.post("http://localhost:3001/create", {
+
       title: title,
       client: client,
       address: address,
       date: newdate,
+
     })
       .then(() => {
         console.log('Success')
         window.location.reload();
+
       })
   }
   
@@ -163,7 +167,6 @@ function Upload(props) {
                   placeholderText="dd/MM/yyyy"
                   label="Date"
                   selected={selectedDate}
-                  minDate={new Date()}
                   onChange={date => setSelectDate(date)}
                   dateFormat='dd/MM/yyyy'
                   showYearDropdown

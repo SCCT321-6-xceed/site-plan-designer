@@ -100,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
   searchBox: {
     borderRadius: 16,
     display: "flex",
+    justifyContent: "center"
   },
   searchInputs: {
     backgroundColor: "#f9f9f9",

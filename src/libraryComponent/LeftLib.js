@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -11,6 +11,8 @@ import AddCategory from "../components/AddCategory";
 import { useState } from "react";
 import axios from "axios";
 import LabelImportantIcon from "@mui/icons-material/LabelImportant";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -39,11 +41,8 @@ const useStyles = makeStyles((theme) => ({
 
 const LeftLib = () => {
   const [category, setCategory] = useState([]);
-  
-
   const getAllCategory = () => {
     axios.get("http://localhost:3001/getCategory").then((response) => {
-      console.log(response);
       const categoryList = response.data;
       setCategory(categoryList);
     });
@@ -53,21 +52,31 @@ const LeftLib = () => {
     getAllCategory();
   }, []);
 
-  //Active item
+  const deleteCategory = (id) => {
+    axios.delete(`http://localhost:3001/deleteCategory/${id}`).then((response) => {
+      setCategory(
+              category.filter((categories) => {
+                return categories.id !== id;
+              })
+            );
+    });
+  };
+
+
+  // //Active item
   const [selectedIndex, setSelectedIndex] = useState("");
   // Acquire the click value
   const handleListItemClick = (event, index) => {
-      setSelectedIndex(index);
+    setSelectedIndex(index);
   };
   // Sends value to backend
   const handleCategoryClick = () => {
     axios.post("http://localhost:3001/CategoryItem", {
-      selectedIndex: selectedIndex
-    })
+      selectedIndex: selectedIndex,
+    });
     //console log user's click
-    console.log(selectedIndex)
+    console.log(selectedIndex);
   };
-
 
 
 
@@ -90,11 +99,9 @@ const LeftLib = () => {
           <ListItemButton
             key={categories.id}
             className={classes.listButton}
-            // selected={selectedIndex === 0}
             onClick={(event) =>
               handleListItemClick(event, categories.id, handleCategoryClick())
             }
-            
             classes={{ selected: classes.active }}
           >
             <ListItemIcon className={classes.listIcon}>
@@ -105,7 +112,10 @@ const LeftLib = () => {
                 {categories.categoryName}
               </Typography>
             </ListItemText>
+            <DeleteIcon onClick={(event) => deleteCategory(categories.id)}/>
           </ListItemButton>
+          
+     
         ))}
 
         <Divider />

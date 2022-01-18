@@ -27,6 +27,19 @@ function UploadLegend(props) {
     filepreview: null,
   });
 
+  const saveItemImage = () => {
+    const formdata = new FormData();
+    formdata.append("legends", imageFile.file);
+
+    axios
+      .post("http://localhost:3001/itemupload", formdata, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(() => {
+        console.log("success");
+      });
+  };
+
   const handleInputChange = (event) => {
     setimageFile({
       ...imageFile,
@@ -74,7 +87,6 @@ function UploadLegend(props) {
     setOpen(!open);
   };
 
- 
   const handleChange = (event) => {
     setcategoryValue(event.target.value);
   };
@@ -117,9 +129,12 @@ function UploadLegend(props) {
           </Stack>
         </div>
         <Box>
-          <FormControl sx={{width: "250px", height: "50px", paddingLeft: "10px"}}>
+          <FormControl
+            sx={{ width: "250px", height: "50px", paddingLeft: "10px" }}
+          >
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select sx={{paddingLeft: "10px"}}
+            <Select
+              sx={{ paddingLeft: "10px" }}
               labelId="category"
               id="category"
               value={categoryValue}
@@ -127,7 +142,7 @@ function UploadLegend(props) {
               onChange={handleChange}
             >
               {category.map((categories) => (
-                <MenuItem  value={categories.id}>
+                <MenuItem value={categories.id}>
                   {categories.categoryName}
                 </MenuItem>
               ))}
@@ -170,6 +185,7 @@ function UploadLegend(props) {
           className={classes.modButton}
           onClick={() => {
             addItem();
+            saveItemImage();
             cancelHandler();
           }}
           style={{ background: theme.palette.primary.main, minWidth: "150px" }}

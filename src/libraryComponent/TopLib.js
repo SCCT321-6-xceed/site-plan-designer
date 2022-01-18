@@ -10,7 +10,6 @@ import { Avatar } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { Link } from "react-router-dom";
 import { theme } from "../theme";
-import { styled } from "@mui/material/styles";
 import UploadLegend from "./UploadLegend";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useState } from "react";
@@ -85,19 +84,7 @@ const TopLib = () => {
             Legend Library
           </Typography>
           <Stack direction="row" spacing={1}>
-            {/* <label htmlFor='contained-button-file'>
-              <Input accept='image/*' id='contained-button-file' multiple type='file'/>
-              <Button 
-              component='span' 
-              variant='contained' size='small' 
-              startIcon={<UploadIcon />}
-              style={{
-                backgroundColor: theme.palette.primary.main,
-                minHeight: "40px",
-                maxHeight: "50px",
-              }}>Upload</Button>
-            </label> */}
-
+       
             <Button
               style={{
                 background: theme.palette.primary.light,
