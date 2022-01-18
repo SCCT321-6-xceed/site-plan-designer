@@ -10,16 +10,17 @@ import {
 } from "@mui/material";
 import useStyles from "../pages/styles";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
+import { useParams } from "react-router-dom";
 
 const MainLib = () => {
   const classes = useStyles();
 
+  const { categoryID } = useParams();
 
   const getAllItem = () => {
     axios.get("http://localhost:3001/getItem").then((response) => {
@@ -28,6 +29,8 @@ const MainLib = () => {
       setItem(itemList);
     });
   };
+
+
 
   const deleteItem = (id) => {
     axios.delete(`http://localhost:3001/deleteItem/${id}`).then((response) => {
@@ -65,6 +68,8 @@ const MainLib = () => {
     setWordEntered("");
   };
 
+ 
+
   return (
     <>
       <div className={classes.container}>
@@ -92,6 +97,7 @@ const MainLib = () => {
         <Container className={classes.cardGrid} maxWidth="md">
         {filteredData.length !== 0 ? (<Grid container spacing={4}>
             {filteredData.map((items) => (
+              
               <Grid item key={items.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
@@ -143,7 +149,7 @@ const MainLib = () => {
                   <CardMedia
                     className={classes.cardMedia}
                     title="Image Title"
-                    image="https://5.imimg.com/data5/YI/VX/MY-56782338/jaquar-6w-led-downlight-250x250.jpg"
+                    image=""
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography variant="h6">{items.name}</Typography>

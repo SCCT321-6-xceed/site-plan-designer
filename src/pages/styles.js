@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     marginLeft: "17px",
   },
+  
 
   //searchField
   searchBar: {
@@ -130,6 +131,7 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
+    
   },
 }));
 export default useStyles;
