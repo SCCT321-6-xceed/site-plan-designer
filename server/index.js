@@ -149,7 +149,7 @@ app.post("/logout", (req, res) => {
 // ------------------------------------------DASHBOARD FUNCTION -------------------------------------------------
 //store image
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, "../sitemap"),
+  destination: path.join(__dirname, "../public/sitemap"),
   filename: function (req, file, cb) {
     // null as first argument means no error
     cb(null, Date.now() + "-" + file.originalname);
@@ -289,7 +289,7 @@ app.delete("/deleteProject/:projectID", (req, res) => {
 //---------------------------------------LIBRARY/CATEGORY---------------------------------------------------------
 //store item
 const itemStorage = multer.diskStorage({
-  destination: path.join(__dirname, "../public"),
+  destination: path.join(__dirname, "../public/item"),
   filename: function (req, file, cb) {
     // null as first argument means no error
     cb(null, Date.now() + "-" + file.originalname);
@@ -347,7 +347,8 @@ app.post("/itemupload", async (req, res) => {
       const classifiedsadd = {
         image: req.file.filename,
       };
-      db.query("INSERT INTO item (image) VALUES (?)",[classifiedsadd], (err, results) => {
+      // UDPATE WHERE
+      db.query("UPDATE item SET ? ORDER BY id DESC LIMIT 1",[classifiedsadd], (err, results) => {
         if (err) throw err;
         res.json({ success: 1 });
       });
