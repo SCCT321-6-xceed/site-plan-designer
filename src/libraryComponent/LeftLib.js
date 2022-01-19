@@ -11,8 +11,8 @@ import AddCategory from "../components/AddCategory";
 import { useState } from "react";
 import axios from "axios";
 import LabelImportantIcon from "@mui/icons-material/LabelImportant";
-import DeleteIcon from '@mui/icons-material/Delete';
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -33,9 +33,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     fontSize: "18px",
     fontWeight: "550",
+    textDeco: "none",
   },
   active: {
     backgroundColor: "red",
+  },
+  link: {
+    textDecoration: "none",
   },
 }));
 
@@ -53,15 +57,16 @@ const LeftLib = () => {
   }, []);
 
   const deleteCategory = (id) => {
-    axios.delete(`http://localhost:3001/deleteCategory/${id}`).then((response) => {
-      setCategory(
-              category.filter((categories) => {
-                return categories.id !== id;
-              })
-            );
-    });
+    axios
+      .delete(`http://localhost:3001/deleteCategory/${id}`)
+      .then((response) => {
+        setCategory(
+          category.filter((categories) => {
+            return categories.id !== id;
+          })
+        );
+      });
   };
-
 
   // //Active item
   const [selectedIndex, setSelectedIndex] = useState("");
@@ -70,15 +75,24 @@ const LeftLib = () => {
     setSelectedIndex(index);
   };
   // Sends value to backend
+  // const handleCategoryClick = () => {
+  //   axios.post("http://localhost:3001/CategoryItem", {
+  //     selectedIndex: selectedIndex,
+  //   });
+
+  // };
+  const [item, setItem] = useState("");
   const handleCategoryClick = () => {
-    axios.post("http://localhost:3001/CategoryItem", {
-      selectedIndex: selectedIndex,
-    });
-    //console log user's click
-    console.log(selectedIndex);
+    axios
+      .post("http://localhost:3001/CategoryItem", {
+        selectedIndex: selectedIndex,
+      })
+      .then((response) => {
+        const itemList = response.data;
+        setItem(itemList);
+        console.log(itemList);
+      });
   };
-
-
 
   //upload item
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -92,6 +106,7 @@ const LeftLib = () => {
   }
 
   const classes = useStyles();
+
   return (
     <div>
       <List className={classes.list}>
@@ -107,15 +122,14 @@ const LeftLib = () => {
             <ListItemIcon className={classes.listIcon}>
               <LabelImportantIcon />
             </ListItemIcon>
-            <ListItemText>
+            <Link className={classes.link} to={`/library/${categories.id}`}>
               <Typography className={classes.listText}>
                 {categories.categoryName}
               </Typography>
-            </ListItemText>
-            <DeleteIcon onClick={(event) => deleteCategory(categories.id)}/>
+            </Link>
+            <ListItemText></ListItemText>
+            <DeleteIcon onClick={(event) => deleteCategory(categories.id)} />
           </ListItemButton>
-          
-     
         ))}
 
         <Divider />

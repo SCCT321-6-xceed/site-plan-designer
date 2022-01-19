@@ -20,6 +20,7 @@ function UploadLegend(props) {
 
   const [legend_name, setLegendName] = useState("");
   const [price, setPrice] = useState(0);
+  const [isSucces, setSuccess] = useState(null);
 
   // upload image func
   const [imageFile, setimageFile] = useState({
@@ -48,21 +49,6 @@ function UploadLegend(props) {
     });
   };
 
-  const [category, setCategory] = useState([]);
-  const [categoryValue, setcategoryValue] = useState("");
-  const getAllCategory = () => {
-    axios.get("http://localhost:3001/getCategory").then((response) => {
-      console.log(response);
-      const categoryList = response.data;
-      setCategory(categoryList);
-    });
-  };
-
-  React.useEffect(() => {
-    getAllCategory();
-  }, []);
-
-  const [isSucces, setSuccess] = useState(null);
 
   const addItem = () => {
     // const formdata = new FormData();
@@ -90,6 +76,21 @@ function UploadLegend(props) {
   const handleChange = (event) => {
     setcategoryValue(event.target.value);
   };
+
+  const [category, setCategory] = useState([]);
+  const [categoryValue, setcategoryValue] = useState("");
+  const getAllCategory = () => {
+    axios.get("http://localhost:3001/getCategory").then((response) => {
+      console.log(response);
+      const categoryList = response.data;
+      setCategory(categoryList);
+    });
+  };
+
+  React.useEffect(() => {
+    getAllCategory();
+  }, []);
+  
   const classes = useStyles();
   return (
     <div className={classes.modal}>

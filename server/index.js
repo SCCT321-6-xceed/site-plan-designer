@@ -316,7 +316,6 @@ app.post("/itemupload", async (req, res) => {
       const classifiedsadd = {
         image: req.file.filename,
       };
-      // const sql = "INSERT INTO item_image SET ?";
       const sql = "INSERT INTO item_image SET ?";
       db.query(sql, classifiedsadd, (err, results) => {
         if (err) throw err;
