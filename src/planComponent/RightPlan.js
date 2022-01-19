@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RightPlan = () => {
+const RightPlan = ({count, count1, count2, count3, count4}) => {
+  console.log("RightPlan count", count);
   const [open, setOpen] = React.useState(true);
   const [open2, setOpen2] = React.useState(true);
   const [open3, setOpen3] = React.useState(true);
@@ -134,7 +135,7 @@ backgroundColor:'#adcaee',
          
         }}
       >
-        <Typography variant="h6">Legend Count: 11</Typography>
+        <Typography variant="h6">Legend Count: {count}</Typography>
       </Box>
 
       <List
@@ -147,7 +148,7 @@ backgroundColor:'#adcaee',
           <ListItemIcon>
             <LightIcon />
           </ListItemIcon>
-          <ListItemText>Lighting</ListItemText>
+          <ListItemText>Lighting {count1}</ListItemText>
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -165,7 +166,7 @@ backgroundColor:'#adcaee',
           <ListItemIcon>
             <OutletIcon />
           </ListItemIcon>
-          <ListItemText>Power Points</ListItemText>
+          <ListItemText>Power Points {count2}</ListItemText>
           {open2 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open2} timeout="auto" unmountOnExit>
@@ -183,7 +184,7 @@ backgroundColor:'#adcaee',
           <ListItemIcon>
             <VideoCameraBackIcon />
           </ListItemIcon>
-          <ListItemText>CCTV</ListItemText>
+          <ListItemText>CCTV {count3}</ListItemText>
           {open3 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open3} timeout="auto" unmountOnExit>
@@ -201,7 +202,7 @@ backgroundColor:'#adcaee',
           <ListItemIcon>
             <NotificationsActiveIcon />
           </ListItemIcon>
-          <ListItemText>Alarm</ListItemText>
+          <ListItemText>Alarm {count4}</ListItemText>
           {open4 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open4} timeout="auto" unmountOnExit>

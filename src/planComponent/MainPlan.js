@@ -22,23 +22,64 @@ const useStyles = makeStyles((theme) => ({
 
 ));
 
-const MainPlan = () => {
+const MainPlan = ({count, setCount, count1, setCount1, count2, setCount2, count3, setCount3, count4, setCount4}) => {
   const [squareRef, { width }] = useElementSize()
   const classes = useStyles();
   const [items, setItems] = useState([])
-  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+  const [{ canDrop, isOver }, drop] = useDrop((e) => ({
     accept: "image",
     drop: (item, monitor) => {
-      const {x, y} = monitor.getDifferenceFromInitialOffset()
+      const delta = monitor.getSourceClientOffset()
+      const src = monitor.getInitialSourceClientOffset();
+      let x = delta.x;
+      let y = delta.y;
+      // let x = 0;
+      // let y = 0;
+      // console.log(delta, src)
       console.log(x, y)
+      console.log(item);
+
+      setCount(count + 1);
+      count += 1;
+      
+      if (item.type === "lightning") {
+        setCount1(count1 + 1);
+        count1 += 1;
+      }
+      if (item.type === "power point") {
+        setCount2(count2 + 1);
+        count2 += 1;
+      }
+      if (item.type === "cctv") {
+        setCount3(count3 + 1);
+        count3 += 1;
+      }
+      if (item.type === "alarm") {
+        setCount4(count4 + 1);
+        count4 += 1;
+      }
+
       setItems(prevItem=>[...prevItem, {...item, x, y, id: uuidv4()}])
     },
-    
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop()
     })
   }));
+
+  // const [{ canDrop, isOver }, drop] = useDrop(() => ({
+  //   accept: "image",
+  //   drop: (item, monitor) => {
+  //     const {x, y} = monitor.getDifferenceFromInitialOffset()
+  //     console.log(x, y)
+  //     setItems(prevItem=>[...prevItem, {...item, x, y, id: uuidv4()}])
+  //   },
+    
+  //   collect: (monitor) => ({
+  //     isOver: monitor.isOver(),
+  //     canDrop: monitor.canDrop()
+  //   })
+  // }));
 
   return (
     <div ref={drop}>
@@ -63,8 +104,8 @@ const MainPlan = () => {
                 <URLImage 
                   key={item.id} 
                   src={item.link} 
-                  width={100} 
-                  height={100} 
+                  width={60} 
+                  height={60} 
                   y={item.y} 
                   x={item.x} 
                 />

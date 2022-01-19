@@ -122,7 +122,7 @@ const LeftPlan = () => {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <IconList />
+              <IconList type="lightning"/>
             </ListItem>
           </List>
         </Collapse>
@@ -138,7 +138,7 @@ const LeftPlan = () => {
         <Collapse in={open2} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <IconList />
+              <IconList type="power point"/>
             </ListItem>
           </List>
         </Collapse>
@@ -154,7 +154,7 @@ const LeftPlan = () => {
         <Collapse in={open3} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <IconList />
+              <IconList type="cctv"/>
             </ListItem>
           </List>
         </Collapse>
@@ -170,7 +170,7 @@ const LeftPlan = () => {
         <Collapse in={open4} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <IconList />
+              <IconList type="alarm"/>
             </ListItem>
           </List>
         </Collapse>

@@ -23,7 +23,7 @@ function App() {
             <Route exact path="/dashboard" element ={<Dashboard />}/>
             <Route exact path="/library" element={<Library />} />
             <Route exact path="/registration" element={<Registration />}/>
-            <Route exact path="/plandesign" element={<ViewPlan />}/>
+            <Route exact path="/plandesign" element={<ViewPlan count={0}/>}/>
             <Route exact path="/export" element={<Export />}/>
             <Route exact path="/newpage" element={<Newpage />}/>
       
