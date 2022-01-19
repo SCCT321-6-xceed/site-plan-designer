@@ -31,6 +31,8 @@ import { useParams } from "react-router-dom";
 function NewLibrary() {
   const classes = useStyles();
 
+  const { categoryID } = useParams();
+
   const [category, setCategory] = useState([]);
   const getAllCategory = () => {
     axios.get("http://localhost:3001/getCategory").then((response) => {
@@ -39,11 +41,8 @@ function NewLibrary() {
     });
   };
 
-  React.useEffect(() => {
-    getAllCategory();
-    getAllItem();
-  }, []);
 
+// Deletes category (Must delete all items related to category)
   const deleteCategory = (id) => {
     axios
       .delete(`http://localhost:3001/deleteCategory/${id}`)
@@ -56,20 +55,14 @@ function NewLibrary() {
       });
   };
 
-  // //Active item
+  // Active item
   const [selectedIndex, setSelectedIndex] = useState("");
   // Acquire the click value
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-  // Sends value to backend
-  // const handleCategoryClick = () => {
-  //   axios.post("http://localhost:3001/CategoryItem", {
-  //     selectedIndex: selectedIndex,
-  //   });
 
-  // };
-
+  // Clicking this will render items belonging that category (must double click category)
   const handleCategoryClick = () => {
     axios
       .post("http://localhost:3001/CategoryItem", {
@@ -91,8 +84,8 @@ function NewLibrary() {
   function closeHandler() {
     setModalIsOpen(false);
   }
-  const { categoryID } = useParams();
 
+  // On initial load, loads all items
   const [item, setItem] = React.useState([]);
   const getAllItem = () => {
     axios.get("http://localhost:3001/getItem").then((response) => {
@@ -101,7 +94,7 @@ function NewLibrary() {
       setItem(itemList);
     });
   };
-
+  // Delete item
   const deleteItem = (id) => {
     axios.delete(`http://localhost:3001/deleteItem/${id}`).then((response) => {
       setItem(
@@ -111,7 +104,9 @@ function NewLibrary() {
       );
     });
   };
+
   React.useEffect(() => {
+    getAllCategory();
     getAllItem();
   }, []);
 
@@ -143,7 +138,6 @@ function NewLibrary() {
         direction="row"
         justifyContent="Left"
         alignItems="stretch"
-        sx={{position: "fixed", height: "100%"}}
       >
         <Grid
           item
@@ -152,18 +146,19 @@ function NewLibrary() {
           md={2}
           sx={{
             position: "fixed",
+            paddingTop: "60px",
             paddingRight: "20px",
+            marginRight: "20px",
             width: "100%",
-            maxWidth: 360,
-            height: "100%",
-            zIndex: 100
+            maxWidth: 300,
+            zIndex: 100,
+
           }}
         >
           <div>
             <List
               style={{
                 backgroundColor: "#e0e9f4",
-                
               }}
             >
               {category.map((categories) => (
@@ -241,10 +236,10 @@ function NewLibrary() {
           sm={8}
           md={10}
           sx={{
-            paddingTop: "50px",
+            paddingTop: "100px",
             direction: "column",
             alignItems: "center",
-            marginLeft: "20px",
+            marginLeft: "200px",
             paddingLeft: "20px",
           }}
         >
