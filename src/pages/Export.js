@@ -15,9 +15,9 @@ function Export() {
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       setLoginStatus(false);
-      history('/');
-    } 
-});
+      history("/");
+    }
+  });
 
   return (
     <div>
