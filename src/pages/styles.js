@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f2f2f2",
   },
   cardMedia: {
-    paddingTop: "56.25%",
+    paddingTop: "10px",
   },
   cardContent: {
     flexGrow: 1,
@@ -26,21 +26,22 @@ const useStyles = makeStyles((theme) => ({
   },
   //modal.js's size and position
   modal: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#EFF5FB",
     position: "fixed",
     top: "20vh",
     left: "calc(50% - 15rem)",
     marginTop: "-50px",
     marginLeft: "-50px",
-    width: "650px",
+    width: "600px",
     height: "auto",
     padding: "1rem",
     zIndex: "1",
+    borderRadius: 16
   },
   modButton: {
     paddingRight: "20px",
     paddingLeft: "20px",
-    marginTop: "50px",
+    marginTop: "13px",
     marginLeft: "50px",
     minWidth: "125px",
     minHeight: "40px",

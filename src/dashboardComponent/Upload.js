@@ -53,7 +53,7 @@ function Upload(props) {
     const formdata = new FormData();
     formdata.append('siteplan', imageFile.file);
 
-    axios.post("http://localhost:3001/imageUpload", formdata, {
+    axios.post("http://localhost:3001/sitemapUpload", formdata, {
 
       headers: { "Content-Type": "multipart/form-data" },
 
@@ -185,8 +185,8 @@ function Upload(props) {
           variant="contained"
           className={classes.modButton}
           onClick={() => {
-            saveImage();
             addProject();
+            saveImage();
             cancelHandler();
           }}
           style={{ background: theme.palette.primary.main, minWidth: "150px" }}
@@ -196,10 +196,11 @@ function Upload(props) {
         {/* cancel button */}
         <Button
           size="medium"
-          variant="contained"
+          variant="outlined"
           className={classes.modButton}
           onClick={cancelHandler}
-          style={{ background: "#d00000" }}
+          style={{ border: "1.5px solid #d11a2a",
+          color: "#d11a2a"}}
         >
           Cancel
         </Button>

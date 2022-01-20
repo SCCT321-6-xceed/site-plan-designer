@@ -123,7 +123,8 @@ const Main = () => {
                     <CardMedia
                       className={classes.cardMedia}
                       title="Image Title"
-                      image="https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg"
+                      component="img"
+                      src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography variant="h7">
@@ -223,11 +224,14 @@ const Main = () => {
                 <Grid item xs={12} sm={6} md={4}>
                   <Card className={classes.card} key={projects.id}>
                     <CardHeader title={projects.title}> </CardHeader>
+                    <Box sx={{maxHeight: "350px"}}>
                     <CardMedia
                       className={classes.cardMedia}
-                      title="Image Title"
-                      image="https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg"
-                    />
+                      title={projects.title}
+                      // image="https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg"
+                            component="img"
+                            src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
+                    /></Box>
                     <CardContent className={classes.cardContent}>
                       <Typography variant="h7">
                         {" "}

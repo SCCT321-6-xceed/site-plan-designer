@@ -4,7 +4,6 @@ import { theme } from "../theme";
 import Button from "@mui/material/Button";
 import useStyles from "../pages/styles";
 import TextField from "@material-ui/core/TextField";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import axios from "axios";
@@ -12,6 +11,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 function UploadLegend(props) {
   function cancelHandler() {
@@ -94,6 +95,18 @@ function UploadLegend(props) {
   const classes = useStyles();
   return (
     <div className={classes.modal}>
+      <IconButton
+        aria-label="close"
+        onClick={cancelHandler}
+        sx={{
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          color: (theme) => theme.palette.primary.main,
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
       <Stack>
         <Typography
           align="center"
@@ -121,7 +134,7 @@ function UploadLegend(props) {
             <div style={{ paddingLeft: "20px" }}>
               {imageFile.filepreview !== null ? (
                 <img
-                  style={{ maxWidth: "300px", maxHeight: "300px" }}
+                  style={{ maxWidth: "300px", maxHeight: "200px" }}
                   src={imageFile.filepreview}
                   alt="UploadImage"
                 />
@@ -195,10 +208,11 @@ function UploadLegend(props) {
         </Button>
         <Button
           size="medium"
-          variant="contained"
+          variant="outlined"
           className={classes.modButton}
           onClick={cancelHandler}
-          style={{ background: "#d00000" }}
+          style={{ border: "1.5px solid #d11a2a",
+          color: "#d11a2a",}}
         >
           Cancel
         </Button>

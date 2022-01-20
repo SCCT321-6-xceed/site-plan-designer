@@ -33,16 +33,17 @@ function AddCategory(props) {
   return (
     <div
       style={{
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "#EAF1F9",
         position: "fixed",
         top: "20vh",
         left: "calc(50% - 8rem)",
         marginTop: "-50px",
         marginLeft: "-50px",
         width: "500px",
-        height: "300px",
+        height: "auto",
         padding: "1rem",
         zIndex: "1",
+        border: 16
       }}
     >
       <Stack>
@@ -98,10 +99,11 @@ function AddCategory(props) {
         </Button>
         <Button
           size="medium"
-          variant="contained"
+          variant="outlined"
           className={classes.modButton}
           onClick={cancelHandler}
-          style={{ background: "#d00000" }}
+          style={{ border: "1.5px solid #d11a2a",
+          color: "#d11a2a" }}
         >
           Cancel
         </Button>
