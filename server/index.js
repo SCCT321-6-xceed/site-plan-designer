@@ -41,7 +41,7 @@ app.use(
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
-  password: "master", //your sql password
+  password: "Grgngopche2700", //your sql password
   database: "siteplandesigner_new", //your sql schema
   dateStrings: true,
 });
@@ -156,7 +156,6 @@ const storage = multer.diskStorage({
   },
 });
 
-
 //insert image into mysql
 app.post("/sitemapupload", async (req, res) => {
   try {
@@ -179,10 +178,14 @@ app.post("/sitemapupload", async (req, res) => {
       const classifiedsadd = {
         image: req.file.filename,
       };
-      db.query("UPDATE project SET ? ORDER BY projectID DESC LIMIT 1", classifiedsadd, (err, results) => {
-        if (err) throw err;
-        res.json({ success: 1 });
-      });
+      db.query(
+        "UPDATE project SET ? ORDER BY projectID DESC LIMIT 1",
+        classifiedsadd,
+        (err, results) => {
+          if (err) throw err;
+          res.json({ success: 1 });
+        }
+      );
     });
   } catch (err) {
     console.log(err);
@@ -368,21 +371,22 @@ app.post("/itemupload", async (req, res) => {
         image: req.file.filename,
       };
       // UDPATE WHERE
-      db.query("UPDATE item SET ? ORDER BY id DESC LIMIT 1",[classifiedsadd], (err, results) => {
-        if (err) throw err;
-        res.json({ success: 1 });
-      });
+      db.query(
+        "UPDATE item SET ? ORDER BY id DESC LIMIT 1",
+        [classifiedsadd],
+        (err, results) => {
+          if (err) throw err;
+          res.json({ success: 1 });
+        }
+      );
     });
   } catch (err) {
     console.log(err);
   }
 });
 
-
-
 // insert legend item in mysql table
 app.post("/addItem", (req, res) => {
-
   const name = req.body.legend_name;
   const price = req.body.price;
   const category_id = req.body.category;
@@ -499,7 +503,6 @@ app.delete("/deleteItem/:id", (req, res) => {
 //     }
 //   });
 // });
-
 
 //Backend is listening (on)
 app.listen(3001, () => {
