@@ -26,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
   },
   //modal.js's size and position
   modal: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#EFF5FB",
     position: "fixed",
     top: "20vh",
     left: "calc(50% - 15rem)",
     marginTop: "-50px",
     marginLeft: "-50px",
-    width: "650px",
+    width: "600px",
     height: "auto",
     padding: "1rem",
     zIndex: "1",

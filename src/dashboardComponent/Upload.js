@@ -196,10 +196,11 @@ function Upload(props) {
         {/* cancel button */}
         <Button
           size="medium"
-          variant="contained"
+          variant="outlined"
           className={classes.modButton}
           onClick={cancelHandler}
-          style={{ background: "#d00000" }}
+          style={{ border: "1.5px solid #d11a2a",
+          color: "#d11a2a"}}
         >
           Cancel
         </Button>

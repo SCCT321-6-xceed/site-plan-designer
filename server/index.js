@@ -235,7 +235,7 @@ app.get("/searchProject", (req, res) => {
 
 //retrive project from mysql
 app.get("/getProject", (req, res) => {
-  db.query("SELECT * FROM project ", (err, result) => {
+  db.query("SELECT * FROM project ORDER BY projectID DESC", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -450,7 +450,7 @@ app.post("/CategoryItem", (req, res) => {
 // retrive legend item from mysql
 app.get("/getItem", (req, res) => {
   db.query(
-    "SELECT * FROM item ",
+    "SELECT * FROM item ORDER BY id DESC",
 
     (err, result) => {
       if (err) {
