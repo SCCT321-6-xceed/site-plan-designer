@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardGrid: {
-    padding: "20px 0px",
+    padding: "20px 20px",
   },
   card: {
     height: "100%",
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMedia: {
     paddingTop: "10px",
+    height:"300px"
   },
   cardContent: {
     flexGrow: 1,
@@ -39,10 +40,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16
   },
   modButton: {
-    paddingRight: "20px",
-    paddingLeft: "20px",
+    // paddingRight: "20px",
+    // paddingLeft: "20px",
     marginTop: "13px",
-    marginLeft: "50px",
+    marginLeft: "30px",
     minWidth: "125px",
     minHeight: "40px",
   },

@@ -22,6 +22,8 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { CleaningServices } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { Search } from "./SearchIcon";
+import { useState } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,25 +39,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 const LeftPlan = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
-  const [open4, setOpen4] = React.useState(true);
-
   const handleClick = () => {
     setOpen(!open);
   };
-  const handleClick2 = () => {
-    setOpen2(!open2);
+
+
+
+  const [category, setCategory] = useState([]);
+  const getAllCategory = () => {
+    axios.get("http://localhost:3001/getCategory").then((response) => {
+      const categoryList = response.data;
+      setCategory(categoryList);
+    });
   };
-  const handleClick3 = () => {
-    setOpen3(!open3);
-  };
-  const handleClick4 = () => {
-    setOpen4(!open4);
-  };
+
+
+
+
+  React.useEffect(() => {
+    getAllCategory();
+   
+  }, []);
   return (
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
@@ -106,70 +115,33 @@ const LeftPlan = () => {
         <div>
           <Search />
         </div>
-
-        {/* light icon */}
-        <ListItemButton onClick={handleClick}>
+{category.map((categories)=>(
+  <div>
+<ListItemButton onClick={handleClick}>
           <ListItemIcon>
             <LightIcon />
           </ListItemIcon>
-          <ListItemText>Lighting</ListItemText>
+          <ListItemText key={categories.id}>{categories.categoryName}</ListItemText>
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList />
-            </ListItem>
-          </List>
-        </Collapse>
+        <List component="div" disablePadding>
+          
+            <ListItem >
+            <IconList />
+          </ListItem>
+      
+          
+        </List>
+      </Collapse>
 
-        {/* power points icon */}
-        <ListItemButton onClick={handleClick2}>
-          <ListItemIcon>
-            <OutletIcon />
-          </ListItemIcon>
-          <ListItemText>Power Points</ListItemText>
-          {open2 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open2} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList />
-            </ListItem>
-          </List>
-        </Collapse>
-
-        {/* cctv icon */}
-        <ListItemButton onClick={handleClick3}>
-          <ListItemIcon>
-            <VideoCameraBackIcon />
-          </ListItemIcon>
-          <ListItemText>CCTV</ListItemText>
-          {open3 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open3} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList />
-            </ListItem>
-          </List>
-        </Collapse>
-
-        {/* alarm icon */}
-        <ListItemButton onClick={handleClick4}>
-          <ListItemIcon>
-            <NotificationsActiveIcon />
-          </ListItemIcon>
-          <ListItemText>Alarm</ListItemText>
-          {open4 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open4} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList />
-            </ListItem>
-          </List>
-        </Collapse>
+  </div>
+  
+))}
+        {/* light icon */}
+        
+        
+        
       </List>
     </Container>
   );

@@ -169,6 +169,7 @@ function Upload(props) {
                   selected={selectedDate}
                   onChange={date => setSelectDate(date)}
                   dateFormat='dd/MM/yyyy'
+                  minDate={new Date()}
                   showYearDropdown
                 />
               </Stack>
@@ -189,7 +190,7 @@ function Upload(props) {
             saveImage();
             cancelHandler();
           }}
-          style={{ background: theme.palette.primary.main, minWidth: "150px" }}
+          style={{ background: theme.palette.primary.main}}
         >
           Confirm
         </Button>

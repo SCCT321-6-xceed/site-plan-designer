@@ -69,10 +69,10 @@ function UploadLegend(props) {
         window.location.reload();
       });
   };
-  const [open, setOpen] = React.useState(true);
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  // const [open, setOpen] = React.useState(true);
+  // const handleClick = () => {
+  //   setOpen(!open);
+  // };
 
   const handleChange = (event) => {
     setcategoryValue(event.target.value);
