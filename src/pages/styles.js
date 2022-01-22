@@ -16,10 +16,21 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f2f2f2",
   },
   cardMedia: {
+<<<<<<< HEAD
     paddingTop: "10px",
+=======
+    paddingTop: "30px",
+    paddingBottom: "10px",
+    paddingLeft: "90px",
+    maxHeight: "100px",
+    maxWidth: "100px",
+    width: "90px",
+>>>>>>> rl
   },
   cardContent: {
     flexGrow: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   cardButton: {
     marginRight: "2px",
@@ -88,21 +99,20 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     marginLeft: "17px",
   },
-  
 
   //searchField
   searchBar: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       // marginLeft: '0px'
     },
-    paddingBottom: '20px',
-    display: 'flex',
-    justifyContent: "center"
+    paddingBottom: "20px",
+    display: "flex",
+    justifyContent: "center",
   },
   searchBox: {
     borderRadius: 16,
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   searchInputs: {
     backgroundColor: "#f9f9f9",
@@ -132,7 +142,6 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
-    
   },
 }));
 export default useStyles;

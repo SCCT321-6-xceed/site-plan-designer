@@ -22,6 +22,7 @@ const MainLib = () => {
 
   const { categoryID } = useParams();
 
+  const [item, setItem] = React.useState([]);
   const getAllItem = () => {
     axios.get("http://localhost:3001/getItem").then((response) => {
       console.log(response);
@@ -30,7 +31,7 @@ const MainLib = () => {
     });
   };
 
-
+ 
 
   const deleteItem = (id) => {
     axios.delete(`http://localhost:3001/deleteItem/${id}`).then((response) => {
@@ -45,7 +46,7 @@ const MainLib = () => {
     getAllItem();
   }, []);
 
-  const [item, setItem] = React.useState([]);
+ 
   //Search filter
   const [filteredData, setFilteredData] = React.useState([]);
   const [wordEntered, setWordEntered] = React.useState("");
