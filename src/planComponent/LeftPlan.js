@@ -1,10 +1,6 @@
 import React from "react";
 import { Container, Divider, makeStyles, Typography } from "@material-ui/core";
 import LightIcon from "@mui/icons-material/Light";
-import OutletIcon from "@mui/icons-material/Outlet";
-import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import IconList from "./IconList";
 import {
   List,
   ListSubheader,
@@ -12,6 +8,7 @@ import {
   ListItemButton,
   ListItemText,
   ListItem,
+  Link,
 } from "@mui/material";
 import { Collapse, Button } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -24,7 +21,9 @@ import { Box } from "@mui/system";
 import { Search } from "./SearchIcon";
 import { useState } from "react";
 import axios from "axios";
-
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 const useStyles = makeStyles((theme) => ({
   container: {
     height: "100%",
@@ -48,8 +47,26 @@ const LeftPlan = () => {
     setOpen(!open);
   };
 
+//try out
+  const [selectedIndex1, setSelectedIndex1] = React.useState("")
 
+  const handleClick1 = index1 => {
+    if (selectedIndex === index1) {
+      setSelectedIndex1("")
+    } else {
+      setSelectedIndex1(index1)
+    }
+  }
 
+// On initial load, loads all items
+const [item, setItem] = React.useState([]);
+const getAllItem = () => {
+  axios.get("http://localhost:3001/getItem").then((response) => {
+    console.log(response);
+    const itemList = response.data;
+    setItem(itemList);
+  });
+};
   const [category, setCategory] = useState([]);
   const getAllCategory = () => {
     axios.get("http://localhost:3001/getCategory").then((response) => {
@@ -58,13 +75,30 @@ const LeftPlan = () => {
     });
   };
 
-
-
-
   React.useEffect(() => {
     getAllCategory();
-   
+    getAllItem();
   }, []);
+
+  // Active item
+  const [selectedIndex, setSelectedIndex] = useState("");
+  // Acquire the click value
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
+  // Clicking this will render items belonging that category (must double click category)
+  const handleCategoryClick = () => {
+    axios
+      .post("http://localhost:3001/CategoryItem", {
+        selectedIndex: selectedIndex,
+      })
+      .then((response) => {
+        const itemList = response.data;
+        setItem(itemList);
+        console.log(itemList);
+      });
+  };
   return (
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
@@ -115,33 +149,50 @@ const LeftPlan = () => {
         <div>
           <Search />
         </div>
-{category.map((categories)=>(
+{category.map((categories,index1)=>(
   <div>
-<ListItemButton onClick={handleClick}>
+<ListItemButton onClick={(event) =>
+                    handleListItemClick(
+                      event,
+                      categories.id,
+                      handleClick1(index1),
+                      handleCategoryClick(),
+                      
+                    )}>
+                      {/* <Link to= {`plandesign/${categories.id}`}> </Link> */}
           <ListItemIcon>
             <LightIcon />
           </ListItemIcon>
           <ListItemText key={categories.id}>{categories.categoryName}</ListItemText>
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {/* {open[index] ? <ExpandLess/> : <ExpandMore />} */}
+          {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        {/* <Collapse in={open[index]} timeout="auto" unmountOnExit> */}
+
+        {/* need to modify to function as normal */}
+        <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit> 
         <List component="div" disablePadding>
-          
             <ListItem >
-            <IconList />
+            <ImageList sx={{ width: 500, height: 450 }} >
+      {item.map((items) => (
+        <ImageListItem key={items.id} value={categories.id}>
+          {/* <Element name={items.name}/> */}
+          <img src= {process.env.PUBLIC_URL + `/item/${items.image}`}/>
+          <ImageListItemBar
+            title={items.name}
+            position="below"
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
           </ListItem>
-      
-          
+         
         </List>
       </Collapse>
-
   </div>
   
 ))}
-        {/* light icon */}
-        
-        
-        
+       
       </List>
     </Container>
   );
