@@ -31,7 +31,6 @@ function Export() {
           >
             Project name
           </Typography>
-          <MainPlan />
         </Grid>
         <Grid item xs={3} sm={4} md={4}>
           <ExportTable />

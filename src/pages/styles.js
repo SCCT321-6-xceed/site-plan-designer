@@ -16,16 +16,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f2f2f2",
   },
   cardMedia: {
-<<<<<<< HEAD
-    paddingTop: "10px",
-=======
     paddingTop: "30px",
     paddingBottom: "10px",
     paddingLeft: "90px",
     maxHeight: "100px",
     maxWidth: "100px",
     width: "90px",
->>>>>>> rl
   },
   cardContent: {
     flexGrow: 1,
@@ -47,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     padding: "1rem",
     zIndex: "1",
-    borderRadius: 16
+    borderRadius: 16,
   },
   modButton: {
     paddingRight: "20px",
