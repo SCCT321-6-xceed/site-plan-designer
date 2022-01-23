@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RightPlan = ({count, count1, count2, count3, count4}) => {
-  console.log("RightPlan count", count);
   const [open, setOpen] = React.useState(true);
   const [open2, setOpen2] = React.useState(true);
   const [open3, setOpen3] = React.useState(true);
@@ -60,9 +59,7 @@ const RightPlan = ({count, count1, count2, count3, count4}) => {
           border: 1,
           borderColor: "#adcaee",
           width:'100%',
-backgroundColor:'#adcaee',
-         
-
+          backgroundColor:'#adcaee',
         }}
       >
         <Stack direction='row' spacing={11}>
@@ -75,7 +72,6 @@ backgroundColor:'#adcaee',
             </IconButton></div>
         
         </Stack>
-        
       </Box>
       <List
         sx={{
@@ -89,28 +85,6 @@ backgroundColor:'#adcaee',
           padding: 1,
           paddingBottom:'20px'
         }}
-        // subheader={
-        //   <ListSubheader
-        //     component="div"
-        //     id="nested-list-subheader"
-        //     sx={{
-        //       border: 1,
-        //       borderColor: "black",
-        //       fontSize: "20px",
-        //       fontWeight:'500',
-        //       color: "black",
-        //       borderRadius: 2
-        //     }}
-        //   >
-        //     History
-        //     <IconButton color="primary">
-        //       <UndoIcon />
-        //     </IconButton>
-        //     <IconButton color="primary">
-        //       <RedoIcon />
-        //     </IconButton>
-        //   </ListSubheader>
-        // }
       >
         <ListItemText primary="[1] - Line" sx={{ borderBottom: 1 }} />
         <ListItemText primary="[2] Circle" sx={{ borderBottom: 1 }} />

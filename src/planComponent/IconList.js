@@ -5,12 +5,12 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Element from './Element'
 
 
-export default function IconList({type}) {
+export default function IconList({ type, setType, url, setUrl }) {
   return (
     <ImageList sx={{ width: 500, height: 450 }}>
       {itemData.map((item) => (
         <ImageListItem key={item.img}>
-          <Element link={item.img} name={item.title} type={type}/>
+          <Element link={item.img} name={item.title} type={type} setType={setType} url={url} setUrl={setUrl}/>
           <ImageListItemBar
             title={item.title}
 

@@ -9,9 +9,6 @@ import { theme } from "./theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-
-
-
 function App() {
   return (
     <>
@@ -23,17 +20,17 @@ function App() {
             <Route exact path="/dashboard" element ={<Dashboard />}/>
             <Route exact path="/library" element={<Library />} />
             <Route exact path="/registration" element={<Registration />}/>
+            
+            /* count stores total legend count */
             <Route exact path="/plandesign" element={<ViewPlan count={0}/>}/>
             <Route exact path="/export" element={<Export />}/>
+            
+            /* Newpage stores misc test files */
             <Route exact path="/newpage" element={<Newpage />}/>
-      
-
           </Routes>
         </div>
         </ThemeProvider>
     </Router>
-     
-      
     </>
   );
 }

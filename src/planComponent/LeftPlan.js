@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const LeftPlan = () => {
+const LeftPlan = ({ url, setUrl, type, setType }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [open2, setOpen2] = React.useState(true);
@@ -60,6 +60,8 @@ const LeftPlan = () => {
   const handleClick4 = () => {
     setOpen4(!open4);
   };
+  
+  /* everything is hardcoded here. will update with sql */
   return (
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
@@ -122,7 +124,7 @@ const LeftPlan = () => {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <IconList type="lightning"/>
+              <IconList type="lightning" setType={setType} url={url} setUrl={setUrl}/>
             </ListItem>
           </List>
         </Collapse>
@@ -138,7 +140,7 @@ const LeftPlan = () => {
         <Collapse in={open2} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <IconList type="power point"/>
+              <IconList type="power point" setType={setType} url={url} setUrl={setUrl}/>
             </ListItem>
           </List>
         </Collapse>
@@ -154,7 +156,7 @@ const LeftPlan = () => {
         <Collapse in={open3} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <IconList type="cctv"/>
+              <IconList type="cctv" setType={setType} url={url} setUrl={setUrl}/>
             </ListItem>
           </List>
         </Collapse>
@@ -170,7 +172,7 @@ const LeftPlan = () => {
         <Collapse in={open4} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem>
-              <IconList type="alarm"/>
+              <IconList type="alarm" setType={setType} url={url} setUrl={setUrl}/>
             </ListItem>
           </List>
         </Collapse>
