@@ -31,35 +31,47 @@ const useStyles = makeStyles((theme) => ({
   cardButton: {
     marginRight: "2px",
   },
+  card2: {
+    height: "100%",
+    width: "md",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#f2f2f2",
+    marginLeft: "20px",
+    marginRight: "20px",
+  },
+  cardMedia2: {
+    paddingTop: "10px",
+    height: "300px",
+    minHeight: "300px",
+  },
+  cardContent2: {
+    flexGrow: 1,
+  },
+  
   //modal.js's size and position
   modal: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#EFF5FB",
     position: "fixed",
     top: "20vh",
     left: "calc(50% - 15rem)",
     marginTop: "-50px",
     marginLeft: "-50px",
-    width: "650px",
+    width: "600px",
     height: "auto",
     padding: "1rem",
     zIndex: "1",
+    borderRadius: 16
   },
   modButton: {
     paddingRight: "20px",
     paddingLeft: "20px",
     marginTop: "50px",
-    marginLeft: "50px",
+    marginLeft: "20px",
     minWidth: "125px",
     minHeight: "40px",
   },
-  // modButton: {
-  //   paddingRight: "20px",
-  //   paddingLeft: "20px",
-  //   marginTop: "13px",
-  //   marginLeft: "50px",
-  //   minWidth: "125px",
-  //   minHeight: "40px",
-  // },
+
   textfield: {
     margin: "normal",
     size: "small",

@@ -156,10 +156,10 @@ const storage = multer.diskStorage({
   },
 });
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 //insert image into mysql
-app.post("/imageupload", async (req, res) => {
+app.post("/sitemapupload", async (req, res) => {
   try {
     // 'siteplan' is the name of our file input field in the HTML form
 
@@ -180,8 +180,7 @@ app.post("/imageupload", async (req, res) => {
       const classifiedsadd = {
         image: req.file.filename,
       };
-      const sql = "INSERT INTO sitemap SET ?";
-      db.query(sql, classifiedsadd, (err, results) => {
+      db.query("UPDATE project SET ? ORDER BY projectID DESC LIMIT 1", classifiedsadd, (err, results) => {
         if (err) throw err;
         res.json({ success: 1 });
       });
@@ -295,37 +294,7 @@ const itemStorage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
-// //insert image into mysql
-// app.post("/itemupload", async (req, res) => {
-//   try {
-//     // 'legends' is the name of our file input field in the HTML form
-//     let upload = multer({ storage: itemStorage }).single("legends");
 
-//     upload(req, res, function (err) {
-//       // req.file contains information of uploaded file
-//       // req.body contains information of text fields
-
-//       if (!req.file) {
-//         return res.send("Please select an image to upload");
-//       } else if (err instanceof multer.MulterError) {
-//         return res.send(err);
-//       } else if (err) {
-//         return res.send(err);
-//       }
-
-//       const classifiedsadd = {
-//         image: req.file.filename,
-//       };
-//       const sql = "INSERT INTO item_image SET ?";
-//       db.query(sql, classifiedsadd, (err, results) => {
-//         if (err) throw err;
-//         res.json({ success: 1 });
-//       });
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
 //insert image into mysql
 app.post("/itemupload", async (req, res) => {
   try {
@@ -357,8 +326,6 @@ app.post("/itemupload", async (req, res) => {
     console.log(err);
   }
 });
-
-
 
 // insert legend item in mysql table
 app.post("/addItem", (req, res) => {
@@ -411,8 +378,6 @@ app.get("/getCategory", (req, res) => {
 // Displays the items according to the category name
 app.post("/CategoryItem", (req, res) => {
   const selectedIndex = req.body.selectedIndex;
-  console.log(req.body.selectedIndex);
-
   db.query(
     "SELECT * FROM category, item WHERE category_id = ? AND category.id = item.category_id",
     [selectedIndex],

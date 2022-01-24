@@ -118,27 +118,27 @@ const Main = () => {
             <Grid container spacing={4}>
               {filteredData.map((projects) => (
                 <Grid item xs={12} sm={6} md={4}>
-                  <Card className={classes.card} key={projects.id}>
+                  <Card className={classes.card2} key={projects.id}>
                     <CardHeader title={projects.title}> </CardHeader>
                     <CardMedia
-                      className={classes.cardMedia}
+                      className={classes.cardMedia2}
                       title="Image Title"
-                      image="https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg"
+                      component="img"
+                      src={
+                        process.env.PUBLIC_URL + `/sitemap/${projects.image}`
+                      }
                     />
-                    <CardContent className={classes.cardContent}>
+                    <CardContent className={classes.cardContent2}>
                       <Typography variant="h7">
-                        {" "}
-                        Client: {projects.client}{" "}
+                        Client: {projects.client}
                       </Typography>
                       <br />
                       <Typography variant="h7">
-                        {" "}
-                        Address: {projects.address}{" "}
+                        Address: {projects.address}
                       </Typography>
                       <br />
                       <Typography variant="h7">
-                        {" "}
-                        Date: {projects.date}{" "}
+                        Date: {projects.date}
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -154,8 +154,7 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {" "}
-                        Design{" "}
+                        Design
                       </Button>
                       <Button
                         size="small"
@@ -172,8 +171,7 @@ const Main = () => {
                           getprojectID();
                         }}
                       >
-                        {" "}
-                        Edit{" "}
+                        Edit
                       </Button>
                       {modalIsOpen && (
                         <UpdateModal
@@ -193,8 +191,7 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {" "}
-                        Export{" "}
+                        Export
                       </Button>
                       <Button
                         size="small"
@@ -209,8 +206,7 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {" "}
-                        Delete{" "}
+                        Delete
                       </Button>
                     </CardActions>
                   </Card>
@@ -221,27 +217,29 @@ const Main = () => {
             <Grid container spacing={4}>
               {project.map((projects) => (
                 <Grid item xs={12} sm={6} md={4}>
-                  <Card className={classes.card} key={projects.id}>
+                  <Card className={classes.card2} key={projects.id}>
                     <CardHeader title={projects.title}> </CardHeader>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      title="Image Title"
-                      image="https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg"
-                    />
-                    <CardContent className={classes.cardContent}>
+                    <Box sx={{ maxHeight: "350px" }}>
+                      <CardMedia
+                        className={classes.cardMedia2}
+                        title={projects.title}
+                        component="img"
+                        src={
+                          process.env.PUBLIC_URL + `/sitemap/${projects.image}`
+                        }
+                      />
+                    </Box>
+                    <CardContent className={classes.cardContent2}>
                       <Typography variant="h7">
-                        {" "}
-                        Client: {projects.client}{" "}
+                        Client: {projects.client}
                       </Typography>
                       <br />
                       <Typography variant="h7">
-                        {" "}
-                        Address: {projects.address}{" "}
+                        Address: {projects.address}
                       </Typography>
                       <br />
                       <Typography variant="h7">
-                        {" "}
-                        Date: {projects.date}{" "}
+                        Date: {projects.date}
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -257,8 +255,7 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {" "}
-                        Design{" "}
+                        Design
                       </Button>
                       <Button
                         size="small"
@@ -272,8 +269,7 @@ const Main = () => {
                         }}
                         onClick={openHandler}
                       >
-                        {" "}
-                        Edit{" "}
+                        Edit
                       </Button>
                       {modalIsOpen && (
                         <UpdateModal
@@ -293,8 +289,7 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {" "}
-                        Export{" "}
+                        Export
                       </Button>
                       <Button
                         size="small"
@@ -309,8 +304,7 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {" "}
-                        Delete{" "}
+                        Delete
                       </Button>
                     </CardActions>
                   </Card>

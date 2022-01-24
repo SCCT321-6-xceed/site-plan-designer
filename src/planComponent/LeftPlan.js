@@ -1,10 +1,6 @@
 import React from "react";
 import { Container, Divider, makeStyles, Typography } from "@material-ui/core";
 import LightIcon from "@mui/icons-material/Light";
-import OutletIcon from "@mui/icons-material/Outlet";
-import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import IconList from "./IconList";
 import {
   List,
   ListSubheader,
@@ -12,6 +8,7 @@ import {
   ListItemButton,
   ListItemText,
   ListItem,
+  Link,
 } from "@mui/material";
 import { Collapse, Button } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -22,6 +19,11 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { CleaningServices } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { Search } from "./SearchIcon";
+import { useState } from "react";
+import axios from "axios";
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,30 +39,71 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 const LeftPlan = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
-  const [open4, setOpen4] = React.useState(true);
-
   const handleClick = () => {
     setOpen(!open);
   };
-  const handleClick2 = () => {
-    setOpen2(!open2);
+
+//try out
+  const [selectedIndex1, setSelectedIndex1] = React.useState("")
+
+  const handleClick1 = index1 => {
+    if (selectedIndex1 === index1) {
+      setSelectedIndex1("")
+    } else {
+      setSelectedIndex1(index1)
+    }
+  }
+
+// On initial load, loads all items
+const [item, setItem] = React.useState([]);
+const getAllItem = () => {
+  axios.get("http://localhost:3001/getItem").then((response) => {
+    console.log(response);
+    const itemList = response.data;
+    setItem(itemList);
+  });
+};
+  const [category, setCategory] = useState([]);
+  const getAllCategory = () => {
+    axios.get("http://localhost:3001/getCategory").then((response) => {
+      const categoryList = response.data;
+      setCategory(categoryList);
+    });
   };
-  const handleClick3 = () => {
-    setOpen3(!open3);
+
+  React.useEffect(() => {
+    getAllCategory();
+    getAllItem();
+  }, []);
+
+  // Active item
+  const [selectedIndex, setSelectedIndex] = useState("");
+  // Acquire the click value
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
   };
-  const handleClick4 = () => {
-    setOpen4(!open4);
+
+  // Clicking this will render items belonging that category (must double click category)
+  const handleCategoryClick = () => {
+    axios
+      .post("http://localhost:3001/CategoryItem", {
+        selectedIndex: selectedIndex,
+      })
+      .then((response) => {
+        const itemList = response.data;
+        setItem(itemList);
+        console.log(itemList);
+      });
   };
   return (
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
         <Typography style={{ color: "#044474", fontWeight: "bold" }}>
-          {" "}
           Drawing Tools
         </Typography>
         <ButtonGroup variant="contained">
@@ -106,70 +149,50 @@ const LeftPlan = () => {
         <div>
           <Search />
         </div>
-
-        {/* light icon */}
-        <ListItemButton onClick={handleClick}>
+{category.map((categories,index1)=>(
+  <div>
+<ListItemButton onClick={(event) =>
+                    handleListItemClick(
+                      event,
+                      categories.id,
+                      handleClick1(index1),
+                      handleCategoryClick(),
+                      
+                    )}>
+                      {/* <Link to= {`plandesign/${categories.id}`}> </Link> */}
           <ListItemIcon>
             <LightIcon />
           </ListItemIcon>
-          <ListItemText>Lighting</ListItemText>
-          {open ? <ExpandLess /> : <ExpandMore />}
+          <ListItemText key={categories.id}>{categories.categoryName}</ListItemText>
+          {/* {open[index] ? <ExpandLess/> : <ExpandMore />} */}
+          {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList />
-            </ListItem>
-          </List>
-        </Collapse>
+        {/* <Collapse in={open[index]} timeout="auto" unmountOnExit> */}
 
-        {/* power points icon */}
-        <ListItemButton onClick={handleClick2}>
-          <ListItemIcon>
-            <OutletIcon />
-          </ListItemIcon>
-          <ListItemText>Power Points</ListItemText>
-          {open2 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open2} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList />
-            </ListItem>
-          </List>
-        </Collapse>
-
-        {/* cctv icon */}
-        <ListItemButton onClick={handleClick3}>
-          <ListItemIcon>
-            <VideoCameraBackIcon />
-          </ListItemIcon>
-          <ListItemText>CCTV</ListItemText>
-          {open3 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open3} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList />
-            </ListItem>
-          </List>
-        </Collapse>
-
-        {/* alarm icon */}
-        <ListItemButton onClick={handleClick4}>
-          <ListItemIcon>
-            <NotificationsActiveIcon />
-          </ListItemIcon>
-          <ListItemText>Alarm</ListItemText>
-          {open4 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open4} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList />
-            </ListItem>
-          </List>
-        </Collapse>
+        {/* need to modify to function as normal */}
+        <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit> 
+        <List component="div" disablePadding>
+            <ListItem >
+            <ImageList sx={{ width: 500, height: 450 }} >
+      {item.map((items) => (
+        <ImageListItem key={items.id} value={categories.id}>
+          {/* <Element name={items.name}/> */}
+          <img src= {process.env.PUBLIC_URL + `/item/${items.image}`}/>
+          <ImageListItemBar
+            title={items.name}
+            position="below"
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
+          </ListItem>
+         
+        </List>
+      </Collapse>
+  </div>
+  
+))}
+       
       </List>
     </Container>
   );

@@ -74,6 +74,7 @@ function Registration() {
           type="email"
           placeholder="Email"
           label="Email"
+          
           className={classes.textfield}
           InputProps={{
             startAdornment: (

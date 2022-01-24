@@ -6,32 +6,28 @@ import useStyles from "../pages/styles";
 import TextField from "@material-ui/core/TextField";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import axios from "axios";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 function Upload(props) {
   // cancel function
   function cancelHandler() {
     props.onCancel();
   }
-  // const handleClose = () => {
-  //   props.onClose();
-  // };
 
   const [title, setTitle] = useState("");
   const [client, setClient] = useState("");
   const [address, setAddress] = useState("");
-  const [selectedDate, setSelectDate] = useState("")
+  const [selectedDate, setSelectDate] = useState("");
 
-  const date = new Date(selectedDate).toLocaleDateString() //convert date time string to local date
+  const date = new Date(selectedDate).toLocaleDateString(); //convert date time string to local date
   const newdate = date.split("/").reverse().join("/"); //covert to yyyy/MM/dd format to insert to mysql
-
 
   // upload image func
   const [imageFile, setimageFile] = useState({
@@ -45,42 +41,35 @@ function Upload(props) {
       file: event.target.files[0],
       filepreview: URL.createObjectURL(event.target.files[0]),
     });
-
-  }
-
+  };
 
   const saveImage = () => {
     const formdata = new FormData();
-    formdata.append('siteplan', imageFile.file);
+    formdata.append("siteplan", imageFile.file);
 
-    axios.post("http://localhost:3001/imageUpload", formdata, {
-
-      headers: { "Content-Type": "multipart/form-data" },
-
-    })
-      .then(() => {
-        console.log('success');
-
+    axios
+      .post("http://localhost:3001/sitemapUpload", formdata, {
+        headers: { "Content-Type": "multipart/form-data" },
       })
-  }
+      .then(() => {
+        console.log("success");
+      });
+  };
 
   const addProject = () => {
-
-    axios.post("http://localhost:3001/create", {
-
-      title: title,
-      client: client,
-      address: address,
-      date: newdate,
-
-    })
-      .then(() => {
-        console.log('Success')
-        window.location.reload();
-
+    axios
+      .post("http://localhost:3001/create", {
+        title: title,
+        client: client,
+        address: address,
+        date: newdate,
       })
-  }
-  
+      .then(() => {
+        console.log("Success");
+        window.location.reload();
+      });
+  };
+
   const classes = useStyles();
 
   return (
@@ -89,7 +78,7 @@ function Upload(props) {
         aria-label="close"
         onClick={cancelHandler}
         sx={{
-          position: 'absolute',
+          position: "absolute",
           right: 8,
           top: 8,
           color: (theme) => theme.palette.primary.main,
@@ -98,33 +87,43 @@ function Upload(props) {
         <CloseIcon />
       </IconButton>
       <Stack>
-        <Typography align="center" variant="h4" style={{ paddingTop: "5px", color: "black" }}>
+        <Typography
+          align="center"
+          variant="h4"
+          style={{ paddingTop: "5px", color: "black" }}
+        >
           Upload Site Plan
         </Typography>
 
         {/* upload image */}
         <div className={classes.modItem}>
           <Stack spacing={2}>
-            <Stack direction={'row'}>
+            <Stack direction={"row"}>
               <Typography
                 variant="body1"
-                style={{ paddingLeft: "15px", color: "black" }}>
+                style={{ paddingLeft: "15px", color: "black" }}
+              >
                 <label>Select an image</label>
-                <input className={classes.imageName} name="upload_file" type='file' onChange={handleInputChange} />
+                <input
+                  className={classes.imageName}
+                  name="upload_file"
+                  type="file"
+                  onChange={handleInputChange}
+                />
               </Typography>
               {/* <Button onClick={saveImage}>Save</Button> */}
             </Stack>
             {/* preview image */}
             <div style={{ paddingLeft: "20px" }}>
-              {imageFile.filepreview !== null ?
+              {imageFile.filepreview !== null ? (
                 <img
-                  style={{ maxWidth: '300px', maxHeight: '200px' }}
-                  src={imageFile.filepreview} alt="UploadImage" />
-                : null}
+                  style={{ maxWidth: "300px", maxHeight: "200px" }}
+                  src={imageFile.filepreview}
+                  alt="UploadImage"
+                />
+              ) : null}
             </div>
-
           </Stack>
-
         </div>
         <Box textAlign="auto">
           {/* title of project   */}
@@ -133,8 +132,12 @@ function Upload(props) {
             style={{ paddingLeft: "15px", color: "black" }}
           >
             <label>Title: </label>
-            <TextField className={classes.textfield}
-              onChange={(event) => { setTitle(event.target.value); }} />
+            <TextField
+              className={classes.textfield}
+              onChange={(event) => {
+                setTitle(event.target.value);
+              }}
+            />
           </Typography>
 
           {/* client info */}
@@ -143,23 +146,34 @@ function Upload(props) {
             style={{ paddingLeft: "15px", color: "black" }}
           >
             <label>Client: </label>
-            <TextField className={classes.textfield}
-              onChange={(event) => { setClient(event.target.value); }} />
+            <TextField
+              className={classes.textfield}
+              onChange={(event) => {
+                setClient(event.target.value);
+              }}
+            />
           </Typography>
 
           {/* address info            */}
           <Typography
             variant="body1"
-            style={{ paddingLeft: "15px", color: "black" }}>
+            style={{ paddingLeft: "15px", color: "black" }}
+          >
             <label>Address:</label>
-            <TextField className={classes.textfield}
-              onChange={(event) => { setAddress(event.target.value); }} />
+            <TextField
+              className={classes.textfield}
+              onChange={(event) => {
+                setAddress(event.target.value);
+              }}
+            />
           </Typography>
 
           {/* pick date */}
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Typography variant="body1"
-              style={{ paddingLeft: "15px", color: "black" }}>
+            <Typography
+              variant="body1"
+              style={{ paddingLeft: "15px", color: "black" }}
+            >
               <Stack direction="row" spacing={2}>
                 <label>Date:</label>
                 <CalendarTodayIcon fontSize="small" />
@@ -167,8 +181,9 @@ function Upload(props) {
                   placeholderText="dd/MM/yyyy"
                   label="Date"
                   selected={selectedDate}
-                  onChange={date => setSelectDate(date)}
-                  dateFormat='dd/MM/yyyy'
+                  onChange={(date) => setSelectDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  minDate={new Date()}
                   showYearDropdown
                 />
               </Stack>
@@ -185,11 +200,11 @@ function Upload(props) {
           variant="contained"
           className={classes.modButton}
           onClick={() => {
-            saveImage();
             addProject();
+            saveImage();
             cancelHandler();
           }}
-          style={{ background: theme.palette.primary.main, minWidth: "150px" }}
+          style={{ background: theme.palette.primary.main }}
         >
           Confirm
         </Button>
@@ -204,7 +219,6 @@ function Upload(props) {
           Cancel
         </Button>
       </Box>
-
     </div>
   );
 }

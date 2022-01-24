@@ -1,13 +1,13 @@
 import { useDrag } from "react-dnd";
 const style = {
   cursor: "move",
-  width: 100,
-  height: 100
+  width: 60,
+  height: 60
 };
-const Element = function Element({ link, name }) {
+const Element = function Element({ link, name, type }) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "image",
-    item: { name, link },
+    item: { name, link, type },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
       handlerId: monitor.getHandlerId()

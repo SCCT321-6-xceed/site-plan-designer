@@ -143,7 +143,7 @@ function UploadLegend(props) {
               onChange={handleChange}
             >
               {category.map((categories) => (
-                <MenuItem value={categories.id}>
+                <MenuItem key={categories.id} value={categories.id}>
                   {categories.categoryName}
                 </MenuItem>
               ))}
