@@ -60,6 +60,9 @@ function NewLibrary() {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
+React.useEffect(()=>{
+  handleCategoryClick()
+},[selectedIndex])
 
   // Clicking this will render items belonging that category (must double click category)
   const handleCategoryClick = () => {

@@ -29,6 +29,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "^4.0.3",
     "roughjs": "^4.5.2",
+    "use-image": "^1.0.8",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.11"
   },
