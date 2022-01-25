@@ -1,5 +1,4 @@
 import React from "react";
-import "./Registration.css";
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -12,6 +11,8 @@ import { theme } from "../theme";
 import AbcIcon from '@mui/icons-material/Abc';
 import { useState } from "react";
 import Axios from "axios";
+// import {Field, Form, Formik } from "formik";
+
 
 const useStyles = makeStyles((theme) => ({
   textfield: {
@@ -19,23 +20,25 @@ const useStyles = makeStyles((theme) => ({
     size: "small",
     variant: "outlined",
     color: "primary",
-    paddingBottom: "10px",
+    paddingBottom: "15px",
   },
 }));
 
 function Registration() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [firstName, setFName] = useState("");
   const [lastName, setLName] = useState("");
-  const [password, setPassword] = useState("");
+
   
   const addUser = () => {
-    Axios.post("http://localhost:3001/create", {
+    Axios.post("http://localhost:3001/register", {
       email: email,
+      password: password,
       firstName: firstName,
       lastName: lastName,
-      password: password,
+ 
     }).then(() => {
       console.log("success");
     });
@@ -127,19 +130,7 @@ function Registration() {
           onChange={(event) => {setPassword(event.target.value);
           }}
         />
-        {/* <TextField
-          type="password"
-          placeholder="Confirm Password"
-          label="Confirm Password"
-          className={classes.textfield}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LockRounded />
-              </InputAdornment>
-            ),
-          }}
-        /> */}
+  
         <Button
           variant="contained"
           size="medium"
@@ -152,7 +143,7 @@ function Registration() {
           }}
           onClick={addUser}
         >
-          {/* <Link href="/dashboard" style={{textDecoration: 'inherit', color: 'inherit'}}>Create Account</Link> */}
+          <Link href="/" style={{textDecoration: 'inherit', color: 'inherit'}}>Create Account</Link>
         </Button>
         
         <Link href="/" style={{ paddingTop: "10px", paddingBottom: "10px" }}>

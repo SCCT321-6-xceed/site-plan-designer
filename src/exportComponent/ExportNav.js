@@ -12,10 +12,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link } from "react-router-dom";
 import { theme } from "../theme";
-//import useStyles from "../pages/styles";
 import Modal from "@mui/material/Modal";
-import { useState } from "react";
-import { makeStyles } from "@material-ui/core";
 import MainPlan from "../planComponent/MainPlan";
 import LegendCount from "./LegendCount";
 
@@ -55,7 +52,7 @@ const ExportNav = () => {
             <HomeIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SitePlan Design{" "}
+            Site Plan Designer
           </Typography>
           <Typography
             variant="h6"

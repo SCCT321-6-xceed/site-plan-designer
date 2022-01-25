@@ -2,7 +2,6 @@ import React from 'react'
 import { Image } from 'react-konva'
 
 class URLImage extends React.Component {
-  /* handles the placement of map into react canvas */
   state = {
     image: null
   };
@@ -39,7 +38,7 @@ class URLImage extends React.Component {
         x={this.props.x}
         y={this.props.y}
         width={this.props.width}
-        height={this.props.height} 
+        height={this.props.height}
         image={this.state.image}
         ref={node => {
           this.imageNode = node;

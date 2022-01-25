@@ -1,10 +1,6 @@
 import React from "react";
 import { Container, Divider, makeStyles, Typography } from "@material-ui/core";
 import LightIcon from "@mui/icons-material/Light";
-import OutletIcon from "@mui/icons-material/Outlet";
-import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import IconList from "./IconList";
 import {
   List,
   ListSubheader,
@@ -12,6 +8,7 @@ import {
   ListItemButton,
   ListItemText,
   ListItem,
+  Link,
 } from "@mui/material";
 import { Collapse, Button } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -22,8 +19,11 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { CleaningServices } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { Search } from "./SearchIcon";
-import {DndProvider} from "react-dnd";
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useState } from "react";
+import axios from "axios";
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -39,35 +39,71 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-const LeftPlan = ({ url, setUrl, type, setType }) => {
+const LeftPlan = ({url, setUrl, type, setType}) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
-  const [open4, setOpen4] = React.useState(true);
 
-  const handleClick = () => {
-    setOpen(!open);
+  //handle collapse
+  const [selectedIndex1, setSelectedIndex1] = React.useState("")
+
+  const handleClick1 = index1 => {
+    if (selectedIndex1 === index1) {
+      setSelectedIndex1("")
+    } else {
+      setSelectedIndex1(index1)
+    }
+  }
+
+  // On initial load, loads all items
+  const [item, setItem] = React.useState([]);
+  const getAllItem = () => {
+    axios.get("http://localhost:3001/getItem").then((response) => {
+      console.log(response);
+      const itemList = response.data;
+      setItem(itemList);
+    });
   };
-  const handleClick2 = () => {
-    setOpen2(!open2);
+  const [category, setCategory] = useState([]);
+  const getAllCategory = () => {
+    axios.get("http://localhost:3001/getCategory").then((response) => {
+      const categoryList = response.data;
+      setCategory(categoryList);
+    });
   };
-  const handleClick3 = () => {
-    setOpen3(!open3);
+
+  React.useEffect(() => {
+    getAllCategory();
+    getAllItem();
+    
+  }, []);
+
+  // Active item
+  const [selectedIndex, setSelectedIndex] = useState("");
+  // Acquire the click value
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
   };
-  const handleClick4 = () => {
-    setOpen4(!open4);
+  React.useEffect(()=>{
+    handleCategoryClick()
+  },[selectedIndex])
+
+  // Clicking this will render items belonging that category (must double click category)
+  const handleCategoryClick = () => {
+    axios
+      .post("http://localhost:3001/CategoryItem", {
+        selectedIndex: selectedIndex,
+      })
+      .then((response) => {
+        const itemList = response.data;
+        setItem(itemList);
+        console.log(itemList);
+      });
   };
-  
-  /* everything is hardcoded here. will update with sql */
+
   return (
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
         <Typography style={{ color: "#044474", fontWeight: "bold" }}>
-          {" "}
-          Drawing Tools
+          {" "} Drawing Tools
         </Typography>
         <ButtonGroup variant="contained">
           <Button
@@ -112,70 +148,53 @@ const LeftPlan = ({ url, setUrl, type, setType }) => {
         <div>
           <Search />
         </div>
+          
+        {category.map((categories,index1)=>( /* db handling epicness starts here */
+          <div>
+            <ListItemButton onClick={(event) =>
+              handleListItemClick(
+                event,
+                categories.id,
+                handleClick1(index1),
+                handleCategoryClick(),
+              )}
+            >
+              <ListItemIcon>
+                <LightIcon />
+              </ListItemIcon>
+              <ListItemText key={categories.id}>{categories.categoryName}</ListItemText>
+              {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
 
-        {/* light icon */}
-        <ListItemButton onClick={handleClick}>
-          <ListItemIcon>
-            <LightIcon />
-          </ListItemIcon>
-          <ListItemText>Lighting</ListItemText>
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList type="lightning" setType={setType} url={url} setUrl={setUrl}/>
-            </ListItem>
-          </List>
-        </Collapse>
-
-        {/* power points icon */}
-        <ListItemButton onClick={handleClick2}>
-          <ListItemIcon>
-            <OutletIcon />
-          </ListItemIcon>
-          <ListItemText>Power Points</ListItemText>
-          {open2 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open2} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList type="power point" setType={setType} url={url} setUrl={setUrl}/>
-            </ListItem>
-          </List>
-        </Collapse>
-
-        {/* cctv icon */}
-        <ListItemButton onClick={handleClick3}>
-          <ListItemIcon>
-            <VideoCameraBackIcon />
-          </ListItemIcon>
-          <ListItemText>CCTV</ListItemText>
-          {open3 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open3} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList type="cctv" setType={setType} url={url} setUrl={setUrl}/>
-            </ListItem>
-          </List>
-        </Collapse>
-
-        {/* alarm icon */}
-        <ListItemButton onClick={handleClick4}>
-          <ListItemIcon>
-            <NotificationsActiveIcon />
-          </ListItemIcon>
-          <ListItemText>Alarm</ListItemText>
-          {open4 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open4} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <IconList type="alarm" setType={setType} url={url} setUrl={setUrl}/>
-            </ListItem>
-          </List>
-        </Collapse>
+            <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit> 
+              <List component="div" disablePadding>
+                <ListItem >
+                  {/* <ImageList sx={{ width: 500, height: 450 }} > */}
+                  {/* 200, 200 looks much better. has to be fixed later. note: images are being displayed on konva canvas at 60px*/}
+                  <ImageList sx={{ width: 200, height: 200 }} > 
+                    {item.map((items) => (
+                      <ImageListItem key={items.id} value={categories.id}>
+                        <img 
+                          src= {process.env.PUBLIC_URL + `/item/${items.image}`}
+                          onDragStart={(e) => {
+                            /* setting url for later use in MainPlan.js */
+                            console.log("items", items);
+                            setUrl(e.target.src);
+                            setType(items.category_id);
+                          }}
+                        />
+                        <ImageListItemBar
+                          title={items.name}
+                          position="below"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </ListItem>
+              </List>
+            </Collapse>
+          </div>
+        ))}
       </List>
     </Container>
   );

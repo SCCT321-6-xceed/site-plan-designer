@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, makeStyles, Typography } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -8,6 +8,7 @@ import {
   List,
   ListItemIcon,
   ListItemButton,
+  ListItem,
   ListItemText,
   Stack,
 } from "@mui/material";
@@ -17,7 +18,10 @@ import LightIcon from "@mui/icons-material/Light";
 import OutletIcon from "@mui/icons-material/Outlet";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-
+import axios from "axios";
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,29 +37,68 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RightPlan = ({count, count1, count2, count3, count4}) => {
-  const [open, setOpen] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
-  const [open4, setOpen4] = React.useState(true);
-
-  const handlerClick = () => {
-    setOpen(!open);
-  };
-  const handlerClick2 = () => {
-    setOpen2(!open2);
-  };
-  const handlerClick3 = () => {
-    setOpen3(!open3);
-  };
-  const handlerClick4 = () => {
-    setOpen4(!open4);
-  };
+const RightPlan = (props) => {
   const classes = useStyles();
+  console.log("count.total", props.count.total);
+  //handle collapse
+  const [selectedIndex1, setSelectedIndex1] = React.useState("")
+
+  const handleClick1 = index1 => {
+    if (selectedIndex1 === index1) {
+      setSelectedIndex1("")
+    } else {
+      setSelectedIndex1(index1)
+    }
+  }
+
+  // On initial load, loads all items
+  const [item, setItem] = React.useState([]);
+  const getAllItem = () => {
+    axios.get("http://localhost:3001/getItem").then((response) => {
+      console.log(response);
+      const itemList = response.data;
+      setItem(itemList);
+    });
+  };
+  const [category, setCategory] = React.useState([]);
+  const getAllCategory = () => {
+    axios.get("http://localhost:3001/getCategory").then((response) => {
+      const categoryList = response.data;
+      setCategory(categoryList);
+    });
+  };
+
+  React.useEffect(() => {
+    getAllItem();
+    getAllCategory();
+  }, []);
+
+  // Active item
+  const [selectedIndex, setSelectedIndex] = useState("");
+  // Acquire the click value
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+  React.useEffect(()=>{
+    handleCategoryClick()
+  },[selectedIndex])
+
+  // Clicking this will render items belonging that category (must double click category)
+  const handleCategoryClick = () => {
+    axios
+      .post("http://localhost:3001/CategoryItem", {
+        selectedIndex: selectedIndex,
+      })
+      .then((response) => {
+        const itemList = response.data;
+        setItem(itemList);
+        console.log(itemList);
+      });
+  };
+
   return (
     <Container className={classes.container}>
-      <Box
-        sx={{
+      <Box sx={{
           border: 1,
           borderColor: "#adcaee",
           width:'100%',
@@ -63,16 +106,18 @@ const RightPlan = ({count, count1, count2, count3, count4}) => {
         }}
       >
         <Stack direction='row' spacing={11}>
-        <Typography variant="h6" style={{marginLeft:'12px', }}>History</Typography>
-        <div><IconButton size='small' style={{color: '#044474'}}>
+          <Typography variant="h6" style={{marginLeft:'12px'}}>History</Typography>
+          <div>
+            <IconButton size='small' style={{color: '#044474'}}>
               <UndoIcon />
             </IconButton>
             <IconButton size='small' style={{color: '#044474'}}>
               <RedoIcon />
-            </IconButton></div>
-        
+            </IconButton>
+          </div>
         </Stack>
       </Box>
+
       <List
         sx={{
           maxHeight: "30%",
@@ -80,7 +125,6 @@ const RightPlan = ({count, count1, count2, count3, count4}) => {
           width: "100%",
           maxWidth: 360,
           bgcolor: "background.paper",
-          // border: 1,
           borderColor: "black",
           padding: 1,
           paddingBottom:'20px'
@@ -99,6 +143,7 @@ const RightPlan = ({count, count1, count2, count3, count4}) => {
         <ListItemText primary="[11] Circle" sx={{ borderBottom: 1 }} />
         <ListItemText primary="[12] Item - Led Light" sx={{ borderBottom: 1 }} />
       </List>
+
       <Box
         sx={{
           border: 1,
@@ -106,84 +151,38 @@ const RightPlan = ({count, count1, count2, count3, count4}) => {
           marginTop: "35px",
           padding: 1,
           backgroundColor: "#adcaee",
-         
         }}
       >
-        <Typography variant="h6">Legend Count: {count}</Typography>
+        <Typography variant="h6">Legend Count: {props.count.total}</Typography>
       </Box>
 
       <List
         sx={{ width: "100%", bgcolor: "background.paper", maxHeight: "50%",
         overflow: "auto", padding: 1}}
-        
       >
-        {/* light icon */}
-        <ListItemButton onClick={handlerClick}>
-          <ListItemIcon>
-            <LightIcon />
-          </ListItemIcon>
-          <ListItemText>Lighting {count1}</ListItemText>
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemText primary="[1] - Line" sx={{ borderBottom: 1 }} />
-            <ListItemText
-              primary="[3] Item - Led Light"
-              sx={{ borderBottom: 1 }}
-            />
-            <ListItemText primary="[4] - Red Line" sx={{ borderBottom: 1 }} />
-          </List>
-        </Collapse>
+        {category.map((categories,index1)=>( /* db handling epicness starts here */
+          <div>
+            <ListItemButton onClick={(event) =>
+              handleListItemClick(
+                event,
+                categories.id,
+                handleClick1(index1),
+                handleCategoryClick(),
+              )}
+            >
+            <ListItemText key={categories.id}>{categories.categoryName} {props.count[categories.id]}</ListItemText>
+            {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
 
-        <ListItemButton onClick={handlerClick2}>
-          <ListItemIcon>
-            <OutletIcon />
-          </ListItemIcon>
-          <ListItemText>Power Points {count2}</ListItemText>
-          {open2 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open2} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemText primary="[5] Black Circle" sx={{ borderBottom: 1 }} />
-            <ListItemText
-              primary="[6] Item - Led Light"
-              sx={{ borderBottom: 1 }}
-            />
-            <ListItemText primary="[7] - Line" sx={{ borderBottom: 1 }} />
-          </List>
-        </Collapse>
-
-        <ListItemButton onClick={handlerClick3}>
-          <ListItemIcon>
-            <VideoCameraBackIcon />
-          </ListItemIcon>
-          <ListItemText>CCTV {count3}</ListItemText>
-          {open3 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open3} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemText primary="[8] Circle" sx={{ borderBottom: 1 }} />
-            <ListItemText
-              primary="[9] Item - Led Light"
-              sx={{ borderBottom: 1 }}
-            />
-            <ListItemText primary="[10] - Line" sx={{ borderBottom: 1 }} />
-          </List>
-        </Collapse>
-
-        <ListItemButton onClick={handlerClick4}>
-          <ListItemIcon>
-            <NotificationsActiveIcon />
-          </ListItemIcon>
-          <ListItemText>Alarm {count4}</ListItemText>
-          {open4 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open4} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemText primary="[11] Circle" sx={{ borderBottom: 1 }} />
-          </List>
-        </Collapse>
+            <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit> 
+              <List component="div" disablePadding>
+              {item.map((items) => (
+                <ListItemText primary={items.name} sx={{ borderBottom: 1 }} />
+              ))}
+              </List>
+            </Collapse>
+          </div>
+        ))}
       </List>
     </Container>
   );

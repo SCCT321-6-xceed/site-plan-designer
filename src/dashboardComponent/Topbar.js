@@ -11,7 +11,7 @@ import Stack from "@mui/material/Stack";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { theme } from "../theme";
 import { BurstModeOutlined } from "@mui/icons-material";
-import Upload from "../components/Upload";
+import Upload from "./Upload";
 import { useState } from "react";
 import { Link } from "@mui/material";
 import { Person } from "@mui/icons-material";
@@ -20,11 +20,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { Logout } from "@mui/icons-material";
 import { ListItemIcon } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Axios from "axios";
+
 // const Input = styled('input')({
 //   display: 'none',
 // });
 export default function ButtonAppBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [loginStatus, setLoginStatus] = useState(false);
+  let history = useNavigate();
 
   function openHandler() {
     setModalIsOpen(true);
@@ -42,6 +47,14 @@ export default function ButtonAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const logout = () => {
+    Axios.post("http://localhost:3001/logout", {});
+    history("/");
+    localStorage.removeItem("token");
+    setLoginStatus(false);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -50,6 +63,7 @@ export default function ButtonAppBar() {
       >
         <Toolbar>
           <IconButton
+            to="/dashboard"
             size="large"
             edge="start"
             color="inherit"
@@ -115,14 +129,7 @@ export default function ButtonAppBar() {
               <Upload onCancel={closeHandler} onConfirm={closeHandler} />
             )}
           </Stack>
-          {/* <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2, marginLeft: 1 }}>
-              <Avatar>R</Avatar>
-            </IconButton> */}
+         
           <div style={{ marginLeft: "10px" }}>
             <IconButton
               id="fade-button"
@@ -151,9 +158,9 @@ export default function ButtonAppBar() {
               </MenuItem>
               <MenuItem onClick={handleClose}>
                 <ListItemIcon>
-                  <Logout />
+                  <Logout onClick={logout} />
                 </ListItemIcon>
-                Logout
+                <Button onClick={logout}> Logout</Button>
               </MenuItem>
             </Menu>
           </div>
