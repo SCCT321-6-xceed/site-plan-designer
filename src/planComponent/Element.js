@@ -1,34 +1,24 @@
-import { useDrag } from "react-dnd";
+import React from 'react';
+
 const style = {
   cursor: "move",
   width: 100,
   height: 100
 };
-const Element = function Element({ link, name }) {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: "image",
-    item: { name, link },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId()
-    })
-  }));
-  const opacity = isDragging ? 0.4 : 1;
+
+const Element = function Element({ link, name, type, setType, url, setUrl }) {
   return (
-    <div
-      ref={drag}
-      role="image"
-      style={{ ...style, opacity }}
-      data-testid={`box-${name}`}
-    >
       <img
-        style={{width: '100%', heith: '100%'}}
-        src={`${link}?w=248&fit=crop&auto=format`}
-        srcSet={`${link}?w=248&fit=crop&auto=format&dpr=2 2x`}
         alt={name}
-        loading="lazy"
+        style={{width: '100%', height: '100%'}}
+        src={`${link}`}
+        draggable = "true"
+        onDragStart={(e) => {
+          /* setting url for later use in MainPlan.js */
+          setUrl(e.target.src);
+          setType(type);
+        }}
       />
-    </div>
   );
 };
 

@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardGrid: {
-    padding: "20px 0px",
+    padding: "20px 20px",
   },
   card: {
     height: "100%",
@@ -16,17 +16,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f2f2f2",
   },
   cardMedia: {
-    paddingTop: "30px",
-    paddingBottom: "10px",
-    paddingLeft: "90px",
-    maxHeight: "100px",
-    maxWidth: "100px",
-    width: "90px",
+    paddingTop: "10px",
+    height:"300px"
   },
   cardContent: {
     flexGrow: 1,
-    alignItems: "flex-end",
-    justifyContent: "center",
   },
   cardButton: {
     marginRight: "2px",
@@ -43,13 +37,13 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     padding: "1rem",
     zIndex: "1",
-    borderRadius: 16,
+    borderRadius: 16
   },
   modButton: {
-    paddingRight: "20px",
-    paddingLeft: "20px",
+    // paddingRight: "20px",
+    // paddingLeft: "20px",
     marginTop: "13px",
-    marginLeft: "50px",
+    marginLeft: "30px",
     minWidth: "125px",
     minHeight: "40px",
   },
@@ -95,20 +89,21 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     marginLeft: "17px",
   },
+  
 
   //searchField
   searchBar: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       // marginLeft: '0px'
     },
-    paddingBottom: "20px",
-    display: "flex",
-    justifyContent: "center",
+    paddingBottom: '20px',
+    display: 'flex',
+    justifyContent: "center"
   },
   searchBox: {
     borderRadius: 16,
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   searchInputs: {
     backgroundColor: "#f9f9f9",
@@ -138,6 +133,7 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
+    
   },
 }));
 export default useStyles;
