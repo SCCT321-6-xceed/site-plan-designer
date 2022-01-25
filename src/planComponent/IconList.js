@@ -34,6 +34,3 @@ React.useEffect(() => {
     </ImageList>
   );
 }
-
-
-

@@ -43,12 +43,12 @@ const useStyles = makeStyles((theme) => ({
 
 const LeftPlan = () => {
   const classes = useStyles();
-  // const [open, setOpen] = React.useState(true);
-  // const handleClick = () => {
-  //   setOpen(!open);
-  // };
+  const [open, setOpen] = React.useState(true);
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
-  //handle collapse
+//try out
   const [selectedIndex1, setSelectedIndex1] = React.useState("")
 
   const handleClick1 = index1 => {
@@ -59,15 +59,15 @@ const LeftPlan = () => {
     }
   }
 
-  // On initial load, loads all items
-  const [item, setItem] = React.useState([]);
-  const getAllItem = () => {
-    axios.get("http://localhost:3001/getItem").then((response) => {
-      console.log(response);
-      const itemList = response.data;
-      setItem(itemList);
-    });
-  };
+// On initial load, loads all items
+const [item, setItem] = React.useState([]);
+const getAllItem = () => {
+  axios.get("http://localhost:3001/getItem").then((response) => {
+    console.log(response);
+    const itemList = response.data;
+    setItem(itemList);
+  });
+};
   const [category, setCategory] = useState([]);
   const getAllCategory = () => {
     axios.get("http://localhost:3001/getCategory").then((response) => {
@@ -79,7 +79,6 @@ const LeftPlan = () => {
   React.useEffect(() => {
     getAllCategory();
     getAllItem();
-    
   }, []);
 
   // Active item
@@ -88,9 +87,6 @@ const LeftPlan = () => {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-  React.useEffect(()=>{
-    handleCategoryClick()
-  },[selectedIndex])
 
   // Clicking this will render items belonging that category (must double click category)
   const handleCategoryClick = () => {
@@ -108,7 +104,6 @@ const LeftPlan = () => {
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
         <Typography style={{ color: "#044474", fontWeight: "bold" }}>
-          {" "}
           Drawing Tools
         </Typography>
         <ButtonGroup variant="contained">
@@ -154,50 +149,50 @@ const LeftPlan = () => {
         <div>
           <Search />
         </div>
-        {category.map((categories, index1) => (
-          <div>
-            <ListItemButton onClick={(event) =>
-              handleListItemClick(
-                event,
-                categories.id,
-                handleClick1(index1),
-                handleCategoryClick(),
+{category.map((categories,index1)=>(
+  <div>
+<ListItemButton onClick={(event) =>
+                    handleListItemClick(
+                      event,
+                      categories.id,
+                      handleClick1(index1),
+                      handleCategoryClick(),
+                      
+                    )}>
+                      {/* <Link to= {`plandesign/${categories.id}`}> </Link> */}
+          <ListItemIcon>
+            <LightIcon />
+          </ListItemIcon>
+          <ListItemText key={categories.id}>{categories.categoryName}</ListItemText>
+          {/* {open[index] ? <ExpandLess/> : <ExpandMore />} */}
+          {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        {/* <Collapse in={open[index]} timeout="auto" unmountOnExit> */}
 
-              )}>
-              {/* <Link to= {`plandesign/${categories.id}`}> </Link> */}
-              <ListItemIcon>
-                <LightIcon />
-              </ListItemIcon>
-              <ListItemText key={categories.id}>{categories.categoryName}</ListItemText>
-              {/* {open[index] ? <ExpandLess/> : <ExpandMore />} */}
-              {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            {/* <Collapse in={open[index]} timeout="auto" unmountOnExit> */}
-
-            {/* need to modify to function as normal */}
-            <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem >
-                  <ImageList sx={{ width: 500, height: 450 }} >
-                    {item.map((items) => (
-                      <ImageListItem key={items.id} value={categories.id}>
-                        {/* <Element name={items.name}/> */}
-                        <img src={process.env.PUBLIC_URL + `/item/${items.image}`} />
-                        <ImageListItemBar
-                          title={items.name}
-                          position="below"
-                        />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
-                </ListItem>
-
-              </List>
-            </Collapse>
-          </div>
-
-        ))}
-
+        {/* need to modify to function as normal */}
+        <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit> 
+        <List component="div" disablePadding>
+            <ListItem >
+            <ImageList sx={{ width: 500, height: 450 }} >
+      {item.map((items) => (
+        <ImageListItem key={items.id} value={categories.id}>
+          {/* <Element name={items.name}/> */}
+          <img src= {process.env.PUBLIC_URL + `/item/${items.image}`}/>
+          <ImageListItemBar
+            title={items.name}
+            position="below"
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
+          </ListItem>
+         
+        </List>
+      </Collapse>
+  </div>
+  
+))}
+       
       </List>
     </Container>
   );

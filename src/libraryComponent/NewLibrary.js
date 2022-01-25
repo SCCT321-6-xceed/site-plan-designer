@@ -4,6 +4,7 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { makeStyles } from "@material-ui/core";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Divider } from "@mui/material";
 import AddCategory from "../components/AddCategory";
@@ -25,58 +26,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function NewLibrary() {
   const classes = useStyles();
+  const { categoryID } = useParams();
 
-  // const { categoryID } = useParams();
-
-  const [category, setCategory] = useState([]);
-  const getAllCategory = () => {
-    axios.get("http://localhost:3001/getCategory").then((response) => {
-      const categoryList = response.data;
-      setCategory(categoryList);
-    });
-  };
-
-
-// Deletes category (Must delete all items related to category)
-  const deleteCategory = (id) => {
-    axios
-      .delete(`http://localhost:3001/deleteCategory/${id}`)
-      .then((response) => {
-        setCategory(
-          category.filter((categories) => {
-            return categories.id !== id;
-          })
-        );
-      });
-  };
-
-  // Active item
-  const [selectedIndex, setSelectedIndex] = useState("");
-  // Acquire the click value
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
-React.useEffect(()=>{
-  handleCategoryClick()
-},[selectedIndex])
-
-  // Clicking this will render items belonging that category (must double click category)
-  const handleCategoryClick = () => {
-    axios
-      .post("http://localhost:3001/CategoryItem", {
-        selectedIndex: selectedIndex,
-      })
-      .then((response) => {
-        const itemList = response.data;
-        setItem(itemList);
-        console.log(itemList);
-      });
-  };
-  //upload item
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function openHandler() {
@@ -87,14 +42,35 @@ React.useEffect(()=>{
     setModalIsOpen(false);
   }
 
-  // On initial load, loads all items
+  //Get All Existing Categories in the database
+  const [category, setCategory] = useState([]);
+  const getAllCategory = () => {
+    axios.get("http://localhost:3001/getCategory").then((response) => {
+      const categoryList = response.data;
+      setCategory(categoryList);
+    });
+  };
+  // On initial load, get all items
   const [item, setItem] = React.useState([]);
   const getAllItem = () => {
     axios.get("http://localhost:3001/getItem").then((response) => {
-      console.log(response);
+      // console.log(response);
       const itemList = response.data;
       setItem(itemList);
     });
+  };
+
+  // Deletes category (Must delete all items related to category)
+  const deleteCategory = (id) => {
+    axios
+      .delete(`http://localhost:3001/deleteCategory/${id}`)
+      .then((response) => {
+        setCategory(
+          category.filter((categories) => {
+            return categories.id !== id;
+          })
+        );
+      });
   };
   // Delete item
   const deleteItem = (id) => {
@@ -107,10 +83,45 @@ React.useEffect(()=>{
     });
   };
 
+  // Active item
+  const [selectedIndex, setSelectedIndex] = useState("");
+  // Acquire the click value
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+  
+
+
+
+  
+
+  
+  // Clicking this will render items belonging that category 
+  const handleCategoryClick = () => {
+    axios
+      .post("http://localhost:3001/CategoryItem", {
+        selectedIndex: selectedIndex,
+      })
+      .then((response) => {
+        const itemList = response.data;
+        setItem(itemList);
+        // console.log(itemList);
+      });
+  };
+  // After clicking a category, re-render and do handleCategoryClick().
+  React.useEffect(() => {
+    handleCategoryClick();
+  }, [selectedIndex]);
+
+
+  // On Page Load, call functions to retrieve categories and items
   React.useEffect(() => {
     getAllCategory();
     getAllItem();
   }, []);
+
+
+  
 
   //Search filter
   const [filteredData, setFilteredData] = React.useState([]);
@@ -154,7 +165,6 @@ React.useEffect(()=>{
             width: "100%",
             maxWidth: 300,
             zIndex: 100,
-
           }}
         >
           <div>
@@ -328,7 +338,9 @@ React.useEffect(()=>{
                             className={classes.cardMedia}
                             title={items.name}
                             component="img"
-                            src= {process.env.PUBLIC_URL + `/item/${items.image}`}
+                            src={
+                              process.env.PUBLIC_URL + `/item/${items.image}`
+                            }
                           />
                           <CardContent className={classes.cardContent}>
                             <Typography variant="h6">{items.name}</Typography>
