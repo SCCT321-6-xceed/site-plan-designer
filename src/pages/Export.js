@@ -7,7 +7,8 @@ import { Typography } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+//import image from images folder
+import image from "../images/image.png";
 function Export() {
   const [loginStatus, setLoginStatus] = useState(false);
   let history = useNavigate();
@@ -31,6 +32,9 @@ function Export() {
           >
             Project name
           </Typography>
+          <div style={{ textAlign: "center" }}>
+            <img src={image} alt="image loading error" width={"80%"} />
+          </div>
         </Grid>
         <Grid item xs={3} sm={4} md={4}>
           <ExportTable />

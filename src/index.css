@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.validation_style {
+  color: red;
+  margin-left: -127px;
+  font-size: 12px;
+  margin-top: -10px;
+}

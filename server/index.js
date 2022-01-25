@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const path = require("path");
 const multer = require("multer");
 // To randomize password string
@@ -45,7 +45,11 @@ const db = mysql.createConnection({
   database: "siteplandesigner_new", //your sql schema
   dateStrings: true,
 });
-
+if (db) {
+  console.log("database connected");
+} else {
+  console.log("data base not connected");
+}
 // POST registration form
 app.post("/register", (req, res) => {
   console.log(req.body);
@@ -63,8 +67,15 @@ app.post("/register", (req, res) => {
       "INSERT INTO user (email, password, firstName, lastName) VALUES (?, ?, ?, ?)",
       [email, hash, firstName, lastName],
       (err, result) => {
+        console.log("new user added", result);
         if (err) {
           console.log(err);
+        } else {
+          // add rewuest status
+          res.status(201).json({
+            user: result,
+            message: "new user added successfully into the database",
+          });
         }
       }
     );
@@ -193,17 +204,17 @@ app.post("/sitemapupload", async (req, res) => {
 });
 
 //retrieve image from mysql
-app.get("/getSitemap", (req, res) => {
-  const id = 1;
-  const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;";
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send({ siteplan: result[0].siteplan });
-    }
-  });
-});
+// app.get("/getSitemap", (req, res) => {
+//   const id = 1;
+//   const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;";
+//   db.query(sql, [id], (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.send({ siteplan: result[0].siteplan });
+//     }
+//   });
+// });
 
 //insert project in mysql table
 app.post("/create", (req, res) => {
@@ -236,41 +247,63 @@ app.get("/searchProject", (req, res) => {
   });
 });
 
-//UPDATE project
-app.get("/getProjectID/:projectID", (req, res) => {
-  const projectID = req.params.projectID;
-
-  db.query(
-    "SELECT title, client, address, date FROM project WHERE projectID = ?",
-    projectID,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
+//retrive project from mysql
+app.get("/getProject", (req, res) => {
+  db.query("SELECT * FROM project ORDER BY projectID DESC", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
     }
-  );
+  });
 });
 
-app.put("/updateProject", (req, res) => {
-  const projectID = req.body.projectID;
-  const title = req.body.title;
-  const client = req.body.client;
-  const address = req.body.address;
-  const date = req.body.date;
-  db.query(
-    "DELETE FROM project WHERE projectID = ?",
-    projectID,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
+// //retrive project from mysql to Search field
+// app.get("/searchProject", (req, res) => {
+//   db.query("SELECT id, title, client FROM project ", (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.send(result);
+//     }
+//   });
+// });
+
+// //UPDATE project
+// app.get("/getProjectID/:projectID", (req, res) => {
+//   const projectID = req.params.projectID;
+
+//   db.query(
+//     "SELECT title, client, address, date FROM project WHERE projectID = ?",
+//     projectID,
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.send(result);
+//       }
+//     }
+//   );
+// });
+
+// app.put("/updateProject", (req, res) => {
+//   const projectID = req.body.projectID;
+//   const title = req.body.title;
+//   const client = req.body.client;
+//   const address = req.body.address;
+//   const date = req.body.date;
+//   db.query(
+//     "UPDATE project SET title = ?, client = ?, address = ?, date = ? WHERE projectID = ?",
+//     [title, client, address, date, projectID],
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.send(result);
+//       }
+//     }
+//   );
+// });
 
 //DELETE project on Dashboard page
 app.delete("/deleteProject/:projectID", (req, res) => {
@@ -296,7 +329,37 @@ const itemStorage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
+// //insert image into mysql
+// app.post("/itemupload", async (req, res) => {
+//   try {
+//     // 'legends' is the name of our file input field in the HTML form
+//     let upload = multer({ storage: itemStorage }).single("legends");
 
+//     upload(req, res, function (err) {
+//       // req.file contains information of uploaded file
+//       // req.body contains information of text fields
+
+//       if (!req.file) {
+//         return res.send("Please select an image to upload");
+//       } else if (err instanceof multer.MulterError) {
+//         return res.send(err);
+//       } else if (err) {
+//         return res.send(err);
+//       }
+
+//       const classifiedsadd = {
+//         image: req.file.filename,
+//       };
+//       const sql = "INSERT INTO item_image SET ?";
+//       db.query(sql, classifiedsadd, (err, results) => {
+//         if (err) throw err;
+//         res.json({ success: 1 });
+//       });
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 //insert image into mysql
 app.post("/itemupload", async (req, res) => {
   try {
@@ -383,6 +446,8 @@ app.get("/getCategory", (req, res) => {
 // Displays the items according to the category name
 app.post("/CategoryItem", (req, res) => {
   const selectedIndex = req.body.selectedIndex;
+  console.log(req.body.selectedIndex);
+
   db.query(
     "SELECT * FROM category, item WHERE category_id = ? AND category.id = item.category_id",
     [selectedIndex],
@@ -437,40 +502,18 @@ app.delete("/deleteItem/:id", (req, res) => {
   });
 });
 
-//retrieve image from mysql
-app.get("/getSitemap", (req, res) => {
-  const id = 1;
-  const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;";
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send({ siteplan: result[0].siteplan });
-    }
-  });
-});
-
-//retrive project from mysql
-app.get("/getProject", (req, res) => {
-  db.query("SELECT * FROM project ", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
-});
-
-//retrive project from mysql to Search field
-app.get("/searchProject", (req, res) => {
-  db.query("SELECT id, title, client FROM project ", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
-});
+// //retrieve image from mysql
+// app.get("/getSitemap", (req, res) => {
+//   const id = 1;
+//   const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;";
+//   db.query(sql, [id], (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.send({ siteplan: result[0].siteplan });
+//     }
+//   });
+// });
 
 //Backend is listening (on)
 app.listen(3001, () => {
