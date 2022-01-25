@@ -90,12 +90,6 @@ function NewLibrary() {
     setSelectedIndex(index);
   };
   
-
-
-
-  
-
-  
   // Clicking this will render items belonging that category 
   const handleCategoryClick = () => {
     axios
@@ -119,9 +113,6 @@ function NewLibrary() {
     getAllCategory();
     getAllItem();
   }, []);
-
-
-  
 
   //Search filter
   const [filteredData, setFilteredData] = React.useState([]);
@@ -287,7 +278,10 @@ function NewLibrary() {
                           <CardMedia
                             className={classes.cardMedia}
                             title="Image Title"
-                            image=""
+                            component="img"
+                            src={
+                              process.env.PUBLIC_URL + `/item/${items.image}`
+                            }
                           />
                           <CardContent className={classes.cardContent}>
                             <Typography variant="h6">{items.name}</Typography>

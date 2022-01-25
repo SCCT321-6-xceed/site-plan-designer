@@ -39,8 +39,8 @@ app.use(
 
 // Database credentials
 const db = mysql.createConnection({
-  user: "root",
-  host: "127.0.0.1",
+  user: "root", //your user
+  host: "127.0.0.1", //your hostname
   password: "password", //your sql password
   database: "siteplandesigner_new", //your sql schema
   dateStrings: true,
