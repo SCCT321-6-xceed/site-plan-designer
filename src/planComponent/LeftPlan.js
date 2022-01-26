@@ -8,7 +8,6 @@ import {
   ListItemButton,
   ListItemText,
   ListItem,
-  Link,
 } from "@mui/material";
 import { Collapse, Button } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -39,14 +38,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-const LeftPlan = () => {
+const LeftPlan = ({url, setUrl, type, setType}) => {
   const classes = useStyles();
-  // const [open, setOpen] = React.useState(true);
-  // const handleClick = () => {
-  //   setOpen(!open);
-  // };
 
   //handle collapse
   const [selectedIndex1, setSelectedIndex1] = React.useState("")
@@ -104,12 +97,12 @@ const LeftPlan = () => {
         console.log(itemList);
       });
   };
+
   return (
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
         <Typography style={{ color: "#044474", fontWeight: "bold" }}>
-          {" "}
-          Drawing Tools
+          {" "} Drawing Tools
         </Typography>
         <ButtonGroup variant="contained">
           <Button
@@ -154,7 +147,8 @@ const LeftPlan = () => {
         <div>
           <Search />
         </div>
-        {category.map((categories, index1) => (
+          
+        {category.map((categories,index1)=>( /* db handling epicness starts here */
           <div>
             <ListItemButton onClick={(event) =>
               handleListItemClick(
@@ -162,27 +156,32 @@ const LeftPlan = () => {
                 categories.id,
                 handleClick1(index1),
                 handleCategoryClick(),
-
-              )}>
-              {/* <Link to= {`plandesign/${categories.id}`}> </Link> */}
+              )}
+            >
               <ListItemIcon>
                 <LightIcon />
               </ListItemIcon>
               <ListItemText key={categories.id}>{categories.categoryName}</ListItemText>
-              {/* {open[index] ? <ExpandLess/> : <ExpandMore />} */}
               {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            {/* <Collapse in={open[index]} timeout="auto" unmountOnExit> */}
 
-            {/* need to modify to function as normal */}
-            <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit>
+            <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit> 
               <List component="div" disablePadding>
                 <ListItem >
-                  <ImageList sx={{ width: 500, height: 450 }} >
+                  {/* <ImageList sx={{ width: 500, height: 450 }} > */}
+                  {/* 200, 200 looks much better. has to be fixed later. note: images are being displayed on konva canvas at 60px*/}
+                  <ImageList sx={{ width: 200, height: 200 }} > 
                     {item.map((items) => (
                       <ImageListItem key={items.id} value={categories.id}>
-                        {/* <Element name={items.name}/> */}
-                        <img src={process.env.PUBLIC_URL + `/item/${items.image}`} />
+                        <img 
+                          src= {process.env.PUBLIC_URL + `/item/${items.image}`}
+                          onDragStart={(e) => {
+                            /* setting url for later use in MainPlan.js */
+                            console.log("items", items);
+                            setUrl(e.target.src);
+                            setType(items.category_id);
+                          }}
+                        />
                         <ImageListItemBar
                           title={items.name}
                           position="below"
@@ -191,13 +190,10 @@ const LeftPlan = () => {
                     ))}
                   </ImageList>
                 </ListItem>
-
               </List>
             </Collapse>
           </div>
-
         ))}
-
       </List>
     </Container>
   );

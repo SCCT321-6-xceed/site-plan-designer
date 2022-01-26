@@ -40,8 +40,8 @@ app.use(
 // Database credentials
 const db = mysql.createConnection({
   user: "root",
-  host: "localhost",
-  password: "master", //your sql password
+  host: "127.0.0.1",
+  password: "", //your sql password
   database: "siteplandesigner_new", //your sql schema
   dateStrings: true,
 });
@@ -222,16 +222,16 @@ app.post("/create", (req, res) => {
     }
   );
 });
-//retrive project from mysql to Search field
-app.get("/searchProject", (req, res) => {
-  db.query("SELECT projectID, title FROM project ", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
-});
+// //retrive project from mysql to Search field
+// app.get("/searchProject", (req, res) => {
+//   db.query("SELECT projectID, title FROM project ", (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.send(result);
+//     }
+//   });
+// });
 
 //retrive project from mysql
 app.get("/getProject", (req, res) => {
@@ -306,6 +306,24 @@ app.delete("/deleteProject/:projectID", (req, res) => {
     }
   );
 });
+//GET project to pass to design page:
+app.get("/passProject/:projectID", (req, res) => {
+  const projectID = req.params.projectID;
+  console.log(projectID)
+  db.query(
+    "SELECT * FROM project WHERE projectID = ?",
+    projectID,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log(result)
+      }
+    }
+  );
+});
+
 //---------------------------------------LIBRARY/CATEGORY---------------------------------------------------------
 //store item
 const itemStorage = multer.diskStorage({

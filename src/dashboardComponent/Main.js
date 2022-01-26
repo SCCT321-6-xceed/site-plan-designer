@@ -21,6 +21,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import { CardHeader } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const classes = useStyles();
@@ -49,7 +50,18 @@ const Main = () => {
         );
       });
   };
-
+  const history = useNavigate()
+  const passProject = (projectID) => {
+        setProject(projectID);
+        console.log(projectID)
+        history(`/plandesign/${projectID}`)
+  };
+  const updateProject = (projectID) => {
+    setProject(projectID);
+    console.log(projectID)
+    history(`/dashboard/${projectID}`)
+};
+  
   //Update modal
   const [modalIsOpen, setModalIsOpen] = useState(false);
   function closeHandler() {
@@ -144,8 +156,9 @@ const Main = () => {
                     </CardContent>
                     <CardActions>
                       <Button
-                        component={Link}
-                        to="/plandesign"
+                        // component={Link}
+                        // to="/plandesign"
+                        onClick={(e)=> passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}
@@ -155,8 +168,8 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {" "}
-                        Design{" "}
+                       
+                        Design
                       </Button>
                       <Button
                         size="small"
@@ -168,7 +181,8 @@ const Main = () => {
                           fontWeight: "bold",
                           marginLeft: "10px",
                         }}
-                        onClick={() => {
+                        onClick={(e) => {
+                         updateProject(projects.projectID);
                           openHandler();
                           getprojectID();
                         }}
@@ -250,8 +264,9 @@ const Main = () => {
                     </CardContent>
                     <CardActions>
                       <Button
-                        component={Link}
-                        to="/plandesign"
+                        // component={Link}
+                        // to="/plandesign"
+                        onClick={(e)=> passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}

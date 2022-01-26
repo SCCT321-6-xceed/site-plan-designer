@@ -276,8 +276,9 @@ React.useEffect(()=>{
                         <Card className={classes.card}>
                           <CardMedia
                             className={classes.cardMedia}
-                            title="Image Title"
-                            image=""
+                            title={items.name}
+                            component="img"
+                            src= {process.env.PUBLIC_URL + `/item/${items.image}`}
                           />
                           <CardContent className={classes.cardContent}>
                             <Typography variant="h6">{items.name}</Typography>
