@@ -30,7 +30,6 @@ const ViewPlan = () => {
     }
   });
 
-  /* hardcoded legend counts */
   const [count, setCount] = useState({});
 
   /* url stores img url for Konva to use. see MainPlan.js */
