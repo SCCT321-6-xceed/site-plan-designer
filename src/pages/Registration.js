@@ -234,7 +234,7 @@ function Registration() {
               maxWidth: "225px",
               maxHeight: "30px",
             }}
-            /*onClick={addUser}*/
+            //onClick={addUser}
             //href="/"
           >
             Create Account

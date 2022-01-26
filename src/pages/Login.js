@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core";
 import { theme } from "../theme";
 import { useState } from "react";
 import Axios from "axios";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   textfield: {
@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "10px",
   },
 }));
-
 
 function Login() {
   const [email, setEmail] = useState("null");
@@ -38,7 +37,7 @@ function Login() {
 
   //Login handler
   const login = () => {
-    Axios.post("http://localhost:3001/login", {
+    Axios.post("http://localhost:3002/login", {
       email: email,
       password: password,
     }).then((response) => {
@@ -46,7 +45,7 @@ function Login() {
         setLoginStatus(false);
         //This gets the response error from index.js after auth error
         setLoginStatus(response.data.message);
-        history("/"); 
+        history("/");
       } else {
         // get token
         localStorage.setItem("token", response.data.token);
@@ -56,8 +55,6 @@ function Login() {
       }
     });
   };
-
-
 
   return (
     <div className="login-form">
@@ -134,7 +131,6 @@ function Login() {
           Login
         </Button>
         <h4>{loginStatus}</h4>
-        
 
         <Link href="/Registration">Create an Account</Link>
       </Box>
