@@ -12,6 +12,7 @@ import AbcIcon from "@mui/icons-material/Abc";
 import { useState } from "react";
 import Axios from "axios";
 import { Field, Form, Formik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   textfield: {
@@ -35,6 +36,8 @@ function Registration() {
   const [firstNameError, setFNameError] = useState(false);
   const [lastNameError, setLNameError] = useState(false);
 
+  let history = useNavigate();
+
   const addUser = async () => {
     try {
       let response = await Axios.post("http://localhost:3001/register", {
@@ -42,6 +45,8 @@ function Registration() {
         password: password,
         firstName: firstName,
         lastName: lastName,
+      }).then(() => {
+        history("/");
       });
     } catch (err) {}
   };
@@ -234,7 +239,7 @@ function Registration() {
               maxWidth: "225px",
               maxHeight: "30px",
             }}
-            //onClick={addUser}
+            onClick={handleSubmit}
             //href="/"
           >
             Create Account

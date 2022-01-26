@@ -37,7 +37,7 @@ function Login() {
 
   //Login handler
   const login = () => {
-    Axios.post("http://localhost:3002/login", {
+    Axios.post("http://localhost:3001/login", {
       email: email,
       password: password,
     }).then((response) => {
