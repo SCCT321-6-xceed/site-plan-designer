@@ -19,9 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }
 ));
 
-const MainPlan = ({url, type, count, setCount }) => {
+const MainPlan = ({url, type, count, setCount, curItem, images, setImages }) => {
   const stageRef = React.useRef();
-  const [images, setImages] = React.useState([]); 
   const [curImg, setCurImg] = React.useState();
 
   const URLIMAGE = ({ image }) => {
@@ -63,6 +62,7 @@ const MainPlan = ({url, type, count, setCount }) => {
                 src: url, /* this is the url we have saved from Element.js */
                 key: uuidv4(),
                 type: type,
+                name: curItem.name,
               },
             ])
           );
@@ -92,8 +92,10 @@ const MainPlan = ({url, type, count, setCount }) => {
         }}
       >
         <Stage
-          width={window.innerWidth}
-          height={window.innerHeight}
+          // width={window.innerWidth}
+          // height={window.innerHeight}
+          width={600}
+          height={600}
           style={{ border: '1px solid grey' }}
           ref={stageRef}
         >

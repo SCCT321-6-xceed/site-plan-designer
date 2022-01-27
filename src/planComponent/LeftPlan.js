@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LeftPlan = ({url, setUrl, type, setType}) => {
+const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
   const classes = useStyles();
 
   //handle collapse
@@ -179,6 +179,7 @@ const LeftPlan = ({url, setUrl, type, setType}) => {
                           onDragStart={(e) => {
                             /* setting url for later use in MainPlan.js */
                             console.log("items", items);
+                            setCurItem(items);
                             setUrl(e.target.src);
                             setType(items.category_id);
                           }}
