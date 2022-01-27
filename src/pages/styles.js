@@ -4,9 +4,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     padding: "20px 30px",
   },
+  
 
   cardGrid: {
-    padding: "20px 20px",
+    padding: "20px 0px",
   },
   card: {
     height: "100%",
@@ -16,15 +17,39 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f2f2f2",
   },
   cardMedia: {
-    paddingTop: "10px",
-    height:"300px"
+    paddingTop: "30px",
+    paddingBottom: "10px",
+    paddingLeft: "90px",
+    maxHeight: "100px",
+    maxWidth: "100px",
+    width: "90px",
   },
   cardContent: {
     flexGrow: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   cardButton: {
     marginRight: "2px",
   },
+  card2: {
+    height: "100%",
+    width: "md",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#f2f2f2",
+    marginLeft: "20px",
+    marginRight: "20px",
+  },
+  cardMedia2: {
+    paddingTop: "10px",
+    height: "300px",
+    minHeight: "300px",
+  },
+  cardContent2: {
+    flexGrow: 1,
+  },
+  
   //modal.js's size and position
   modal: {
     backgroundColor: "#EFF5FB",
@@ -40,21 +65,14 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16
   },
   modButton: {
-    // paddingRight: "20px",
-    // paddingLeft: "20px",
-    marginTop: "13px",
-    marginLeft: "30px",
+    paddingRight: "20px",
+    paddingLeft: "20px",
+    marginTop: "50px",
+    marginLeft: "20px",
     minWidth: "125px",
     minHeight: "40px",
   },
-  // modButton: {
-  //   paddingRight: "20px",
-  //   paddingLeft: "20px",
-  //   marginTop: "13px",
-  //   marginLeft: "50px",
-  //   minWidth: "125px",
-  //   minHeight: "40px",
-  // },
+
   textfield: {
     margin: "normal",
     size: "small",
@@ -89,21 +107,20 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     marginLeft: "17px",
   },
-  
 
   //searchField
   searchBar: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       // marginLeft: '0px'
     },
-    paddingBottom: '20px',
-    display: 'flex',
-    justifyContent: "center"
+    paddingBottom: "20px",
+    display: "flex",
+    justifyContent: "center",
   },
   searchBox: {
     borderRadius: 16,
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   searchInputs: {
     backgroundColor: "#f9f9f9",
@@ -133,7 +150,6 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
-    
   },
 }));
 export default useStyles;

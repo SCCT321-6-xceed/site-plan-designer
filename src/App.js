@@ -1,11 +1,10 @@
+import React from 'react';
 import Login from "./pages/Login.js";
 import Registration from "./pages/Registration.js";
 import Dashboard from "./pages/Dashboard.js";
 import ViewPlan from "./pages/ViewPlan.js";
 import Library from "./libraryComponent/Library.js";
 import Export from "./pages/Export.js";
-import Newpage from "./newpage/newpage.js";
-
 import { theme } from "./theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
@@ -23,9 +22,10 @@ function App() {
             <Route exact path="/library/:categoryID" element={<Library />} />
 
             <Route exact path="/plandesign" element={<ViewPlan />}/>
+            <Route exact path="/plandesign/:projectID" element={<ViewPlan />}/>
             <Route exact path="/export" element={<Export />}/>
-
-            <Route exact path="/newpage" element={<Newpage />}/>
+            <Route exact path="/export:projectID" element={<Export />}/>
+            
           </Routes>
         </div>
         </ThemeProvider>

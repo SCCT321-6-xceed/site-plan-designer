@@ -99,65 +99,65 @@ const RightPlan = (props) => {
 
   return (
     <Container className={classes.container}>
-      <Box sx={{
-          border: 1,
-          borderColor: "#adcaee",
-          width:'100%',
-          backgroundColor:'#adcaee',
-        }}
-      >
-        <Stack direction='row' spacing={11}>
-          <Typography variant="h6" style={{marginLeft:'12px'}}>History</Typography>
-          <div>
-            <IconButton size='small' style={{color: '#044474'}}>
-              <UndoIcon 
-                onClick={() => {
-                  console.log("last item", props.images[props.images.length - 1]);
-                  props.setImages((names) => names.filter((_, i) => i !== names.length - 1))
-                  /* updating legend count */
-                  props.setCount((item)=>({...item, total: (props.count.total ? props.count.total : 0) - 1}));
-                  props.setCount((item)=>({...item, [props.images[props.images.length - 1].type]: (props.count[props.images[props.images.length - 1].type] ? props.count[props.images[props.images.length - 1].type] : 0) - 1}));
-                }}
-              />
-            </IconButton>
-            <IconButton size='small' style={{color: '#044474'}}>
-              <RedoIcon />
-            </IconButton>
-          </div>
-        </Stack>
-      </Box>
+    <Box sx={{
+        border: 1,
+        borderColor: "#adcaee",
+        width:'100%',
+        backgroundColor:'#adcaee',
+      }}
+    >
+      <Stack direction='row' spacing={11}>
+        <Typography variant="h6" style={{marginLeft:'12px'}}>History</Typography>
+        <div>
+          <IconButton size='small' style={{color: '#044474'}}>
+            <UndoIcon 
+              onClick={() => {
+                console.log("last item", props.images[props.images.length - 1]);
+                props.setImages((names) => names.filter((_, i) => i !== names.length - 1))
+                /* updating legend count */
+                props.setCount((item)=>({...item, total: (props.count.total ? props.count.total : 0) - 1}));
+                props.setCount((item)=>({...item, [props.images[props.images.length - 1].type]: (props.count[props.images[props.images.length - 1].type] ? props.count[props.images[props.images.length - 1].type] : 0) - 1}));
+              }}
+            />
+          </IconButton>
+          <IconButton size='small' style={{color: '#044474'}}>
+            <RedoIcon />
+          </IconButton>
+        </div>
+      </Stack>
+    </Box>
 
-      <List
-        sx={{
-          maxHeight: "30%",
-          overflow: "auto",
-          width: "100%",
-          maxWidth: 360,
-          bgcolor: "background.paper",
-          borderColor: "black",
-          padding: 1,
-          paddingBottom:'20px'
-        }}
-      >
-        {[...props.images].reverse().map((image, index) => {
-          return (
-            <ListItemText primary={`[${props.images.length - index}] - ${image.name} at (${image.x}, ${image.y})`} sx={{ borderBottom: 1 }} />
-          )
-        })}
-        {/* <ListItemText primary="[1] - Line" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[2] Circle" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[3] Item - Led Light" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[4] - Red Line" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[5] Black Circle" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[6] Item - Led Light" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[7] - Line" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[8] Circle" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[9] Item - Led Light" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[10] - Line" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[11] Circle" sx={{ borderBottom: 1 }} />
-        <ListItemText primary="[12] Item - Led Light" sx={{ borderBottom: 1 }} /> */}
-      </List>
-
+    <List
+      sx={{
+        maxHeight: "30%",
+        overflow: "auto",
+        width: "100%",
+        maxWidth: 360,
+        bgcolor: "background.paper",
+        borderColor: "black",
+        padding: 1,
+        paddingBottom:'20px'
+      }}
+    >
+      {[...props.images].reverse().map((image, index) => {
+        return (
+          <ListItemText primary={`[${props.images.length - index}] - ${image.name} at (${image.x}, ${image.y})`} sx={{ borderBottom: 1 }} />
+        )
+      })}
+      {/* <ListItemText primary="[1] - Line" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[2] Circle" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[3] Item - Led Light" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[4] - Red Line" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[5] Black Circle" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[6] Item - Led Light" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[7] - Line" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[8] Circle" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[9] Item - Led Light" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[10] - Line" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[11] Circle" sx={{ borderBottom: 1 }} />
+      <ListItemText primary="[12] Item - Led Light" sx={{ borderBottom: 1 }} /> */}
+    </List>
+{/* --------------------------Legend count -------------------------------*/}
       <Box
         sx={{
           border: 1,
@@ -184,17 +184,11 @@ const RightPlan = (props) => {
                 handleCategoryClick(),
               )}
             >
-            <ListItemText key={categories.id}>{categories.categoryName} {props.count[categories.id]}</ListItemText>
-            {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
+            <ListItemText key={categories.id}>{categories.categoryName}: {props.count[categories.id]}</ListItemText>
+            
             </ListItemButton>
 
-            <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit> 
-              <List component="div" disablePadding>
-              {item.map((items) => (
-                <ListItemText primary={items.name} sx={{ borderBottom: 1 }} />
-              ))}
-              </List>
-            </Collapse>
+            
           </div>
         ))}
       </List>

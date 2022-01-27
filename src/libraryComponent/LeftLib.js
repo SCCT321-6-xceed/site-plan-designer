@@ -93,7 +93,6 @@ const LeftLib = () => {
         console.log(itemList);
       });
   };
-
   //upload item
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -145,6 +144,7 @@ const LeftLib = () => {
           <AddCategory onCancel={closeHandler} onConfirm={closeHandler} />
         )}
       </List>
+      
     </div>
   );
 };
