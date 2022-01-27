@@ -273,14 +273,14 @@ React.useEffect(()=>{
                   <Grid container spacing={4}>
                     {filteredData.map((items) => (
                       <Grid item key={items.id} xs={12} sm={6} md={4}>
-                        <Card className={classes.card}>
+                        <Card className={classes.card2}>
                           <CardMedia
-                            className={classes.cardMedia}
+                            className={classes.cardMedia2}
                             title={items.name}
                             component="img"
                             src= {process.env.PUBLIC_URL + `/item/${items.image}`}
                           />
-                          <CardContent className={classes.cardContent}>
+                          <CardContent className={classes.cardContent2}>
                             <Typography variant="h6">{items.name}</Typography>
                             <Typography variant="h7">
                               Price: ${items.price}
@@ -324,14 +324,14 @@ React.useEffect(()=>{
                   <Grid container spacing={4}>
                     {item.map((items) => (
                       <Grid item key={items.id} xs={12} sm={6} md={4}>
-                        <Card className={classes.card}>
+                        <Card className={classes.card2}>
                           <CardMedia
-                            className={classes.cardMedia}
+                            className={classes.cardMedia2}
                             title={items.name}
                             component="img"
                             src= {process.env.PUBLIC_URL + `/item/${items.image}`}
                           />
-                          <CardContent className={classes.cardContent}>
+                          <CardContent className={classes.cardContent2}>
                             <Typography variant="h6">{items.name}</Typography>
                             <Typography variant="h7">
                               Price: ${items.price}

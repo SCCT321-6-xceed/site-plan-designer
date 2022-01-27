@@ -25,6 +25,24 @@ const useStyles = makeStyles((theme) => ({
   cardButton: {
     marginRight: "2px",
   },
+
+  card2: {
+    height: "100%",
+    width: "md",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#f2f2f2",
+    marginLeft: "20px",
+    marginRight: "20px",
+  },
+  cardMedia2: {
+    paddingTop: "10px",
+    maxheight: "200px",
+    minHeight: "300px",
+  },
+  cardContent2: {
+    flexGrow: 1,
+  },
   //modal.js's size and position
   modal: {
     backgroundColor: "#EFF5FB",

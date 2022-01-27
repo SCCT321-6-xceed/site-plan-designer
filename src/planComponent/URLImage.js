@@ -35,8 +35,8 @@ class URLImage extends React.Component {
   render() {
     return (
       <Image
-        x={this.props.x}
-        y={this.props.y}
+        x={250}
+        y={69}
         width={this.props.width}
         height={this.props.height}
         image={this.state.image}

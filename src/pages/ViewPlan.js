@@ -35,6 +35,8 @@ const ViewPlan = () => {
   /* url stores img url for Konva to use. see MainPlan.js */
   const [url, setUrl] = useState('');
   const [type, setType] = useState('');
+  const [curItem, setCurItem] = useState();
+  const [images, setImages] = React.useState([]); 
 
   return (
     <div>
@@ -45,6 +47,7 @@ const ViewPlan = () => {
             <LeftPlan 
               url={url} setUrl={setUrl}
               type={type} setType={setType}
+              curItem={curItem} setCurItem={setCurItem}
             />
           </Grid>
           <Grid item xs={8} sm={7} md={8}>
@@ -52,11 +55,14 @@ const ViewPlan = () => {
               url={url}
               type={type}
               count={count} setCount={setCount}
+              curItem={curItem}
+              images={images} setImages={setImages}
             />
           </Grid>
           <Grid item xs={2} sm={2} md={2}>
               <RightPlan 
-                count={count}
+                count={count} setCount = {setCount}
+                images={images} setImages={setImages}
               />
           </Grid>
       </Grid> 

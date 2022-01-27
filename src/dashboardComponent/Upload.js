@@ -29,9 +29,9 @@ function Upload(props) {
   const [address, setAddress] = useState("");
   const [selectedDate, setSelectDate] = useState("")
 
-  const date = new Date(selectedDate).toLocaleDateString() //convert date time string to local date
+  const date = new Date(selectedDate).toLocaleDateString() //convert Date from datepicker to string format
   const newdate = date.split("/").reverse().join("/"); //covert to yyyy/MM/dd format to insert to mysql
-
+// const newdate = date.toISOString();
 
   // upload image func
   const [imageFile, setimageFile] = useState({
