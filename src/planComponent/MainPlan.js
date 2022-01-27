@@ -1,118 +1,133 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
-import { Container, makeStyles } from "@material-ui/core";
-import { useDrop } from "react-dnd";
+import React, { useRef, useState, } from "react"
+import { makeStyles } from "@material-ui/core";
 import { v4 as uuidv4 } from 'uuid';
-import { Image, Layer,  Stage,  } from "react-konva";
+import { Image, Layer, Stage, } from "react-konva";
 import URLImage from "./URLImage";
-import useElementSize from './useDimensions'
-import rough from "roughjs/bundled/rough.esm";
-import getStroke from "perfect-freehand";
-
+import useImage from 'use-image';
+import { useMatch } from 'react-router-dom';
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   container: {
     height: "100%",
     paddingTop: theme.spacing(2),
   },
-
-  
 }
-
-
-
 ));
 
-const MainPlan = ({count, setCount, count1, setCount1, count2, setCount2, count3, setCount3, count4, setCount4}) => {
-  const [squareRef, { width }] = useElementSize()
-  const classes = useStyles();
-  const [items, setItems] = useState([])
-  const [{ canDrop, isOver }, drop] = useDrop((e) => ({
-    accept: "image",
-    drop: (item, monitor) => {
-      const delta = monitor.getSourceClientOffset()
-      const src = monitor.getInitialSourceClientOffset();
-      let x = delta.x;
-      let y = delta.y;
-      // let x = 0;
-      // let y = 0;
-      // console.log(delta, src)
-      console.log(x, y)
-      console.log(item);
+const MainPlan = ({ url, type, count, setCount }) => {
+  const [passID, setpassID] = useState([])
+  const {
+    params: { projectID },
+  } = useMatch('/plandesign/:projectID');
+  console.log(projectID)
 
-      setCount(count + 1);
-      count += 1;
-      
-      if (item.type === "lightning") {
-        setCount1(count1 + 1);
-        count1 += 1;
-      }
-      if (item.type === "power point") {
-        setCount2(count2 + 1);
-        count2 += 1;
-      }
-      if (item.type === "cctv") {
-        setCount3(count3 + 1);
-        count3 += 1;
-      }
-      if (item.type === "alarm") {
-        setCount4(count4 + 1);
-        count4 += 1;
-      }
+  const passProject = () => {
+    axios
+      .get(`http://localhost:3001/passProject/${projectID}`)
+      .then((response) => {
+        const id = response.data;
+        setpassID(id);
+        console.log(id);
+      });
+  };
+  React.useEffect(() => {
+    passProject();
+  }, []);
+  const stageRef = useRef();
+  const [images, setImages] = useState([]);
+  const [curImg, setCurImg] = useState();
 
-      setItems(prevItem=>[...prevItem, {...item, x, y, id: uuidv4()}])
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
-    })
-  }));
-
-  // const [{ canDrop, isOver }, drop] = useDrop(() => ({
-  //   accept: "image",
-  //   drop: (item, monitor) => {
-  //     const {x, y} = monitor.getDifferenceFromInitialOffset()
-  //     console.log(x, y)
-  //     setItems(prevItem=>[...prevItem, {...item, x, y, id: uuidv4()}])
-  //   },
-    
-  //   collect: (monitor) => ({
-  //     isOver: monitor.isOver(),
-  //     canDrop: monitor.canDrop()
-  //   })
-  // }));
+  const URLIMAGE = ({ image }) => {
+    const [img] = useImage(image.src);
+    return (
+      <Image
+        image={img}
+        x={image.x}
+        y={image.y}
+        width={30}
+        height={30}
+        draggable
+        onDragEnd={(e) => {
+          image.x = e.target.x()
+          image.y = e.target.y()
+        }}
+        onClick={(e) => {
+          console.log("Image log", image);
+          setCurImg(image);
+        }}
+        /* offsetted to use center of the img */
+        offsetX={img ? 30 : 0}
+        offsetY={img ? 30 : 0}
+      />
+    );
+  };
 
   return (
-    <div ref={drop}>
-      <div className="MainPlan"></div>
-      
-      <Container role="Dustbin"  ref={squareRef} className={classes.container}>
+    <div>
+      <div
+        /* this div handles the drop */
+        onDrop={(e) => {
+          e.preventDefault();
+          stageRef.current.setPointersPositions(e);
+          setImages(
+            images.concat([
+              {
+                ...stageRef.current.getPointerPosition(),
+                src: url, /* this is the url we have saved from Element.js */
+                key: uuidv4(),
+                type: type,
+              },
+            ])
+          );
+          setCount((item) => ({ ...item, total: (count.total ? count.total : 0) + 1 }));
+          console.log("type", type);
+          setCount((item) => ({ ...item, [type]: (count[type] ? count[type] : 0) + 1 }));
+          console.log("type and count", type, count[type]);
+          console.log("count now", count);
+        }}
+        onDragOver={(e) => e.preventDefault()}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          console.log(e.code);
+          if (e.code === "Delete") {
+            console.log("Del initiated on", curImg);
+            console.log(images);
+
+            if (images.some(item => item === curImg)) {
+              console.log("img found");
+              setImages((state) => state.filter((item) => item !== curImg));
+
+              /* updating legend count */
+              setCount((item) => ({ ...item, total: (count.total ? count.total : 0) - 1 }));
+              setCount((item) => ({ ...item, [curImg.type]: (count[curImg.type] ? count[curImg.type] : 0) - 1 }));
+            }
+          }
+        }}
+      >
         <Stage
-          style={{ border: "2px solid red" }}
-          width={width}
-          height={700}
+          width={window.innerWidth}
+          height={window.innerHeight}
+          style={{ border: '1px solid grey' }}
+          ref={stageRef}
         >
           <Layer>
-          <URLImage 
-        x={270}
-            src="https://wcs.smartdraw.com/floor-plan/img/template-floor-plan.png?bn=15100111810"
-          />
+            {passID.map((passIDs) =>
+              <URLImage
+                component="img"
+                src={process.env.PUBLIC_URL + `/sitemap/${passIDs.image}`}
+              />
+            )}
           </Layer>
-          <Layer>
 
-            {items.map(item=>{
+          <Layer>
+            {images.map((image) => {
               return (
-                <URLImage 
-                  key={item.id} 
-                  src={item.link} 
-                  width={60} 
-                  height={60} 
-                  y={item.y} 
-                  x={item.x} 
-                />
+                <URLIMAGE image={image} />
               )
             })}
           </Layer>
-        </Stage> 
-      </Container>
+        </Stage>
+      </div>
     </div>
   );
 };

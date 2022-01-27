@@ -14,8 +14,14 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import { useMatch } from 'react-router-dom';
 
 function Update(props) {
+  // const {
+  //   params: { projectID },
+  // } = useMatch('/dashboard/:projectID');
+  // console.log(projectID)
+
   // cancel function
   function cancelHandler() {
     props.onCancel();
