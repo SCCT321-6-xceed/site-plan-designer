@@ -27,7 +27,7 @@ function Upload(props) {
   const [selectedDate, setSelectDate] = useState("");
 
   const date = new Date(selectedDate).toLocaleDateString(); //convert date time string to local date
-  const newdate = date.split("/").reverse().join("/"); //covert to yyyy/MM/dd format to insert to mysql
+  const newdate = date.split("/").reverse().join("/"); //reverse date format to insert to mysql
 
   // upload image func
   const [imageFile, setimageFile] = useState({
@@ -154,7 +154,7 @@ function Upload(props) {
             />
           </Typography>
 
-          {/* address info            */}
+          {/* address info */}
           <Typography
             variant="body1"
             style={{ paddingLeft: "15px", color: "black" }}
@@ -178,11 +178,11 @@ function Upload(props) {
                 <label>Date:</label>
                 <CalendarTodayIcon fontSize="small" />
                 <DatePicker
-                  placeholderText="dd/MM/yyyy"
+                  placeholderText="dd-MM-yyyy"
                   label="Date"
                   selected={selectedDate}
                   onChange={(date) => setSelectDate(date)}
-                  dateFormat="dd/MM/yyyy"
+                  dateFormat="dd/MM/y"
                   minDate={new Date()}
                   showYearDropdown
                 />

@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import useStyles from "../pages/styles";
 import { Link } from "react-router-dom";
-// import { Search } from './SearchProject';
 import EditIcon from "@mui/icons-material/Edit";
 import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -21,6 +20,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import { CardHeader } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const classes = useStyles();
@@ -48,6 +48,13 @@ const Main = () => {
           })
         );
       });
+  };
+
+  const history = useNavigate()
+  const passProject = (projectID) => {
+        setProject(projectID);
+        console.log(projectID)
+        history(`/plandesign/${projectID}`)
   };
 
   //Update modal
@@ -143,9 +150,7 @@ const Main = () => {
                     </CardContent>
                     <CardActions>
                       <Button
-                        component={Link}
-                        to="/plandesign"
-                        size="small"
+                        onClick={(e)=> passProject(projects.projectID)}
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}
                         style={{
@@ -244,8 +249,7 @@ const Main = () => {
                     </CardContent>
                     <CardActions>
                       <Button
-                        component={Link}
-                        to="/plandesign"
+                        onClick={(e)=> passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}

@@ -455,17 +455,25 @@ app.get("/getProject", (req, res) => {
     }
   });
 });
-
-//retrive project from mysql to Search field
-app.get("/searchProject", (req, res) => {
-  db.query("SELECT id, title, client FROM project ", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
+//---------------------------------------PLAN DESIGN---------------------------------------------------------
+//GET project to pass to design page:
+app.get("/passProject/:projectID", (req, res) => {
+  const projectID = req.params.projectID;
+  console.log(projectID)
+  db.query(
+    "SELECT * FROM project WHERE projectID = ?",
+    projectID,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log(result)
+      }
     }
-  });
+  );
 });
+
 
 //Backend is listening (on)
 app.listen(3001, () => {

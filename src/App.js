@@ -21,7 +21,10 @@ function App() {
             <Route exact path="/library/:categoryID" element={<Library />} />
 
             <Route exact path="/plandesign" element={<ViewPlan />}/>
+            <Route exact path="/plandesign/:projectID" element={<ViewPlan />}/>
             <Route exact path="/export" element={<Export />}/>
+            <Route exact path="/export:projectID" element={<Export />}/>
+            
           </Routes>
         </div>
         </ThemeProvider>
