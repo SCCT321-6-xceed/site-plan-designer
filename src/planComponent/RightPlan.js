@@ -6,12 +6,22 @@ import RedoIcon from "@mui/icons-material/Redo";
 import UndoIcon from "@mui/icons-material/Undo";
 import {
   List,
+  ListItemIcon,
   ListItemButton,
+  ListItem,
   ListItemText,
   Stack,
 } from "@mui/material";
+import { Collapse} from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import LightIcon from "@mui/icons-material/Light";
+import OutletIcon from "@mui/icons-material/Outlet";
+import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import axios from "axios";
-
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -29,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
 
 const RightPlan = (props) => {
   const classes = useStyles();
-  console.log("count.total", props.count.total);
+  const [idx, setIdx] = useState(1);
+
   //handle collapse
   const [selectedIndex1, setSelectedIndex1] = React.useState("")
 
@@ -99,7 +110,15 @@ const RightPlan = (props) => {
           <Typography variant="h6" style={{marginLeft:'12px'}}>History</Typography>
           <div>
             <IconButton size='small' style={{color: '#044474'}}>
-              <UndoIcon />
+              <UndoIcon 
+                onClick={() => {
+                  console.log("last item", props.images[props.images.length - 1]);
+                  props.setImages((names) => names.filter((_, i) => i !== names.length - 1))
+                  /* updating legend count */
+                  props.setCount((item)=>({...item, total: (props.count.total ? props.count.total : 0) - 1}));
+                  props.setCount((item)=>({...item, [props.images[props.images.length - 1].type]: (props.count[props.images[props.images.length - 1].type] ? props.count[props.images[props.images.length - 1].type] : 0) - 1}));
+                }}
+              />
             </IconButton>
             <IconButton size='small' style={{color: '#044474'}}>
               <RedoIcon />
@@ -108,7 +127,38 @@ const RightPlan = (props) => {
         </Stack>
       </Box>
 
+      <List
+        sx={{
+          maxHeight: "30%",
+          overflow: "auto",
+          width: "100%",
+          maxWidth: 360,
+          bgcolor: "background.paper",
+          borderColor: "black",
+          padding: 1,
+          paddingBottom:'20px'
+        }}
+      >
+        {[...props.images].reverse().map((image, index) => {
+          return (
+            <ListItemText primary={`[${props.images.length - index}] - ${image.name} at (${image.x}, ${image.y})`} sx={{ borderBottom: 1 }} />
+          )
+        })}
+        {/* <ListItemText primary="[1] - Line" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[2] Circle" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[3] Item - Led Light" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[4] - Red Line" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[5] Black Circle" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[6] Item - Led Light" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[7] - Line" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[8] Circle" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[9] Item - Led Light" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[10] - Line" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[11] Circle" sx={{ borderBottom: 1 }} />
+        <ListItemText primary="[12] Item - Led Light" sx={{ borderBottom: 1 }} /> */}
+      </List>
 
+{/* --------------------------Legend count -------------------------------*/}
       <Box
         sx={{
           border: 1,
@@ -135,11 +185,11 @@ const RightPlan = (props) => {
                 handleCategoryClick(),
               )}
             >
-            <ListItemText key={categories.id}>{categories.categoryName}: {props.count[categories.id]}</ListItemText>
+            <ListItemText key={categories.id}>{categories.categoryName} {props.count[categories.id]}</ListItemText>
             
             </ListItemButton>
 
-           
+            
           </div>
         ))}
       </List>
