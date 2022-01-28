@@ -21,7 +21,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import { CardHeader } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
   const classes = useStyles();
@@ -50,18 +50,18 @@ const Main = () => {
         );
       });
   };
-  const history = useNavigate()
+  const history = useNavigate();
   const passProject = (projectID) => {
-        setProject(projectID);
-        console.log(projectID)
-        history(`/plandesign/${projectID}`)
+    setProject(projectID);
+    console.log(projectID);
+    history(`/plandesign/${projectID}`);
   };
   const updateProject = (projectID) => {
     setProject(projectID);
-    console.log(projectID)
-    history(`/dashboard/${projectID}`)
-};
-  
+    console.log(projectID);
+    history(`/dashboard/${projectID}`);
+  };
+
   //Update modal
   const [modalIsOpen, setModalIsOpen] = useState(false);
   function closeHandler() {
@@ -136,7 +136,9 @@ const Main = () => {
                       className={classes.cardMedia}
                       title="Image Title"
                       component="img"
-                      src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
+                      src={
+                        process.env.PUBLIC_URL + `/sitemap/${projects.image}`
+                      }
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography variant="h7">
@@ -158,7 +160,7 @@ const Main = () => {
                       <Button
                         // component={Link}
                         // to="/plandesign"
-                        onClick={(e)=> passProject(projects.projectID)}
+                        onClick={(e) => passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}
@@ -168,7 +170,6 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                       
                         Design
                       </Button>
                       <Button
@@ -182,7 +183,7 @@ const Main = () => {
                           marginLeft: "10px",
                         }}
                         onClick={(e) => {
-                         updateProject(projects.projectID);
+                          updateProject(projects.projectID);
                           openHandler();
                           getprojectID();
                         }}
@@ -238,14 +239,17 @@ const Main = () => {
                 <Grid item xs={12} sm={6} md={4}>
                   <Card className={classes.card} key={projects.id}>
                     <CardHeader title={projects.title}> </CardHeader>
-                    <Box sx={{maxHeight: "350px"}}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      title={projects.title}
-                      // image="https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg"
-                            component="img"
-                            src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
-                    /></Box>
+                    <Box sx={{ maxHeight: "350px" }}>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        title={projects.title}
+                        // image="https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg"
+                        component="img"
+                        src={
+                          process.env.PUBLIC_URL + `/sitemap/${projects.image}`
+                        }
+                      />
+                    </Box>
                     <CardContent className={classes.cardContent}>
                       <Typography variant="h7">
                         {" "}
@@ -266,7 +270,7 @@ const Main = () => {
                       <Button
                         // component={Link}
                         // to="/plandesign"
-                        onClick={(e)=> passProject(projects.projectID)}
+                        onClick={(e) => passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}
@@ -301,6 +305,7 @@ const Main = () => {
                         />
                       )}
                       <Button
+                        onClick={(e) => passProject(projects.projectID)}
                         component={Link}
                         to="/export"
                         size="small"

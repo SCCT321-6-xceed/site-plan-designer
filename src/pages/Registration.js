@@ -51,25 +51,6 @@ function Registration() {
     } catch (err) {}
   };
   // all  feild validation here and api call is here
-  const validate = () => {
-    if (email === "") {
-      setEmailError(true);
-    }
-
-    if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email) === false) {
-      setEmailError(true);
-    }
-
-    if (password === "") {
-      setPasswordError(true);
-    }
-    if (firstName === "") {
-      setFNameError(true);
-    }
-    if (lastName === "") {
-      setLNameError(true);
-    }
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
