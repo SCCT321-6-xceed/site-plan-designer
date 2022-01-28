@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -11,7 +11,6 @@ import { theme } from "../theme";
 import AbcIcon from "@mui/icons-material/Abc";
 import { useState } from "react";
 import Axios from "axios";
-import { Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Registration() {
   const classes = useStyles();
+  //declare variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFName] = useState("");
@@ -50,33 +50,10 @@ function Registration() {
       });
     } catch (err) {}
   };
-  // // all  feild validation here and api call is here
-  // const validate = () => {
-  //   if (email === "") {
-  //     setEmailError(true);
-  //   }
 
-  //   if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email) === false) {
-  //     setEmailError(true);
-  //   }
-
-  //   if (password === "") {
-  //     setPasswordError(true);
-  //   }
-  //   if (firstName === "") {
-  //     setFNameError(true);
-  //   }
-  //   if (lastName === "") {
-  //     setLNameError(true);
-  //   }
-  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // setEmailError(false);
-    // setPasswordError(false);
-    // setFNameError(false);
-    // setLNameError(false);
 
     if (
       email === "" ||
@@ -109,6 +86,7 @@ function Registration() {
       setLNameError(false);
 
       addUser();
+      history("/");
     }
   };
 
@@ -156,7 +134,6 @@ function Registration() {
             }}
             required
             error={emailError}
-            // helperText="Must not be blank"
           />
           {emailError && (
             <span className="validation_style">Add valid email</span>
@@ -178,7 +155,6 @@ function Registration() {
             }}
             required
             error={firstNameError}
-            // helperText="Must not be blank"
           />
           {firstNameError && (
             <span className="validation_style">Must not be blank</span>
@@ -200,7 +176,6 @@ function Registration() {
             }}
             required
             error={lastNameError}
-            // helperText="Must not be blank"
           />
           {lastNameError && (
             <span className="validation_style">Must not be blank</span>
@@ -222,7 +197,6 @@ function Registration() {
             }}
             required
             error={passwordError}
-            // helperText="Must not be blank"
           />
           {passwordError && (
             <span className="validation_style">Must not be blank</span>
@@ -240,7 +214,6 @@ function Registration() {
               maxHeight: "30px",
             }}
             onClick={handleSubmit}
-            // href="/"
           >
             Create Account
           </Button>

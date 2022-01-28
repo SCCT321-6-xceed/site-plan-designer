@@ -1,60 +1,82 @@
-import React, { useEffect, useLayoutEffect, useRef, useState, setState } from "react"
-import { Container, makeStyles } from "@material-ui/core";
-import { useDrop } from "react-dnd";
+import React, { useState } from "react"
 import { v4 as uuidv4 } from 'uuid';
-import { Image, Layer,  Stage,  } from "react-konva";
-import URLImage from "./URLImage";
-import useElementSize from './useDimensions'
-import rough from "roughjs/bundled/rough.esm";
-import getStroke from "perfect-freehand";
+import { Layer,  Stage,  } from "react-konva";
+import { Image as IMAGE } from 'react-konva';
 import useImage from 'use-image';
 import { useMatch } from 'react-router-dom';
 import axios from "axios";
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    height: "100%",
-    paddingTop: theme.spacing(2),
-  },
-}
-));
-
-const MainPlan = ({url, type, count, setCount, curItem, images, setImages }) => {
+const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo, setDemo, innerWidth, innerHeight }) => {
+  const stageRef = React.useRef();
+  const [curImg, setCurImg] = React.useState();
   
+  const [width, setWidth] = useState()
+  const [height, setHeight] = useState()
+
   const [passID, setpassID] = useState([])
+  const [srcImg, setSrcImg] = useState()
+
   const {
     params: { projectID },
   } = useMatch('/plandesign/:projectID');
   console.log(projectID)
 
   const passProject = () => {
+    let id;
     axios
       .get(`http://localhost:3001/passProject/${projectID}`)
       .then((response) => {
-        const id = response.data;
+        id = response.data;
         setpassID(id);
-        console.log(id);
+        console.log("this is id", id);
+        let img = new Image();
+        img.src= process.env.PUBLIC_URL + `/sitemap/${id[0].image}`;
+        setSrcImg(img);
+        img.onload = () => {
+          setWidth(img.width);
+          setHeight(img.height);
+          console.log("img dimensions", img, img.width, img.height);
+          console.log("heights", innerHeight, height);
+        };
       });
   };
+
   React.useEffect(() => {
     passProject();
   }, []);
-  const stageRef = React.useRef();
-  const [curImg, setCurImg] = React.useState();
 
   const URLIMAGE = ({ image }) => {
     const [img] = useImage(image.src);
     return (
-      <Image
+      <IMAGE
         image={img}
         x={image.x}
         y={image.y}
-        width={60}
-        height={60}
+        width={30}
+        height={30}
         draggable
         onDragEnd={(e) => {
+          const xoffset = (innerWidth - width) / 2;
+          const yoffset = 10;
+
           image.x = e.target.x()
+          if (e.target.x() < 15 + xoffset) {
+            image.x = 15 + xoffset /* values are 15 because all legends are of size 30 and offsetted by 30/2 = 15 */
+          }
+          if (e.target.x() > width - 15 + xoffset) {
+            image.x = width - 15 + xoffset
+          }
+          
           image.y = e.target.y()
+          if (e.target.y() < 15 + yoffset) {
+            image.y = 15 + yoffset  
+          }
+          if (e.target.y() > height - 15 + yoffset) {
+            image.y = height - 15 + yoffset
+          }
+          setDemo(demo + 1);
+          demo += 1;  
+          console.log("URLIMAGE", image.x, image.y);
         }}
         onClick = {(e) => {
           console.log("Image log", image);
@@ -90,16 +112,17 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages }) => 
           setCount((item)=>({...item, [type]: (count[type] ? count[type] : 0) + 1}));
           console.log("type and count", type, count[type]);
           console.log("count now", count);
+          console.log("passId", passID[0]);
         }}
         onDragOver={(e) => e.preventDefault()}
         tabIndex={0}
         onKeyDown={(e) => {
           console.log(e.code);
-          if (e.code == "Delete") {
+          if (e.code === "Delete") {
             console.log("Del initiated on", curImg);
             console.log(images);
             
-            if (images.some(item => item == curImg)) {
+            if (images.some(item => item === curImg)) {
               console.log("img found");
               setImages((state) => state.filter((item) => item !== curImg));
 
@@ -111,20 +134,19 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages }) => 
         }}
       >
         <Stage
-          // width={window.innerWidth}
-          // height={window.innerHeight}
-          width={600}
-          height={600}
-          style={{ border: '1px solid grey' }}
+          width={innerWidth}
+          height={innerHeight}
           ref={stageRef}
+          style={{border: '1px solid grey', paddingBottom: 10}}
         >
           <Layer>
-          {passID.map((passIDs) =>
-              <URLImage
-                component="img"
-                src={process.env.PUBLIC_URL + `/sitemap/${passIDs.image}`}
+          
+              <IMAGE
+                x={(innerWidth - width) / 2.60}
+                y={20}
+                image={srcImg}
               />
-            )}
+          
           </Layer>
           
           <Layer>

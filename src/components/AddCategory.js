@@ -10,12 +10,14 @@ import axios from "axios";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
+// Modal Handler
 function AddCategory(props) {
   function cancelHandler() {
     props.onCancel();
   }
 
   const [categoryName, setcategoryName] = useState("");
+  // Add category function
   const addCategory = () => {
     axios
       .post("http://localhost:3001/addCategory", {
@@ -67,11 +69,13 @@ function AddCategory(props) {
           New category
         </Typography>
 
+
         <Box>
           <Typography
             variant="body1"
             style={{ paddingLeft: "10px", color: "black", paddingTop: "10px" }}
           >
+            {/* // input field */}
             <label>Title: </label>
             <TextField
               className={classes.textfield}

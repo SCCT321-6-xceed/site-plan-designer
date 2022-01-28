@@ -20,10 +20,8 @@ function Upload(props) {
   function cancelHandler() {
     props.onCancel();
   }
-  // const handleClose = () => {
-  //   props.onClose();
-  // };
 
+  // Const Variables
   const [title, setTitle] = useState("");
   const [client, setClient] = useState("");
   const [address, setAddress] = useState("");
@@ -31,7 +29,7 @@ function Upload(props) {
 
   const date = new Date(selectedDate).toLocaleDateString() //convert Date from datepicker to string format
   const newdate = date.split("/").reverse().join("/"); //covert to yyyy/MM/dd format to insert to mysql
-// const newdate = date.toISOString();
+  // const newdate = date.toISOString();
 
   // upload image func
   const [imageFile, setimageFile] = useState({
@@ -39,6 +37,7 @@ function Upload(props) {
     filepreview: null,
   });
 
+  // Preview Image function
   const handleInputChange = (event) => {
     setimageFile({
       ...imageFile,
@@ -48,22 +47,20 @@ function Upload(props) {
 
   }
 
-
+  // Image form handler
   const saveImage = () => {
     const formdata = new FormData();
     formdata.append('siteplan', imageFile.file);
 
     axios.post("http://localhost:3001/sitemapUpload", formdata, {
-
       headers: { "Content-Type": "multipart/form-data" },
-
     })
       .then(() => {
         console.log('success');
 
       })
   }
-
+  // Creates project to the backend
   const addProject = () => {
 
     axios.post("http://localhost:3001/create", {
@@ -80,7 +77,6 @@ function Upload(props) {
 
       })
   }
-  
   const classes = useStyles();
 
   return (
@@ -110,11 +106,11 @@ function Upload(props) {
                 variant="body1"
                 style={{ paddingLeft: "15px", color: "black" }}>
                 <label>Select an image</label>
-                <input className={classes.imageName} name="upload_file" type='file' 
-                accept="image/*,.pdf"
-                onChange={handleInputChange} />
+                <input className={classes.imageName} name="upload_file" type='file'
+                  accept="image/*,.pdf"
+                  onChange={handleInputChange} />
               </Typography>
-              {/* <Button onClick={saveImage}>Save</Button> */}
+
             </Stack>
             {/* preview image */}
             <div style={{ paddingLeft: "20px" }}>
@@ -179,7 +175,6 @@ function Upload(props) {
           </LocalizationProvider>
         </Box>
       </Stack>
-      {/* {isSucces !== null ? <h6> {isSucces} </h6> : null} */}
       {/* action button */}
       <Box textAlign="center">
         {/* confirm button */}
@@ -192,7 +187,7 @@ function Upload(props) {
             saveImage();
             cancelHandler();
           }}
-          style={{ background: theme.palette.primary.main}}
+          style={{ background: theme.palette.primary.main }}
         >
           Confirm
         </Button>
@@ -202,8 +197,10 @@ function Upload(props) {
           variant="outlined"
           className={classes.modButton}
           onClick={cancelHandler}
-          style={{ border: "1.5px solid #d11a2a",
-          color: "#d11a2a"}}
+          style={{
+            border: "1.5px solid #d11a2a",
+            color: "#d11a2a"
+          }}
         >
           Cancel
         </Button>

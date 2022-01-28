@@ -39,8 +39,8 @@ app.use(
 
 // Database credentials
 const db = mysql.createConnection({
-  user: "root",
-  host: "127.0.0.1",
+  user: "root", //your username from mysql
+  host: "127.0.0.1", // your host name
   password: "", //your sql password
   database: "siteplandesigner_new", //your sql schema
   dateStrings: true,
@@ -179,6 +179,7 @@ app.post("/sitemapupload", async (req, res) => {
       const classifiedsadd = {
         image: req.file.filename,
       };
+      //update project with image file
       db.query("UPDATE project SET ? ORDER BY projectID DESC LIMIT 1", classifiedsadd, (err, results) => {
         if (err) throw err;
         res.json({ success: 1 });
@@ -189,18 +190,6 @@ app.post("/sitemapupload", async (req, res) => {
   }
 });
 
-//retrieve image from mysql
-// app.get("/getSitemap", (req, res) => {
-//   const id = 1;
-//   const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;";
-//   db.query(sql, [id], (err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send({ siteplan: result[0].siteplan });
-//     }
-//   });
-// });
 
 //insert project in mysql table
 app.post("/create", (req, res) => {
@@ -222,16 +211,7 @@ app.post("/create", (req, res) => {
     }
   );
 });
-// //retrive project from mysql to Search field
-// app.get("/searchProject", (req, res) => {
-//   db.query("SELECT projectID, title FROM project ", (err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send(result);
-//     }
-//   });
-// });
+
 
 //retrive project from mysql
 app.get("/getProject", (req, res) => {
@@ -244,52 +224,6 @@ app.get("/getProject", (req, res) => {
   });
 });
 
-// //retrive project from mysql to Search field
-// app.get("/searchProject", (req, res) => {
-//   db.query("SELECT id, title, client FROM project ", (err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send(result);
-//     }
-//   });
-// });
-
-// //UPDATE project
-// app.get("/getProjectID/:projectID", (req, res) => {
-//   const projectID = req.params.projectID;
-
-//   db.query(
-//     "SELECT title, client, address, date FROM project WHERE projectID = ?",
-//     projectID,
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.send(result);
-//       }
-//     }
-//   );
-// });
-
-// app.put("/updateProject", (req, res) => {
-//   const projectID = req.body.projectID;
-//   const title = req.body.title;
-//   const client = req.body.client;
-//   const address = req.body.address;
-//   const date = req.body.date;
-//   db.query(
-//     "UPDATE project SET title = ?, client = ?, address = ?, date = ? WHERE projectID = ?",
-//     [title, client, address, date, projectID],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.send(result);
-//       }
-//     }
-//   );
-// });
 
 //DELETE project on Dashboard page
 app.delete("/deleteProject/:projectID", (req, res) => {
@@ -333,37 +267,7 @@ const itemStorage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
-// //insert image into mysql
-// app.post("/itemupload", async (req, res) => {
-//   try {
-//     // 'legends' is the name of our file input field in the HTML form
-//     let upload = multer({ storage: itemStorage }).single("legends");
 
-//     upload(req, res, function (err) {
-//       // req.file contains information of uploaded file
-//       // req.body contains information of text fields
-
-//       if (!req.file) {
-//         return res.send("Please select an image to upload");
-//       } else if (err instanceof multer.MulterError) {
-//         return res.send(err);
-//       } else if (err) {
-//         return res.send(err);
-//       }
-
-//       const classifiedsadd = {
-//         image: req.file.filename,
-//       };
-//       const sql = "INSERT INTO item_image SET ?";
-//       db.query(sql, classifiedsadd, (err, results) => {
-//         if (err) throw err;
-//         res.json({ success: 1 });
-//       });
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
 //insert image into mysql
 app.post("/itemupload", async (req, res) => {
   try {
@@ -504,19 +408,6 @@ app.delete("/deleteItem/:id", (req, res) => {
     }
   });
 });
-
-// //retrieve image from mysql
-// app.get("/getSitemap", (req, res) => {
-//   const id = 1;
-//   const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;";
-//   db.query(sql, [id], (err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send({ siteplan: result[0].siteplan });
-//     }
-//   });
-// });
 
 
 //Backend is listening (on)

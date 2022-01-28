@@ -76,9 +76,7 @@ export default function ButtonAppBar() {
             Site Plan Designer
           </Typography>
 
-          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, justifyContent: "center" }}>
-            Dashboard
-          </Typography> */}
+
 
           <Stack direction="row" spacing={1}>
             <Button
@@ -97,19 +95,7 @@ export default function ButtonAppBar() {
                 Legend library
               </Link>
             </Button>
-            {/* 
-          <label htmlFor='contained-button-file'>
-              <Input accept='image/*' id='contained-button-file' multiple type='file'/>
-              <Button 
-              component='span' 
-              variant='contained' size='small' 
-              startIcon={<AddCircleIcon />}
-              style={{
-                backgroundColor: theme.palette.primary.main,
-                minHeight: "40px",
-                maxHeight: "50px",
-              }}>New Project</Button>
-            </label> */}
+      
             <Button
               variant="contained"
               size="small"
@@ -129,7 +115,7 @@ export default function ButtonAppBar() {
               <Upload onCancel={closeHandler} onConfirm={closeHandler} />
             )}
           </Stack>
-         
+
           <div style={{ marginLeft: "10px" }}>
             <IconButton
               id="fade-button"

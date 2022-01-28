@@ -25,13 +25,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
-// import { useParams } from "react-router-dom";
+
 
 function NewLibrary() {
   const classes = useStyles();
 
-  // const { categoryID } = useParams();
 
+  //Get Category from backend
   const [category, setCategory] = useState([]);
   const getAllCategory = () => {
     axios.get("http://localhost:3001/getCategory").then((response) => {
@@ -64,7 +64,7 @@ React.useEffect(()=>{
   handleCategoryClick()
 },[selectedIndex])
 
-  // Clicking this will render items belonging that category (must double click category)
+  // Clicking this will render items belonging that category 
   const handleCategoryClick = () => {
     axios
       .post("http://localhost:3001/CategoryItem", {
@@ -107,6 +107,7 @@ React.useEffect(()=>{
     });
   };
 
+  //Initial load, render category and all items
   React.useEffect(() => {
     getAllCategory();
     getAllItem();
@@ -269,6 +270,7 @@ React.useEffect(()=>{
             </div>
             <div>
               <Container className={classes.cardGrid} maxWidth="md">
+              {/* //Dynamic items cards if user not use search filter */}
                 {filteredData.length !== 0 ? (
                   <Grid container spacing={4}>
                     {filteredData.map((items) => (
@@ -321,6 +323,7 @@ React.useEffect(()=>{
                     ))}
                   </Grid>
                 ) : (
+                  //Dynamic items cards if user not use search filter
                   <Grid container spacing={4}>
                     {item.map((items) => (
                       <Grid item key={items.id} xs={12} sm={6} md={4}>

@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import useStyles from "../pages/styles";
 import { Link } from "react-router-dom";
-// import { Search } from './SearchProject';
 import EditIcon from "@mui/icons-material/Edit";
 import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -35,10 +34,12 @@ const Main = () => {
       setProject(projectList);
     });
   };
+  //On reload, run this function
   React.useEffect(() => {
     getAllProject();
   }, []);
 
+  //Delete function
   const deleteProject = (projectID) => {
     axios
       .delete(`http://localhost:3001/deleteProject/${projectID}`)
@@ -50,12 +51,24 @@ const Main = () => {
         );
       });
   };
+  // react-router-dom to navigate to page
   const history = useNavigate()
+
+  // Retrieve project info
   const passProject = (projectID) => {
         setProject(projectID);
         console.log(projectID)
         history(`/plandesign/${projectID}`)
   };
+const [projectExp, setProjectExp]=useState([])
+  // Retrieve project info
+  const passExport = (projectID) => {
+    setProjectExp(projectID);
+    console.log(projectID)
+    history(`/export/${projectID}`)
+};
+
+  //Doesnt work
   const updateProject = (projectID) => {
     setProject(projectID);
     console.log(projectID)
@@ -71,10 +84,11 @@ const Main = () => {
   function openHandler() {
     setModalIsOpen(true);
   }
+  //Display project info
   const [getID, setID] = useState([]);
   const getprojectID = (projectID) => {
     axios
-      .get("http://localhost:3001/getProjectID/${projectID}")
+      .get(`http://localhost:3001/getProjectID/${projectID}`)
       .then((response) => {
         console.log(response);
         setID(response.data);
@@ -90,7 +104,7 @@ const Main = () => {
     const newFilter = project.filter((projects) => {
       return projects.title.toLowerCase().includes(searchWord.toLowerCase());
     });
-
+// if empty, re-render project page
     if (searchWord === "") {
       setFilteredData(project);
     } else {
@@ -124,7 +138,9 @@ const Main = () => {
           </Box>
         </Box>
       </div>
+      {/* // Dynamic Project Cards */}
       <div>
+        
         <Container className={classes.cardGrid} maxWidth="auto">
           {filteredData.length !== 0 ? (
             <Grid container spacing={4}>
@@ -156,8 +172,7 @@ const Main = () => {
                     </CardContent>
                     <CardActions>
                       <Button
-                        // component={Link}
-                        // to="/plandesign"
+                      // Pass the projectID to the Design page
                         onClick={(e)=> passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
@@ -197,8 +212,7 @@ const Main = () => {
                         />
                       )}
                       <Button
-                        component={Link}
-                        to="/export"
+                         onClick={(e)=> passExport(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<ExitToAppIcon />}
@@ -242,7 +256,6 @@ const Main = () => {
                     <CardMedia
                       className={classes.cardMedia}
                       title={projects.title}
-                      // image="https://www.roomsketcher.com/wp-content/uploads/2017/06/RoomSketcher-site-plan-landscape-design-garden-deck.jpg"
                             component="img"
                             src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
                     /></Box>
@@ -264,8 +277,7 @@ const Main = () => {
                     </CardContent>
                     <CardActions>
                       <Button
-                        // component={Link}
-                        // to="/plandesign"
+                        
                         onClick={(e)=> passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
@@ -301,8 +313,7 @@ const Main = () => {
                         />
                       )}
                       <Button
-                        component={Link}
-                        to="/export"
+                         onClick={(e)=> passExport(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<ExitToAppIcon />}

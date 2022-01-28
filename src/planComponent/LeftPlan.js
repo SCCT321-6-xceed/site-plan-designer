@@ -8,7 +8,6 @@ import {
   ListItemButton,
   ListItemText,
   ListItem,
-  Link,
 } from "@mui/material";
 import { Collapse, Button } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -44,7 +43,6 @@ const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
 
   //handle collapse
   const [selectedIndex1, setSelectedIndex1] = React.useState("")
-
   const handleClick1 = index1 => {
     if (selectedIndex1 === index1) {
       setSelectedIndex1("")
@@ -170,8 +168,7 @@ const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
               <List component="div" disablePadding>
                 <ListItem >
                   {/* <ImageList sx={{ width: 500, height: 450 }} > */}
-                  {/* 200, 200 looks much better. has to be fixed later. note: images are being displayed on konva canvas at 60px*/}
-                  <ImageList sx={{ width: 200, height: 200 }} > 
+                  <ImageList sx={{ width: "100%", height: 250 }} > 
                     {item.map((items) => (
                       <ImageListItem key={items.id} value={categories.id}>
                         <img 

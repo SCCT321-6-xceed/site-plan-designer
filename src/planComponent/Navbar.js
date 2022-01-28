@@ -18,9 +18,8 @@ import { useState } from "react";
 import { Logout } from "@mui/icons-material";
 import { ListItemIcon } from "@mui/material";
 import { BurstModeOutlined } from "@mui/icons-material";
-import { ExpandMore } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import Axios from "axios";
+import { useNavigate, useMatch } from "react-router-dom";
+import axios from "axios";
 
 
 export default function ButtonAppBar() {
@@ -37,12 +36,29 @@ export default function ButtonAppBar() {
   };
 
   const logout = () => {
-    Axios.post("http://localhost:3001/logout", {});
+    axios.post("http://localhost:3001/logout", {});
     history("/");
     localStorage.removeItem("token");
     setLoginStatus(false);
   };
 
+  const [passID, setpassID] = useState([])
+  const {
+    params: { projectID },
+  } = useMatch('/plandesign/:projectID');
+  console.log(projectID)
+  const passProject = () => {
+    axios
+      .get(`http://localhost:3001/passProject/${projectID}`)
+      .then((response) => {
+        const id = response.data;
+        setpassID(id);
+        console.log(id);
+      });
+  };
+  React.useEffect(() => {
+    passProject();
+  }, []);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -64,13 +80,12 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Site Plan Designer
           </Typography>
+          {passID.map((passIDs) =>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Project name/ Site 1<ExpandMore />
+            {passIDs.title}
           </Typography>
-          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, justifyContent: "center" }}>
-            Dashboard
-          </Typography> */}
-
+          )}
+          
           <Stack direction="row" spacing={1}>
             <Button
               variant="text"
@@ -89,14 +104,7 @@ export default function ButtonAppBar() {
               </Link>
             </Button>
           </Stack>
-          {/* <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2, marginLeft: 1 }}>
-              <Avatar>R</Avatar>
-            </IconButton> */}
+          {/* //Profile  */}
           <div style={{ marginLeft: "10px" }}>
             <IconButton
               id="fade-button"
