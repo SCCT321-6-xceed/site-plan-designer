@@ -171,9 +171,9 @@ const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
                 <ListItem >
                   {/* <ImageList sx={{ width: 500, height: 450 }} > */}
                   {/* 200, 200 looks much better. has to be fixed later. note: images are being displayed on konva canvas at 60px*/}
-                  <ImageList sx={{ width: 200, height: 200 }} > 
+                  <ImageList sx={{ width: "100%", height: 200 }} > 
                     {item.map((items) => (
-                      <ImageListItem key={items.id} value={categories.id}>
+                      <ImageListItem key={items.id} value={categories.id} >
                         <img 
                           src= {process.env.PUBLIC_URL + `/item/${items.image}`}
                           onDragStart={(e) => {

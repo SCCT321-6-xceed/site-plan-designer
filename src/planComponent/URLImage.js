@@ -36,15 +36,17 @@ class URLImage extends React.Component {
     return (
       <Image
         x={0}
-        y={0}
+        y={10}
         // width={this.props.width}
         // height={this.props.height}
-        width={1680}
-        height={1000}
+        // width={1680}
+        // height={1000}
         image={this.state.image}
         ref={node => {
           this.imageNode = node;
         }}
+        style={{align: 'center'}}
+
       />
     );
   }
