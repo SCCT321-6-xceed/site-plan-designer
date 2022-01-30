@@ -14,6 +14,7 @@ import { render } from 'react-dom';
 import { Html } from 'react-konva-utils';
 import { useMatch } from 'react-router-dom';
 import axios from "axios";
+import { Collapse, Button } from "@mui/material";
 
 const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo, setDemo, innerWidth, innerHeight }) => {
   const stageRef = React.useRef();
@@ -55,6 +56,25 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
     passProject();
   }, []);
 
+  function downloadURI(uri, name) {
+    var link = document.createElement('a');
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  const handleExport = () => {
+    const uri = stageRef.current.toDataURL();
+    console.log(uri);
+    // we also can save uri as file
+    // but in the demo on Konva website it will not work
+    // because of iframe restrictions
+    // but feel free to use it in your apps:
+    downloadURI(uri, 'stage.png');
+  };
+
   const URLIMAGE = ({ image }) => {
     const [img] = useImage(image.src);
     return (
@@ -62,27 +82,28 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
         image={img}
         x={image.x}
         y={image.y}
-        width={60}
-        height={60}
+        width={30}
+        height={30}
         draggable
         onDragEnd={(e) => {
           const xoffset = (innerWidth - width) / 2;
           const yoffset = 10;
+          const half = 15; /* if you want to change the width and height from 30, be sure width and height are the same value, AND half = width / 2.*/
 
           image.x = e.target.x()
-          if (e.target.x() < 30 + xoffset) {
-            image.x = 30 + xoffset /* values are 30 because all legends are of size 60 and offsetted by 60/2 = 30 */
+          if (e.target.x() < half + xoffset) {
+            image.x = half + xoffset /* values are 30 because all legends are of size 60 and offsetted by 60/2 = 30 */
           }
-          if (e.target.x() > width - 30 + xoffset) {
-            image.x = width - 30 + xoffset
+          if (e.target.x() > width - half + xoffset) {
+            image.x = width - half + xoffset
           }
           
           image.y = e.target.y()
-          if (e.target.y() < 30 + yoffset) {
-            image.y = 30 + yoffset  
+          if (e.target.y() < half + yoffset) {
+            image.y = half + yoffset  
           }
-          if (e.target.y() > height - 30 + yoffset) {
-            image.y = height - 30 + yoffset
+          if (e.target.y() > height - half + yoffset) {
+            image.y = height - half + yoffset
           }
           setDemo(demo + 1);
           demo += 1;  
@@ -92,15 +113,17 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
           console.log("Image log", image);
           setCurImg(image);
         }}
+
         /* offsetted to use center of the img */
-        offsetX={img ? 30 : 0}
-        offsetY={img ? 30 : 0}
+        offsetX={img ? 15 : 0} /* these values should be equal to the variable "half", be sure to update them if you play around with the width and height */
+        offsetY={img ? 15 : 0}
       />
     );
   };
 
   return (
    <div>
+      <Button onClick={handleExport}>Download Siteplan</Button>
       <div
         /* this div handles the drop */
         onDrop={(e) => {
@@ -144,8 +167,6 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
         }}
       >
         <Stage
-          // width={width}
-          // height={height + 10}
           width={innerWidth}
           height={innerHeight}
           ref={stageRef}
@@ -156,20 +177,8 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
               <IMAGE
                 x={(innerWidth - width) / 2}
                 y={10}
-                // width={this.props.width}
-                // height={this.props.height}
-                // width={1680}
-                // height={1000}
-                // image={process.env.PUBLIC_URL + `/sitemap/${passIDs.image}`}
                 image={srcImg}
               />
-
-              // <URLImage
-              //   ref={srcImgRef}
-              //   component="img"
-              //   style={{align: 'center'}}
-              //   src={process.env.PUBLIC_URL + `/sitemap/${passIDs.image}`}
-              // />
             )}
           </Layer>
           
