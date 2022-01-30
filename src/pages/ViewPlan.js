@@ -34,7 +34,7 @@ const ViewPlan = () => {
   const [url, setUrl] = useState('');
   const [type, setType] = useState('');
   const [curItem, setCurItem] = useState();
-  const [images, setImages] = React.useState([]); 
+  const [images, setImages] = useState([]); 
   const [demo, setDemo] = useState(0);
 
   return (

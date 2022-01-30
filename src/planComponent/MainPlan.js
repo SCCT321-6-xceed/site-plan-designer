@@ -9,7 +9,7 @@ import axios from "axios";
 const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo, setDemo, innerWidth, innerHeight }) => {
   const stageRef = React.useRef();
   const [curImg, setCurImg] = React.useState();
-  
+
   const [width, setWidth] = useState()
   const [height, setHeight] = useState()
 
@@ -43,7 +43,26 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
 
   React.useEffect(() => {
     passProject();
+    // addIcon();
   }, []);
+  const [iconName, seticonName] = useState("")
+  const [positionX, setpositionX] = useState(0);
+  const [positionY, setpositionY] = useState(0);
+  const addIcon = () => {
+    axios
+      .post(`http://localhost:3001/addPosition/` + projectID, {
+        iconName: iconName,
+        positionX: positionX,
+        positionY: positionY,
+        projectID: projectID
+      })
+      .then((res) => {
+        // then print response status
+        console.warn(res);
+        console.log(curItem)
+      });
+  }; 
+
 
   const URLIMAGE = ({ image }) => {
     const [img] = useImage(image.src);
@@ -76,7 +95,7 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
           }
           setDemo(demo + 1);
           demo += 1;  
-          console.log("URLIMAGE", image.x, image.y);
+          
         }}
         onClick = {(e) => {
           console.log("Image log", image);
@@ -100,19 +119,22 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
             images.concat([
               {
                 ...stageRef.current.getPointerPosition(),
-                src: url, /* this is the url we have saved from Element.js */
+                src: url, 
                 key: uuidv4(),
                 type: type,
                 name: curItem.name,
               },
             ])
+           
           );
+          addIcon();
           setCount((item)=>({...item, total: (count.total ? count.total : 0) + 1}));
           console.log("type", type);
           setCount((item)=>({...item, [type]: (count[type] ? count[type] : 0) + 1}));
           console.log("type and count", type, count[type]);
           console.log("count now", count);
           console.log("passId", passID[0]);
+          
         }}
         onDragOver={(e) => e.preventDefault()}
         tabIndex={0}
@@ -125,7 +147,7 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
             if (images.some(item => item === curImg)) {
               console.log("img found");
               setImages((state) => state.filter((item) => item !== curImg));
-
+          
               /* updating legend count */
               setCount((item)=>({...item, total: (count.total ? count.total : 0) - 1}));
               setCount((item)=>({...item, [curImg.type]: (count[curImg.type] ? count[curImg.type] : 0) - 1}));
@@ -140,17 +162,17 @@ const MainPlan = ({url, type, count, setCount, curItem, images, setImages, demo,
           style={{border: '1px solid grey', paddingBottom: 10}}
         >
           <Layer>
-          
               <IMAGE
                 x={(innerWidth - width) / 2.60}
                 y={20}
                 image={srcImg}
               />
-          
           </Layer>
           
           <Layer>
             {images.map((image) => {
+              //  console.log("URLIMAGE", image.x, image.y);
+              
               return (
                 <URLIMAGE image={image} />
               )
