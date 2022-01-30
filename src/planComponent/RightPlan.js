@@ -61,6 +61,7 @@ const RightPlan = (props) => {
       setItem(itemList);
     });
   };
+  
   const [category, setCategory] = React.useState([]);
   const getAllCategory = () => {
     axios.get("http://localhost:3001/getCategory").then((response) => {
@@ -144,18 +145,7 @@ const RightPlan = (props) => {
           <ListItemText primary={`[${props.images.length - index}] - ${image.name} at (${image.x}, ${image.y})`} sx={{ borderBottom: 1 }} />
         )
       })}
-      {/* <ListItemText primary="[1] - Line" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[2] Circle" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[3] Item - Led Light" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[4] - Red Line" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[5] Black Circle" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[6] Item - Led Light" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[7] - Line" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[8] Circle" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[9] Item - Led Light" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[10] - Line" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[11] Circle" sx={{ borderBottom: 1 }} />
-      <ListItemText primary="[12] Item - Led Light" sx={{ borderBottom: 1 }} /> */}
+   
     </List>
 {/* --------------------------Legend count -------------------------------*/}
       <Box

@@ -474,7 +474,24 @@ app.get("/passProject/:projectID", (req, res) => {
   );
 });
 
-
+app.post("/addPosition/:projectID",(req,res)=>{
+  const iconName = req.body.iconName;
+  const positionX = req.body.positionX;
+  const positionY = req.body.positionY;
+  const projectID = req.body.projectID;
+  db.query(
+    "INSERT INTO icon (iconName, positionX, positionY, project_projectID) VALUES (?,?,?,?)",
+    [iconName,positionX,positionY,projectID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+        console.log(result);
+      }
+    }
+  );
+})
 //Backend is listening (on)
 app.listen(3001, () => {
   console.log("Server is running - 3001");
