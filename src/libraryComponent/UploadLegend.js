@@ -128,6 +128,7 @@ function UploadLegend(props) {
                 className={classes.imageName}
                 name="upload_file"
                 type="file"
+                accept="image/*"
                 onChange={handleInputChange}
               />
             </Typography>

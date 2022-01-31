@@ -107,7 +107,7 @@ function Upload(props) {
                 style={{ paddingLeft: "15px", color: "black" }}>
                 <label>Select an image</label>
                 <input className={classes.imageName} name="upload_file" type='file'
-                  accept="image/*,.pdf"
+                  accept="image/*"
                   onChange={handleInputChange} />
               </Typography>
 
