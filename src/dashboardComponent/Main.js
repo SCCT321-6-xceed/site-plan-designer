@@ -49,7 +49,9 @@ const Main = () => {
             return projects.projectID !== projectID;
           })
         );
+        window.location.reload();
       });
+      
   };
   // react-router-dom to navigate to page
   const history = useNavigate()
@@ -146,15 +148,15 @@ const [projectExp, setProjectExp]=useState([])
             <Grid container spacing={4}>
               {filteredData.map((projects) => (
                 <Grid item xs={12} sm={6} md={4}>
-                  <Card className={classes.card} key={projects.id}>
+                  <Card className={classes.card2} key={projects.id}>
                     <CardHeader title={projects.title}> </CardHeader>
                     <CardMedia
-                      className={classes.cardMedia}
+                      className={classes.cardMedia2}
                       title="Image Title"
                       component="img"
                       src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
                     />
-                    <CardContent className={classes.cardContent}>
+                    <CardContent className={classes.cardContent2}>
                       <Typography variant="h7">
                         {" "}
                         Client: {projects.client}{" "}
@@ -250,16 +252,16 @@ const [projectExp, setProjectExp]=useState([])
             <Grid container spacing={4}>
               {project.map((projects) => (
                 <Grid item xs={12} sm={6} md={4}>
-                  <Card className={classes.card} key={projects.id}>
+                  <Card className={classes.card2} key={projects.id}>
                     <CardHeader title={projects.title}> </CardHeader>
                     <Box sx={{maxHeight: "350px"}}>
                     <CardMedia
-                      className={classes.cardMedia}
+                      className={classes.cardMedia2}
                       title={projects.title}
                             component="img"
                             src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
                     /></Box>
-                    <CardContent className={classes.cardContent}>
+                    <CardContent className={classes.cardContent2}>
                       <Typography variant="h7">
                         {" "}
                         Client: {projects.client}{" "}

@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardGrid: {
-    padding: "20px 20px",
+    padding: "20px 0px",
   },
   card: {
     height: "100%",
@@ -16,16 +16,21 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f2f2f2",
   },
   cardMedia: {
-    paddingTop: "10px",
-    height:"300px"
+    paddingTop: "30px",
+    paddingBottom: "10px",
+    paddingLeft: "90px",
+    maxHeight: "100px",
+    maxWidth: "100px",
+    width: "90px",
   },
   cardContent: {
     flexGrow: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   cardButton: {
     marginRight: "2px",
   },
-
   card2: {
     height: "100%",
     width: "md",
@@ -37,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMedia2: {
     paddingTop: "10px",
-    maxheight: "200px",
+    height: "300px",
     minHeight: "300px",
   },
   cardContent2: {
