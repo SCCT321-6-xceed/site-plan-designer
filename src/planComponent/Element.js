@@ -1,3 +1,6 @@
+// export default Element;
+
+/* Completely using my new Element.js */
 import React from 'react';
 import { useDrag } from "react-dnd";
 import { scryRenderedComponentsWithType } from 'react-dom/cjs/react-dom-test-utils.production.min';

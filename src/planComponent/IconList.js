@@ -6,6 +6,7 @@ import Element from './Element'
 import axios from 'axios';
 
 export default function IconList({type}) {
+
   // On initial load, loads all items
 const [item, setItem] = React.useState([]);
 const getAllItem = () => {
@@ -19,6 +20,7 @@ React.useEffect(() => {
   
   getAllItem();
 }, []);
+
   return (
     <ImageList sx={{ width: 500, height: 450 }}>
       {item.map((items) => (

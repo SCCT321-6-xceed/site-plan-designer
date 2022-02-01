@@ -90,12 +90,6 @@ function NewLibrary() {
     setSelectedIndex(index);
   };
   
-
-
-
-  
-
-  
   // Clicking this will render items belonging that category 
   const handleCategoryClick = () => {
     axios
@@ -119,9 +113,6 @@ function NewLibrary() {
     getAllCategory();
     getAllItem();
   }, []);
-
-
-  
 
   //Search filter
   const [filteredData, setFilteredData] = React.useState([]);
@@ -283,14 +274,16 @@ function NewLibrary() {
                   <Grid container spacing={4}>
                     {filteredData.map((items) => (
                       <Grid item key={items.id} xs={12} sm={6} md={4}>
-                        <Card className={classes.card2}>
+                        <Card className={classes.card}>
                           <CardMedia
-                            className={classes.cardMedia2}
-                            title={items.name}
+                            className={classes.cardMedia}
+                            title="Image Title"
                             component="img"
-                            src= {process.env.PUBLIC_URL + `/item/${items.image}`}
+                            src={
+                              process.env.PUBLIC_URL + `/item/${items.image}`
+                            }
                           />
-                          <CardContent className={classes.cardContent2}>
+                          <CardContent className={classes.cardContent}>
                             <Typography variant="h6">{items.name}</Typography>
                             <Typography variant="h7">
                               Price: ${items.price}
@@ -334,16 +327,16 @@ function NewLibrary() {
                   <Grid container spacing={4}>
                     {item.map((items) => (
                       <Grid item key={items.id} xs={12} sm={6} md={4}>
-                        <Card className={classes.card2}>
+                        <Card className={classes.card}>
                           <CardMedia
-                            className={classes.cardMedia2}
+                            className={classes.cardMedia}
                             title={items.name}
                             component="img"
                             src={
                               process.env.PUBLIC_URL + `/item/${items.image}`
                             }
                           />
-                          <CardContent className={classes.cardContent2}>
+                          <CardContent className={classes.cardContent}>
                             <Typography variant="h6">{items.name}</Typography>
                             <Typography variant="h7">
                               Price: ${items.price}
