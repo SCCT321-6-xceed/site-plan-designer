@@ -86,7 +86,7 @@ const ExportNav = () => {
       Sum: "50.00",
     },
   ]);
-
+  //modal usestate
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -108,6 +108,7 @@ const ExportNav = () => {
       head: [columns_data],
       body: temp_rows,
     });
+    //pass the text to pdf with the x,y coordinates
     doc.text("Invoice", 100, 10, { align: "center" });
     doc.text("Site plan", 100, 105, { align: "center" });
     doc.setFontSize(10);
