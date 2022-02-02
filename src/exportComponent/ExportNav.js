@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import { theme } from "../theme";
 import Modal from "@mui/material/Modal";
 import MainPlan from "../planComponent/MainPlan";
-import LegendCount from "./LegendCount";
 
 const ExportNav = () => {
   const style = {
@@ -70,7 +69,7 @@ const ExportNav = () => {
                   <EditIcon />
                   Edit
                 </Button>
-                <Button variant="contained" onClick={handleOpen}>
+                <Button variant="contained">
                   <ExitToAppIcon />
                   Export
                 </Button>
@@ -92,11 +91,7 @@ const ExportNav = () => {
                       <MainPlan />
                       <Button>Save</Button>
                       <Button>Return</Button>
-                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor
-                        ligula.
-                      </Typography>
-                      <LegendCount />
+                     
                     </Box>
                   </Container>
                 </Modal>

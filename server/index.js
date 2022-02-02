@@ -39,8 +39,8 @@ app.use(
 
 // Database credentials
 const db = mysql.createConnection({
-  user: "root", //your user
-  host: "127.0.0.1", //your hostname
+  user: "root", //your username from mysql
+  host: "127.0.0.1", // your host name
   password: "password", //your sql password
   database: "siteplandesigner_new", //your sql schema
   dateStrings: true,
@@ -157,7 +157,6 @@ const storage = multer.diskStorage({
 });
 
 
-
 //insert image into mysql
 app.post("/sitemapupload", async (req, res) => {
   try {
@@ -180,6 +179,7 @@ app.post("/sitemapupload", async (req, res) => {
       const classifiedsadd = {
         image: req.file.filename,
       };
+      //update project with image file
       db.query("UPDATE project SET ? ORDER BY projectID DESC LIMIT 1", classifiedsadd, (err, results) => {
         if (err) throw err;
         res.json({ success: 1 });
@@ -190,18 +190,6 @@ app.post("/sitemapupload", async (req, res) => {
   }
 });
 
-//retrieve image from mysql
-app.get("/getSitemap", (req, res) => {
-  const id = 1;
-  const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;";
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send({ siteplan: result[0].siteplan });
-    }
-  });
-});
 
 //insert project in mysql table
 app.post("/create", (req, res) => {
@@ -223,9 +211,11 @@ app.post("/create", (req, res) => {
     }
   );
 });
-//retrive project from mysql to Search field
-app.get("/searchProject", (req, res) => {
-  db.query("SELECT projectID, title FROM project ", (err, result) => {
+
+
+//retrive project from mysql
+app.get("/getProject", (req, res) => {
+  db.query("SELECT * FROM project ORDER BY projectID DESC", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -234,41 +224,6 @@ app.get("/searchProject", (req, res) => {
   });
 });
 
-//UPDATE project
-app.get("/getProjectID/:projectID", (req, res) => {
-  const projectID = req.params.projectID;
-
-  db.query(
-    "SELECT title, client, address, date FROM project WHERE projectID = ?",
-    projectID,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-
-app.put("/updateProject", (req, res) => {
-  const projectID = req.body.projectID;
-  const title = req.body.title;
-  const client = req.body.client;
-  const address = req.body.address;
-  const date = req.body.date;
-  db.query(
-    "UPDATE project SET title = ?, client = ?, address = ?, date = ? WHERE projectID = ?",
-    [title, client, address, date, projectID],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
 
 //DELETE project on Dashboard page
 app.delete("/deleteProject/:projectID", (req, res) => {
@@ -285,6 +240,24 @@ app.delete("/deleteProject/:projectID", (req, res) => {
     }
   );
 });
+//GET project to pass to design page:
+app.get("/passProject/:projectID", (req, res) => {
+  const projectID = req.params.projectID;
+  console.log(projectID)
+  db.query(
+    "SELECT * FROM project WHERE projectID = ?",
+    projectID,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log(result)
+      }
+    }
+  );
+});
+
 //---------------------------------------LIBRARY/CATEGORY---------------------------------------------------------
 //store item
 const itemStorage = multer.diskStorage({
@@ -326,6 +299,8 @@ app.post("/itemupload", async (req, res) => {
     console.log(err);
   }
 });
+
+
 
 // insert legend item in mysql table
 app.post("/addItem", (req, res) => {
@@ -378,6 +353,8 @@ app.get("/getCategory", (req, res) => {
 // Displays the items according to the category name
 app.post("/CategoryItem", (req, res) => {
   const selectedIndex = req.body.selectedIndex;
+  console.log(req.body.selectedIndex);
+
   db.query(
     "SELECT * FROM category, item WHERE category_id = ? AND category.id = item.category_id",
     [selectedIndex],
@@ -395,7 +372,7 @@ app.post("/CategoryItem", (req, res) => {
 // retrive legend item from mysql
 app.get("/getItem", (req, res) => {
   db.query(
-    "SELECT * FROM item ",
+    "SELECT * FROM item ORDER BY id DESC",
 
     (err, result) => {
       if (err) {
@@ -432,66 +409,7 @@ app.delete("/deleteItem/:id", (req, res) => {
   });
 });
 
-//retrieve image from mysql
-app.get("/getSitemap", (req, res) => {
-  const id = 1;
-  const sql = "SELECT * FROM sitemap WHERE id_sitemap = ? ;";
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send({ siteplan: result[0].siteplan });
-    }
-  });
-});
 
-//retrive project from mysql
-app.get("/getProject", (req, res) => {
-  db.query("SELECT * FROM project ", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
-});
-//---------------------------------------PLAN DESIGN---------------------------------------------------------
-//GET project to pass to design page:
-app.get("/passProject/:projectID", (req, res) => {
-  const projectID = req.params.projectID;
-  console.log(projectID)
-  db.query(
-    "SELECT * FROM project WHERE projectID = ?",
-    projectID,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-        console.log(result)
-      }
-    }
-  );
-});
-
-app.post("/addPosition/:projectID",(req,res)=>{
-  const iconName = req.body.iconName;
-  const positionX = req.body.positionX;
-  const positionY = req.body.positionY;
-  const projectID = req.body.projectID;
-  db.query(
-    "INSERT INTO icon (iconName, positionX, positionY, project_projectID) VALUES (?,?,?,?)",
-    [iconName,positionX,positionY,projectID],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(result);
-        console.log(result);
-      }
-    }
-  );
-})
 //Backend is listening (on)
 app.listen(3001, () => {
   console.log("Server is running - 3001");

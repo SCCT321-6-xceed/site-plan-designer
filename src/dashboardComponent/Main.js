@@ -34,10 +34,12 @@ const Main = () => {
       setProject(projectList);
     });
   };
+  //On reload, run this function
   React.useEffect(() => {
     getAllProject();
   }, []);
 
+  //Delete function
   const deleteProject = (projectID) => {
     axios
       .delete(`http://localhost:3001/deleteProject/${projectID}`)
@@ -47,16 +49,34 @@ const Main = () => {
             return projects.projectID !== projectID;
           })
         );
+        window.location.reload();
       });
+      
   };
-
+  // react-router-dom to navigate to page
   const history = useNavigate()
+
+  // Retrieve project info
   const passProject = (projectID) => {
         setProject(projectID);
         console.log(projectID)
         history(`/plandesign/${projectID}`)
   };
+const [projectExp, setProjectExp]=useState([])
+  // Retrieve project info
+  const passExport = (projectID) => {
+    setProjectExp(projectID);
+    console.log(projectID)
+    history(`/export/${projectID}`)
+};
 
+  //Doesnt work
+  const updateProject = (projectID) => {
+    setProject(projectID);
+    console.log(projectID)
+    history(`/dashboard/${projectID}`)
+};
+  
   //Update modal
   const [modalIsOpen, setModalIsOpen] = useState(false);
   function closeHandler() {
@@ -66,10 +86,11 @@ const Main = () => {
   function openHandler() {
     setModalIsOpen(true);
   }
+  //Display project info
   const [getID, setID] = useState([]);
   const getprojectID = (projectID) => {
     axios
-      .get("http://localhost:3001/getProjectID/${projectID}")
+      .get(`http://localhost:3001/getProjectID/${projectID}`)
       .then((response) => {
         console.log(response);
         setID(response.data);
@@ -85,7 +106,7 @@ const Main = () => {
     const newFilter = project.filter((projects) => {
       return projects.title.toLowerCase().includes(searchWord.toLowerCase());
     });
-
+// if empty, re-render project page
     if (searchWord === "") {
       setFilteredData(project);
     } else {
@@ -119,7 +140,9 @@ const Main = () => {
           </Box>
         </Box>
       </div>
+      {/* // Dynamic Project Cards */}
       <div>
+        
         <Container className={classes.cardGrid} maxWidth="auto">
           {filteredData.length !== 0 ? (
             <Grid container spacing={4}>
@@ -131,26 +154,29 @@ const Main = () => {
                       className={classes.cardMedia2}
                       title="Image Title"
                       component="img"
-                      src={
-                        process.env.PUBLIC_URL + `/sitemap/${projects.image}`
-                      }
+                      src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
                     />
                     <CardContent className={classes.cardContent2}>
                       <Typography variant="h7">
-                        Client: {projects.client}
+                        {" "}
+                        Client: {projects.client}{" "}
                       </Typography>
                       <br />
                       <Typography variant="h7">
-                        Address: {projects.address}
+                        {" "}
+                        Address: {projects.address}{" "}
                       </Typography>
                       <br />
                       <Typography variant="h7">
-                        Date: {projects.date}
+                        {" "}
+                        Date: {projects.date}{" "}
                       </Typography>
                     </CardContent>
                     <CardActions>
                       <Button
+                      // Pass the projectID to the Design page
                         onClick={(e)=> passProject(projects.projectID)}
+                        size="small"
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}
                         style={{
@@ -159,6 +185,7 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
+                       
                         Design
                       </Button>
                       <Button
@@ -171,12 +198,14 @@ const Main = () => {
                           fontWeight: "bold",
                           marginLeft: "10px",
                         }}
-                        onClick={() => {
+                        onClick={(e) => {
+                         updateProject(projects.projectID);
                           openHandler();
                           getprojectID();
                         }}
                       >
-                        Edit
+                        {" "}
+                        Edit{" "}
                       </Button>
                       {modalIsOpen && (
                         <UpdateModal
@@ -185,8 +214,7 @@ const Main = () => {
                         />
                       )}
                       <Button
-                        component={Link}
-                        to="/export"
+                         onClick={(e)=> passExport(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<ExitToAppIcon />}
@@ -196,7 +224,8 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        Export
+                        {" "}
+                        Export{" "}
                       </Button>
                       <Button
                         size="small"
@@ -211,7 +240,8 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        Delete
+                        {" "}
+                        Delete{" "}
                       </Button>
                     </CardActions>
                   </Card>
@@ -224,31 +254,32 @@ const Main = () => {
                 <Grid item xs={12} sm={6} md={4}>
                   <Card className={classes.card2} key={projects.id}>
                     <CardHeader title={projects.title}> </CardHeader>
-                    <Box sx={{ maxHeight: "350px" }}>
-                      <CardMedia
-                        className={classes.cardMedia2}
-                        title={projects.title}
-                        component="img"
-                        src={
-                          process.env.PUBLIC_URL + `/sitemap/${projects.image}`
-                        }
-                      />
-                    </Box>
+                    <Box sx={{maxHeight: "350px"}}>
+                    <CardMedia
+                      className={classes.cardMedia2}
+                      title={projects.title}
+                            component="img"
+                            src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
+                    /></Box>
                     <CardContent className={classes.cardContent2}>
                       <Typography variant="h7">
-                        Client: {projects.client}
+                        {" "}
+                        Client: {projects.client}{" "}
                       </Typography>
                       <br />
                       <Typography variant="h7">
-                        Address: {projects.address}
+                        {" "}
+                        Address: {projects.address}{" "}
                       </Typography>
                       <br />
                       <Typography variant="h7">
-                        Date: {projects.date}
+                        {" "}
+                        Date: {projects.date}{" "}
                       </Typography>
                     </CardContent>
                     <CardActions>
                       <Button
+                        
                         onClick={(e)=> passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
@@ -259,7 +290,8 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        Design
+                        {" "}
+                        Design{" "}
                       </Button>
                       <Button
                         size="small"
@@ -273,7 +305,8 @@ const Main = () => {
                         }}
                         onClick={openHandler}
                       >
-                        Edit
+                        {" "}
+                        Edit{" "}
                       </Button>
                       {modalIsOpen && (
                         <UpdateModal
@@ -282,8 +315,7 @@ const Main = () => {
                         />
                       )}
                       <Button
-                        component={Link}
-                        to="/export"
+                         onClick={(e)=> passExport(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<ExitToAppIcon />}
@@ -293,7 +325,8 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        Export
+                        {" "}
+                        Export{" "}
                       </Button>
                       <Button
                         size="small"
@@ -308,7 +341,8 @@ const Main = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        Delete
+                        {" "}
+                        Delete{" "}
                       </Button>
                     </CardActions>
                   </Card>

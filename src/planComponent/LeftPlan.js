@@ -21,9 +21,9 @@ import { Box } from "@mui/system";
 import { Search } from "./SearchIcon";
 import { useState } from "react";
 import axios from "axios";
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -39,19 +39,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
+const LeftPlan = ({ url, setUrl, type, setType, curItem, setCurItem }) => {
   const classes = useStyles();
 
   //handle collapse
-  const [selectedIndex1, setSelectedIndex1] = React.useState("")
+  const [selectedIndex1, setSelectedIndex1] = React.useState("");
 
-  const handleClick1 = index1 => {
+  const handleClick1 = (index1) => {
     if (selectedIndex1 === index1) {
-      setSelectedIndex1("")
+      setSelectedIndex1("");
     } else {
-      setSelectedIndex1(index1)
+      setSelectedIndex1(index1);
     }
-  }
+  };
 
   // On initial load, loads all items
   const [item, setItem] = React.useState([]);
@@ -73,7 +73,6 @@ const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
   React.useEffect(() => {
     getAllCategory();
     getAllItem();
-    
   }, []);
 
   // Active item
@@ -82,9 +81,9 @@ const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-  React.useEffect(()=>{
-    handleCategoryClick()
-  },[selectedIndex])
+  React.useEffect(() => {
+    handleCategoryClick();
+  }, [selectedIndex]);
 
   // Clicking this will render items belonging that category (must double click category)
   const handleCategoryClick = () => {
@@ -103,7 +102,8 @@ const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
         <Typography style={{ color: "#044474", fontWeight: "bold" }}>
-          {" "} Drawing Tools
+          {" "}
+          Drawing Tools
         </Typography>
         <ButtonGroup variant="contained">
           <Button
@@ -148,54 +148,63 @@ const LeftPlan = ({url, setUrl, type, setType, curItem, setCurItem}) => {
         <div>
           <Search />
         </div>
-          
-        {category.map((categories,index1)=>( /* db handling epicness starts here */
-          <div>
-            <ListItemButton onClick={(event) =>
-              handleListItemClick(
-                event,
-                categories.id,
-                handleClick1(index1),
-                handleCategoryClick(),
-              )}
-            >
-              <ListItemIcon>
-                <LightIcon />
-              </ListItemIcon>
-              <ListItemText key={categories.id}>{categories.categoryName}</ListItemText>
-              {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
 
-            <Collapse in={index1 === selectedIndex1} timeout="auto" unmountOnExit> 
-              <List component="div" disablePadding>
-                <ListItem >
-                  {/* <ImageList sx={{ width: 500, height: 450 }} > */}
-                  {/* 200, 200 looks much better. has to be fixed later. note: images are being displayed on konva canvas at 60px*/}
-                  <ImageList sx={{ width: "100%", height: 200 }} > 
-                    {item.map((items) => (
-                      <ImageListItem key={items.id} value={categories.id} >
-                        <img 
-                          src= {process.env.PUBLIC_URL + `/item/${items.image}`}
-                          onDragStart={(e) => {
-                            /* setting url for later use in MainPlan.js */
-                            console.log("items", items);
-                            setCurItem(items);
-                            setUrl(e.target.src);
-                            setType(items.category_id);
-                          }}
-                        />
-                        <ImageListItemBar
-                          title={items.name}
-                          position="below"
-                        />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
-                </ListItem>
-              </List>
-            </Collapse>
-          </div>
-        ))}
+        {category.map(
+          (categories, index1 /* db handling epicness starts here */) => (
+            <div>
+              <ListItemButton
+                onClick={(event) =>
+                  handleListItemClick(
+                    event,
+                    categories.id,
+                    handleClick1(index1),
+                    handleCategoryClick()
+                  )
+                }
+              >
+                <ListItemText key={categories.id}>
+                  {categories.categoryName}
+                </ListItemText>
+                {index1 === selectedIndex1 ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+
+              <Collapse
+                in={index1 === selectedIndex1}
+                timeout="auto"
+                unmountOnExit
+              >
+                <List component="div" disablePadding>
+                  <ListItem>
+                    {/* <ImageList sx={{ width: 500, height: 450 }} > */}
+                    {/* 200, 200 looks much better. has to be fixed later. note: images are being displayed on konva canvas at 60px*/}
+                    <ImageList sx={{ width: "100%", height: 200 }}>
+                      {item.map((items) => (
+                        <ImageListItem key={items.id} value={categories.id}>
+                          <img
+                            src={
+                              process.env.PUBLIC_URL + `/item/${items.image}`
+                            }
+                            onDragStart={(e) => {
+                              /* setting url for later use in MainPlan.js */
+                              console.log("items", items);
+                              setCurItem(items);
+                              setUrl(e.target.src);
+                              setType(items.category_id);
+                            }}
+                          />
+                          <ImageListItemBar
+                            title={items.name}
+                            position="below"
+                          />
+                        </ImageListItem>
+                      ))}
+                    </ImageList>
+                  </ListItem>
+                </List>
+              </Collapse>
+            </div>
+          )
+        )}
       </List>
     </Container>
   );

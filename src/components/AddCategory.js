@@ -10,12 +10,14 @@ import axios from "axios";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
+// Modal Handler
 function AddCategory(props) {
   function cancelHandler() {
     props.onCancel();
   }
 
   const [categoryName, setcategoryName] = useState("");
+  // Add category function
   const addCategory = () => {
     axios
       .post("http://localhost:3001/addCategory", {
@@ -33,16 +35,17 @@ function AddCategory(props) {
   return (
     <div
       style={{
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "#EAF1F9",
         position: "fixed",
         top: "20vh",
         left: "calc(50% - 8rem)",
         marginTop: "-50px",
         marginLeft: "-50px",
         width: "500px",
-        height: "300px",
+        height: "auto",
         padding: "1rem",
         zIndex: "1",
+        border: 16
       }}
     >
       <Stack>
@@ -66,11 +69,13 @@ function AddCategory(props) {
           New category
         </Typography>
 
+
         <Box>
           <Typography
             variant="body1"
             style={{ paddingLeft: "10px", color: "black", paddingTop: "10px" }}
           >
+            {/* // input field */}
             <label>Title: </label>
             <TextField
               className={classes.textfield}
@@ -98,10 +103,11 @@ function AddCategory(props) {
         </Button>
         <Button
           size="medium"
-          variant="contained"
+          variant="outlined"
           className={classes.modButton}
           onClick={cancelHandler}
-          style={{ background: "#d00000" }}
+          style={{ border: "1.5px solid #d11a2a",
+          color: "#d11a2a" }}
         >
           Cancel
         </Button>

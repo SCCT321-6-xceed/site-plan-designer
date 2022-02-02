@@ -13,7 +13,8 @@ import { theme } from "../theme";
 import { BurstModeOutlined } from "@mui/icons-material";
 import Upload from "./Upload";
 import { useState } from "react";
-import { Link } from "@mui/material";
+// import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
 import { Person } from "@mui/icons-material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -82,20 +83,24 @@ export default function ButtonAppBar() {
 
           <Stack direction="row" spacing={1}>
             <Button
+            component={Link}
+            to="/library"
               variant="text"
               startIcon={<BurstModeOutlined sx={{ color: "white" }} />}
               style={{
                 minHeight: "40px",
                 maxHeight: "50px",
                 fontWeight: "550",
+                color: "white"
               }}
             >
-              <Link
+              Legend Library
+              {/* <Link
                 href="/library"
                 style={{ textDecoration: "inherit", color: "white" }}
               >
                 Legend library
-              </Link>
+              </Link> */}
             </Button>
             {/* 
           <label htmlFor='contained-button-file'>

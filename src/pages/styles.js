@@ -62,7 +62,9 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     padding: "1rem",
     zIndex: "1",
-    borderRadius: 16
+    borderRadius: 16,
+    border: "1px",
+    borderColor: "black",
   },
   modButton: {
     paddingRight: "20px",

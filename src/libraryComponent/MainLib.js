@@ -40,6 +40,7 @@ const MainLib = () => {
           return items.id !== id;
         })
       );
+      window.location.reload();
     });
   };
   React.useEffect(() => {

@@ -9,7 +9,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import { Avatar } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { theme } from "../theme";
-import { Link } from "@mui/material";
+// import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
 import { Person } from "@mui/icons-material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,7 +22,6 @@ import { BurstModeOutlined } from "@mui/icons-material";
 import { ExpandMore } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-
 
 export default function ButtonAppBar() {
   const [loginStatus, setLoginStatus] = useState(false);
@@ -52,7 +52,7 @@ export default function ButtonAppBar() {
         <Toolbar>
           <IconButton
             component={Link}
-            href="/dashboard"
+            to="/dashboard"
             size="large"
             edge="start"
             color="inherit"
@@ -67,9 +67,6 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Project name/ Site 1<ExpandMore />
           </Typography>
-          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, justifyContent: "center" }}>
-            Dashboard
-          </Typography> */}
 
           <Stack direction="row" spacing={1}>
             <Button
@@ -82,21 +79,14 @@ export default function ButtonAppBar() {
               }}
             >
               <Link
-                href="/library"
+                component={Link}
+                to="/library"
                 style={{ textDecoration: "inherit", color: "white" }}
               >
                 Legend library
               </Link>
             </Button>
           </Stack>
-          {/* <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2, marginLeft: 1 }}>
-              <Avatar>R</Avatar>
-            </IconButton> */}
           <div style={{ marginLeft: "10px" }}>
             <IconButton
               id="fade-button"
@@ -125,10 +115,9 @@ export default function ButtonAppBar() {
               </MenuItem>
               <MenuItem onClick={handleClose}>
                 <ListItemIcon>
-                <Logout onClick={logout} />
-                <Button onClick={logout}> Logout</Button>
+                  <Logout onClick={logout} />
+                  <Button onClick={logout}> Logout</Button>
                 </ListItemIcon>
-                
               </MenuItem>
             </Menu>
           </div>
