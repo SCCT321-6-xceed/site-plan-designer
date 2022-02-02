@@ -17,26 +17,19 @@ import IconButton from '@mui/material/IconButton';
 import { useMatch } from 'react-router-dom';
 
 function Update(props) {
-  // const {
-  //   params: { projectID },
-  // } = useMatch('/dashboard/:projectID');
-  // console.log(projectID)
 
   // cancel function
   function cancelHandler() {
     props.onCancel();
   }
-  // const handleClose = () => {
-  //   props.onClose();
-  // };
+  
+  // const [title, setTitle] = useState("");
+  // const [client, setClient] = useState("");
+  // const [address, setAddress] = useState("");
+  // const [selectedDate, setSelectDate] = useState("")
 
-  const [title, setTitle] = useState("");
-  const [client, setClient] = useState("");
-  const [address, setAddress] = useState("");
-  const [selectedDate, setSelectDate] = useState("")
-
-  const date = new Date(selectedDate).toLocaleDateString() //convert date time string to local date
-  const newdate = date.split("/").reverse().join("/"); //covert to yyyy/MM/dd format to insert to mysql
+  // const date = new Date(selectedDate).toLocaleDateString() //convert date time string to local date
+  // const newdate = date.split("/").reverse().join("/"); //covert to yyyy/MM/dd format to insert to mysql
 
 
   // upload image func
@@ -70,22 +63,22 @@ function Update(props) {
       })
   }
 
-  const updateProject = () => {
+  // const updateProject = () => {
 
-    axios.put("http://localhost:3001/updateProject", {
+  //   axios.put("http://localhost:3001/updateProject", {
 
-      title: title,
-      client: client,
-      address: address,
-      date: newdate,
+  //     title: title,
+  //     client: client,
+  //     address: address,
+  //     date: newdate,
 
-    })
-      .then(() => {
-        console.log('Success')
-        window.location.reload();
+  //   })
+  //     .then(() => {
+  //       console.log('Success')
+  //       window.location.reload();
 
-      })
-  }
+  //     })
+  // }
   
   const classes = useStyles();
 
@@ -132,15 +125,19 @@ function Update(props) {
           </Stack>
 
         </div>
-        <Box textAlign="auto">
+        <div>
+        
+          <Box textAlign="auto">
+        
           {/* title of project   */}
           <Typography
             variant="body1"
             style={{ paddingLeft: "15px", color: "black" }}
           >
-            <label>Title: </label>
-            <TextField className={classes.textfield}
-              onChange={(event) => { setTitle(event.target.value); }} />
+            {/* <label>Title: </label> */}
+            {props.titles}
+            {/* <TextField className={classes.textfield}
+              onChange={(event) => { setTitle(event.target.value); }} /> */}
           </Typography>
 
           {/* client info */}
@@ -149,8 +146,9 @@ function Update(props) {
             style={{ paddingLeft: "15px", color: "black" }}
           >
             <label>Client: </label>
-            <TextField className={classes.textfield}
-              onChange={(event) => { setClient(event.target.value); }} />
+            
+            {/* <TextField className={classes.textfield}
+              onChange={(event) => { setClient(event.target.value); }} /> */}
           </Typography>
 
           {/* address info            */}
@@ -158,12 +156,13 @@ function Update(props) {
             variant="body1"
             style={{ paddingLeft: "15px", color: "black" }}>
             <label>Address:</label>
-            <TextField className={classes.textfield}
-              onChange={(event) => { setAddress(event.target.value); }} />
+            
+            {/* <TextField className={classes.textfield}
+              onChange={(event) => { setAddress(event.target.value); }} /> */}
           </Typography>
 
           {/* pick date */}
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Typography variant="body1"
               style={{ paddingLeft: "15px", color: "black" }}>
               <Stack direction="row" spacing={2}>
@@ -179,8 +178,12 @@ function Update(props) {
                 />
               </Stack>
             </Typography>
-          </LocalizationProvider>
+          </LocalizationProvider> */}
         </Box>
+     
+        </div>
+       
+        
       </Stack>
       {/* {isSucces !== null ? <h6> {isSucces} </h6> : null} */}
       {/* action button */}
@@ -192,7 +195,7 @@ function Update(props) {
           className={classes.modButton}
           onClick={() => {
             saveImage();
-            updateProject();
+            // updateProject();
             cancelHandler();
           }}
           style={{ background: theme.palette.primary.main, minWidth: "150px" }}

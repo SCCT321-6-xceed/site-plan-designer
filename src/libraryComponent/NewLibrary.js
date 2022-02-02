@@ -26,6 +26,12 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 function NewLibrary() {
   const classes = useStyles();
@@ -89,11 +95,13 @@ React.useEffect(()=>{
 
   // On initial load, loads all items
   const [item, setItem] = React.useState([]);
+  const [item2, setItem2] = React.useState([]);
   const getAllItem = () => {
     axios.get("http://localhost:3001/getItem").then((response) => {
       console.log(response);
       const itemList = response.data;
       setItem(itemList);
+      setItem2(itemList)
     });
   };
   // Delete item
@@ -113,6 +121,26 @@ React.useEffect(()=>{
     getAllItem();
   }, []);
 
+  //delete modal
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const deleteItem1 = (id) => {
+    axios.delete(`http://localhost:3001/deleteItem/${id}`).then((response) => {
+      setItem(
+        item.filter((items) => {
+          return items.id !== id;
+        })
+      );
+      window.location.reload();
+    });
+  };
   //Search filter
   const [filteredData, setFilteredData] = React.useState([]);
   const [wordEntered, setWordEntered] = React.useState("");
@@ -124,16 +152,18 @@ React.useEffect(()=>{
     });
 
     if (searchWord === "") {
-      setFilteredData(item);
+      setFilteredData(item2);
     } else {
       setFilteredData(newFilter);
     }
   };
 
   const clearInput = () => {
-    setFilteredData(item);
+    setFilteredData(item2);
     setWordEntered("");
+    window.location.reload();
   };
+  
   return (
     <div>
       <Grid
@@ -303,20 +333,44 @@ React.useEffect(()=>{
                               Edit
                             </Button>
                             <Button
-                              size="small"
-                              variant="outlined"
-                              startIcon={<DeleteIcon />}
-                              style={{
-                                border: "1.5px solid #d11a2a",
-                                color: "#d11a2a",
-                                fontWeight: "bold",
-                              }}
-                              onClick={() => {
-                                deleteItem(items.id);
-                              }}
-                            >
-                              Delete
-                            </Button>
+                        size="small"
+                        variant="outlined"
+                        startIcon={<DeleteIcon />}
+                        onClick={handleClickOpen}
+                        style={{
+                          border: "1.5px solid #d11a2a",
+                          color: "#d11a2a",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {" "}
+                        Delete{" "}
+                      </Button>
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                      >
+                        <DialogTitle>
+                          {"Delete project"}
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            Are you sure you want to delete this item?
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button
+                            variant="contained"
+                            style={{ backgroundColor: "#d11a2a" }}
+                            onClick={() => {
+                              deleteItem1(items.id);
+                              handleClose();
+                            }} autoFocus>
+                            Delete
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                           </CardActions>
                         </Card>
                       </Grid>
@@ -354,7 +408,7 @@ React.useEffect(()=>{
                             >
                               Edit
                             </Button>
-                            <Button
+                            {/* <Button
                               size="small"
                               variant="outlined"
                               startIcon={<DeleteIcon />}
@@ -368,7 +422,46 @@ React.useEffect(()=>{
                               }}
                             >
                               Delete
-                            </Button>
+                            </Button> */}
+                            <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<DeleteIcon />}
+                        onClick={handleClickOpen}
+                        style={{
+                          border: "1.5px solid #d11a2a",
+                          color: "#d11a2a",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {" "}
+                        Delete{" "}
+                      </Button>
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                      >
+                        <DialogTitle>
+                          {"Delete project"}
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            Are you sure you want to delete this item?
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button
+                            variant="contained"
+                            style={{ backgroundColor: "#d11a2a" }}
+                            onClick={() => {
+                              deleteItem(items.id);
+                              handleClose();
+                            }} autoFocus>
+                            Delete
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                           </CardActions>
                         </Card>
                       </Grid>

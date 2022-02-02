@@ -9,20 +9,25 @@ import {
   CardMedia,
 } from "@mui/material";
 import useStyles from "../pages/styles";
-import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import axios from "axios";
-import UpdateModal from "./UpdateModal";
 import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import { CardHeader } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 const Main = () => {
+
   const classes = useStyles();
   const [project, setProject] = useState([]);
 
@@ -49,53 +54,51 @@ const Main = () => {
             return projects.projectID !== projectID;
           })
         );
+        // window.location.reload();
+      });
+
+  };
+  const deleteProject1 = (projectID) => {
+    axios
+      .delete(`http://localhost:3001/deleteProject/${projectID}`)
+      .then((response) => {
+        setProject(
+          project.filter((projects) => {
+            return projects.projectID !== projectID;
+          })
+        );
         window.location.reload();
       });
-      
+
   };
   // react-router-dom to navigate to page
   const history = useNavigate()
 
   // Retrieve project info
   const passProject = (projectID) => {
-        setProject(projectID);
-        console.log(projectID)
-        history(`/plandesign/${projectID}`)
+    setProject(projectID);
+    console.log(projectID)
+    history(`/plandesign/${projectID}`)
   };
-const [projectExp, setProjectExp]=useState([])
+  const [projectExp, setProjectExp] = useState([])
   // Retrieve project info
   const passExport = (projectID) => {
     setProjectExp(projectID);
     console.log(projectID)
     history(`/export/${projectID}`)
-};
-
-  //Doesnt work
-  const updateProject = (projectID) => {
-    setProject(projectID);
-    console.log(projectID)
-    history(`/dashboard/${projectID}`)
-};
-  
-  //Update modal
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  function closeHandler() {
-    setModalIsOpen(false);
-  }
-
-  function openHandler() {
-    setModalIsOpen(true);
-  }
-  //Display project info
-  const [getID, setID] = useState([]);
-  const getprojectID = (projectID) => {
-    axios
-      .get(`http://localhost:3001/getProjectID/${projectID}`)
-      .then((response) => {
-        console.log(response);
-        setID(response.data);
-      });
   };
+
+//delete modal
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   //Search filter
   const [filteredData, setFilteredData] = React.useState([]);
@@ -106,7 +109,7 @@ const [projectExp, setProjectExp]=useState([])
     const newFilter = project.filter((projects) => {
       return projects.title.toLowerCase().includes(searchWord.toLowerCase());
     });
-// if empty, re-render project page
+    // if empty, re-render project page
     if (searchWord === "") {
       setFilteredData(project);
     } else {
@@ -142,7 +145,7 @@ const [projectExp, setProjectExp]=useState([])
       </div>
       {/* // Dynamic Project Cards */}
       <div>
-        
+
         <Container className={classes.cardGrid} maxWidth="auto">
           {filteredData.length !== 0 ? (
             <Grid container spacing={4}>
@@ -154,7 +157,7 @@ const [projectExp, setProjectExp]=useState([])
                       className={classes.cardMedia2}
                       title="Image Title"
                       component="img"
-                      src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
+                      src={process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
                     />
                     <CardContent className={classes.cardContent2}>
                       <Typography variant="h7">
@@ -174,8 +177,8 @@ const [projectExp, setProjectExp]=useState([])
                     </CardContent>
                     <CardActions>
                       <Button
-                      // Pass the projectID to the Design page
-                        onClick={(e)=> passProject(projects.projectID)}
+                        // Pass the projectID to the Design page
+                        onClick={(e) => passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}
@@ -185,44 +188,42 @@ const [projectExp, setProjectExp]=useState([])
                           fontWeight: "bold",
                         }}
                       >
-                       
+
                         Design
                       </Button>
                       <Button
                         size="small"
-                        variant="outlined"
+                        variant="contained"
                         startIcon={<EditIcon />}
-                        style={{
-                          border: "1.5px solid #0367a6",
-                          color: "#083359",
-                          fontWeight: "bold",
-                          marginLeft: "10px",
-                        }}
-                        onClick={(e) => {
-                         updateProject(projects.projectID);
-                          openHandler();
-                          getprojectID();
-                        }}
+                        // style={{
+                        //   border: "1.5px solid #0367a6",
+                        //   color: "#083359",
+                        //   fontWeight: "bold",
+                        //   marginLeft: "10px",
+                        // }}
+                        // onClick={openHandler}
+                        disabled
                       >
                         {" "}
                         Edit{" "}
                       </Button>
-                      {modalIsOpen && (
-                        <UpdateModal
+                      {/* {modalIsOpen && (
+                        <UpdateModal 
                           onCancel={closeHandler}
                           onConfirm={closeHandler}
                         />
-                      )}
+                      )} */}
                       <Button
-                         onClick={(e)=> passExport(projects.projectID)}
+                        onClick={(e) => passExport(projects.projectID)}
                         size="small"
-                        variant="outlined"
+                        variant="contained"
                         startIcon={<ExitToAppIcon />}
-                        style={{
-                          border: "1.5px solid #0367a6",
-                          color: "#083359",
-                          fontWeight: "bold",
-                        }}
+                        // style={{
+                        //   border: "1.5px solid #0367a6",
+                        //   color: "#083359",
+                        //   fontWeight: "bold",
+                        // }}
+                        disabled
                       >
                         {" "}
                         Export{" "}
@@ -231,9 +232,7 @@ const [projectExp, setProjectExp]=useState([])
                         size="small"
                         variant="outlined"
                         startIcon={<DeleteIcon />}
-                        onClick={() => {
-                          deleteProject(projects.projectID);
-                        }}
+                        onClick={handleClickOpen}
                         style={{
                           border: "1.5px solid #d11a2a",
                           color: "#d11a2a",
@@ -243,6 +242,31 @@ const [projectExp, setProjectExp]=useState([])
                         {" "}
                         Delete{" "}
                       </Button>
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                      >
+                        <DialogTitle>
+                          {"Delete project"}
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            Are you sure you want to delete this project?
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button
+                            variant="contained"
+                            style={{ backgroundColor: "#d11a2a" }}
+                            onClick={() => {
+                              deleteProject1(projects.projectID);
+                              handleClose();
+                            }} autoFocus>
+                            Delete
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                     </CardActions>
                   </Card>
                 </Grid>
@@ -254,13 +278,13 @@ const [projectExp, setProjectExp]=useState([])
                 <Grid item xs={12} sm={6} md={4}>
                   <Card className={classes.card2} key={projects.id}>
                     <CardHeader title={projects.title}> </CardHeader>
-                    <Box sx={{maxHeight: "350px"}}>
-                    <CardMedia
-                      className={classes.cardMedia2}
-                      title={projects.title}
-                            component="img"
-                            src= {process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
-                    /></Box>
+                    <Box sx={{ maxHeight: "350px" }}>
+                      <CardMedia
+                        className={classes.cardMedia2}
+                        title={projects.title}
+                        component="img"
+                        src={process.env.PUBLIC_URL + `/sitemap/${projects.image}`}
+                      /></Box>
                     <CardContent className={classes.cardContent2}>
                       <Typography variant="h7">
                         {" "}
@@ -279,8 +303,8 @@ const [projectExp, setProjectExp]=useState([])
                     </CardContent>
                     <CardActions>
                       <Button
-                        
-                        onClick={(e)=> passProject(projects.projectID)}
+
+                        onClick={(e) => passProject(projects.projectID)}
                         size="small"
                         variant="outlined"
                         startIcon={<DesignServicesIcon />}
@@ -295,35 +319,37 @@ const [projectExp, setProjectExp]=useState([])
                       </Button>
                       <Button
                         size="small"
-                        variant="outlined"
+                        variant="contained"
                         startIcon={<EditIcon />}
-                        style={{
-                          border: "1.5px solid #0367a6",
-                          color: "#083359",
-                          fontWeight: "bold",
-                          marginLeft: "10px",
-                        }}
-                        onClick={openHandler}
+                        // style={{
+                        //   border: "1.5px solid #0367a6",
+                        //   color: "#083359",
+                        //   fontWeight: "bold",
+                        //   marginLeft: "10px",
+                        // }}
+                        // onClick={openHandler}
+                        disabled
                       >
                         {" "}
                         Edit{" "}
                       </Button>
-                      {modalIsOpen && (
-                        <UpdateModal
+                      {/* {modalIsOpen && (
+                        <UpdateModal 
                           onCancel={closeHandler}
                           onConfirm={closeHandler}
                         />
-                      )}
+                      )} */}
                       <Button
-                         onClick={(e)=> passExport(projects.projectID)}
+                        onClick={(e) => passExport(projects.projectID)}
                         size="small"
-                        variant="outlined"
+                        variant="contained"
                         startIcon={<ExitToAppIcon />}
-                        style={{
-                          border: "1.5px solid #0367a6",
-                          color: "#083359",
-                          fontWeight: "bold",
-                        }}
+                        // style={{
+                        //   border: "1.5px solid #0367a6",
+                        //   color: "#083359",
+                        //   fontWeight: "bold",
+                        // }}
+                        disabled
                       >
                         {" "}
                         Export{" "}
@@ -332,9 +358,7 @@ const [projectExp, setProjectExp]=useState([])
                         size="small"
                         variant="outlined"
                         startIcon={<DeleteIcon />}
-                        onClick={() => {
-                          deleteProject(projects.projectID);
-                        }}
+                        onClick={handleClickOpen}
                         style={{
                           border: "1.5px solid #d11a2a",
                           color: "#d11a2a",
@@ -344,6 +368,31 @@ const [projectExp, setProjectExp]=useState([])
                         {" "}
                         Delete{" "}
                       </Button>
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                      >
+                        <DialogTitle>
+                          {"Delete project"}
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            Are you sure you want to delete this project?
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button
+                            variant="contained"
+                            style={{ backgroundColor: "#d11a2a" }}
+                            onClick={() => {
+                              deleteProject(projects.projectID);
+                              handleClose();
+                            }} autoFocus>
+                            Delete
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                     </CardActions>
                   </Card>
                 </Grid>

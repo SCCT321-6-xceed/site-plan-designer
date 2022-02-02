@@ -14,7 +14,6 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-
 function Upload(props) {
   // cancel function
   function cancelHandler() {
@@ -185,12 +184,13 @@ function Upload(props) {
           onClick={() => {
             addProject();
             saveImage();
-            cancelHandler();
+            // cancelHandler();
           }}
           style={{ background: theme.palette.primary.main }}
         >
           Confirm
         </Button>
+        
         {/* cancel button */}
         <Button
           size="medium"
