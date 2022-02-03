@@ -9,8 +9,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useMatch } from 'react-router-dom';
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   // right: {

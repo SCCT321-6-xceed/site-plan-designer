@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import img1 from "../images/logo.png";
 import Button from "@mui/material/Button";
 import TextField from "@material-ui/core/TextField";
@@ -11,7 +11,6 @@ import { theme } from "../theme";
 import AbcIcon from "@mui/icons-material/Abc";
 import { useState } from "react";
 import Axios from "axios";
-import { Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,34 +49,11 @@ function Registration() {
       });
     } catch (err) {}
   };
-  // all  feild validation here and api call is here
-  const validate = () => {
-    if (email === "") {
-      setEmailError(true);
-    }
 
-    if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email) === false) {
-      setEmailError(true);
-    }
-
-    if (password === "") {
-      setPasswordError(true);
-    }
-    if (firstName === "") {
-      setFNameError(true);
-    }
-    if (lastName === "") {
-      setLNameError(true);
-    }
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // setEmailError(false);
-    // setPasswordError(false);
-    // setFNameError(false);
-    // setLNameError(false);
-
+    // validation
     if (
       email === "" ||
       /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email) === false ||
@@ -109,6 +85,7 @@ function Registration() {
       setLNameError(false);
 
       addUser();
+      history("/");
     }
   };
 

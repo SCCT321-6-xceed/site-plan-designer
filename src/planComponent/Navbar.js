@@ -9,7 +9,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import { Avatar } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { theme } from "../theme";
-// import { Link } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Person } from "@mui/icons-material";
 import Menu from "@mui/material/Menu";
@@ -19,9 +18,8 @@ import { useState } from "react";
 import { Logout } from "@mui/icons-material";
 import { ListItemIcon } from "@mui/material";
 import { BurstModeOutlined } from "@mui/icons-material";
-import { ExpandMore } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import Axios from "axios";
+import { useNavigate, useMatch } from "react-router-dom";
+import axios from "axios";
 
 export default function ButtonAppBar() {
   const [loginStatus, setLoginStatus] = useState(false);
@@ -37,11 +35,28 @@ export default function ButtonAppBar() {
   };
 
   const logout = () => {
-    Axios.post("http://localhost:3001/logout", {});
+    axios.post("http://localhost:3001/logout", {});
     history("/");
     localStorage.removeItem("token");
     setLoginStatus(false);
   };
+  const [passID, setpassID] = useState([]);
+  const {
+    params: { projectID },
+  } = useMatch("/plandesign/:projectID");
+  console.log(projectID);
+  const passProject = () => {
+    axios
+      .get(`http://localhost:3001/passProject/${projectID}`)
+      .then((response) => {
+        const id = response.data;
+        setpassID(id);
+        console.log(id);
+      });
+  };
+  React.useEffect(() => {
+    passProject();
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -64,10 +79,11 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Site Plan Designer
           </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Project name/ Site 1<ExpandMore />
-          </Typography>
-
+          {passID.map((passIDs) => (
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              {passIDs.title}
+            </Typography>
+          ))}
           <Stack direction="row" spacing={1}>
             <Button
               variant="text"

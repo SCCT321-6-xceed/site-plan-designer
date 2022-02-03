@@ -13,7 +13,6 @@ import { theme } from "../theme";
 import { BurstModeOutlined } from "@mui/icons-material";
 import Upload from "./Upload";
 import { useState } from "react";
-// import { Link } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Person } from "@mui/icons-material";
 import Menu from "@mui/material/Menu";
@@ -24,9 +23,6 @@ import { ListItemIcon } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
-// const Input = styled('input')({
-//   display: 'none',
-// });
 export default function ButtonAppBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [loginStatus, setLoginStatus] = useState(false);
@@ -77,10 +73,6 @@ export default function ButtonAppBar() {
             Site Plan Designer
           </Typography>
 
-          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, justifyContent: "center" }}>
-            Dashboard
-          </Typography> */}
-
           <Stack direction="row" spacing={1}>
             <Button
             component={Link}
@@ -95,26 +87,8 @@ export default function ButtonAppBar() {
               }}
             >
               Legend Library
-              {/* <Link
-                href="/library"
-                style={{ textDecoration: "inherit", color: "white" }}
-              >
-                Legend library
-              </Link> */}
             </Button>
-            {/* 
-          <label htmlFor='contained-button-file'>
-              <Input accept='image/*' id='contained-button-file' multiple type='file'/>
-              <Button 
-              component='span' 
-              variant='contained' size='small' 
-              startIcon={<AddCircleIcon />}
-              style={{
-                backgroundColor: theme.palette.primary.main,
-                minHeight: "40px",
-                maxHeight: "50px",
-              }}>New Project</Button>
-            </label> */}
+       
             <Button
               variant="contained"
               size="small"

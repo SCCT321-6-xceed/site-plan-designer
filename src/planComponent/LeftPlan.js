@@ -1,22 +1,15 @@
 import React from "react";
-import { Container, Divider, makeStyles, Typography } from "@material-ui/core";
-import LightIcon from "@mui/icons-material/Light";
+import { Container, Divider, makeStyles } from "@material-ui/core";
 import {
   List,
   ListSubheader,
-  ListItemIcon,
   ListItemButton,
   ListItemText,
   ListItem,
-  Link,
 } from "@mui/material";
-import { Collapse, Button } from "@mui/material";
+import { Collapse } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import CropSquareIcon from "@mui/icons-material/CropSquare";
-import TextFieldsIcon from "@mui/icons-material/TextFields";
-import EditIcon from "@mui/icons-material/Edit";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import { CleaningServices } from "@mui/icons-material";
+
 import { Box } from "@mui/system";
 import { Search } from "./SearchIcon";
 import { useState } from "react";
@@ -101,38 +94,8 @@ const LeftPlan = ({ url, setUrl, type, setType, curItem, setCurItem }) => {
   return (
     <Container className={classes.container}>
       <Box sx={{ paddingTop: 1, paddingBottom: 2 }}>
-        <Typography style={{ color: "#044474", fontWeight: "bold" }}>
-          {" "}
-          Drawing Tools
-        </Typography>
-        <ButtonGroup variant="contained">
-          <Button
-            size="medium"
-            style={{ color: "#044474", backgroundColor: "#adcaee" }}
-          >
-            <CropSquareIcon />
-          </Button>
-          <Button
-            size="medium"
-            style={{ color: "#044474", backgroundColor: "#adcaee" }}
-          >
-            <EditIcon />
-          </Button>
-          <Button
-            size="medium"
-            style={{ color: "#044474", backgroundColor: "#adcaee" }}
-          >
-            <TextFieldsIcon />
-          </Button>
-          <Button
-            size="medium"
-            style={{ color: "#044474", backgroundColor: "#adcaee" }}
-          >
-            <CleaningServices />
-          </Button>
-        </ButtonGroup>
-      </Box>
 
+      </Box>
       <List
         sx={{ width: "100%", bgcolor: "background.paper", paddingTop: "10px" }}
         subheader={

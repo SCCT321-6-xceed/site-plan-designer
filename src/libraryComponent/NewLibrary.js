@@ -4,7 +4,6 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { makeStyles } from "@material-ui/core";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Divider } from "@mui/material";
 import AddCategory from "../components/AddCategory";
@@ -27,6 +26,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import { useParams } from "react-router-dom";
+
+
 
 function NewLibrary() {
   const classes = useStyles();
@@ -52,6 +53,7 @@ function NewLibrary() {
   };
   // On initial load, get all items
   const [item, setItem] = React.useState([]);
+
   const getAllItem = () => {
     axios.get("http://localhost:3001/getItem").then((response) => {
       // console.log(response);
@@ -99,7 +101,6 @@ function NewLibrary() {
       .then((response) => {
         const itemList = response.data;
         setItem(itemList);
-        // console.log(itemList);
       });
   };
   // After clicking a category, re-render and do handleCategoryClick().
@@ -123,9 +124,9 @@ function NewLibrary() {
     const newFilter = item.filter((items) => {
       return items.name.toLowerCase().includes(searchWord.toLowerCase());
     });
-
     if (searchWord === "") {
       setFilteredData(item);
+
     } else {
       setFilteredData(newFilter);
     }
@@ -134,6 +135,7 @@ function NewLibrary() {
   const clearInput = () => {
     setFilteredData(item);
     setWordEntered("");
+    window.location.reload();
   };
   return (
     <div>
@@ -269,6 +271,7 @@ function NewLibrary() {
               </Box>
             </div>
             <div>
+              
               <Container className={classes.cardGrid} maxWidth="md">
                 {filteredData.length !== 0 ? (
                   <Grid container spacing={4}>
@@ -277,7 +280,7 @@ function NewLibrary() {
                         <Card className={classes.card}>
                           <CardMedia
                             className={classes.cardMedia}
-                            title="Image Title"
+                            title={items.name}
                             component="img"
                             src={
                               process.env.PUBLIC_URL + `/item/${items.image}`

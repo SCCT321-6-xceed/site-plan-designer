@@ -1,9 +1,5 @@
 import React, {
-  useEffect,
-  useLayoutEffect,
-  useRef,
   useState,
-  setState,
 } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Layer, Stage } from "react-konva";
@@ -12,6 +8,7 @@ import useImage from "use-image";
 import { useMatch } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@mui/material";
+import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 
 const MainPlan = ({
   url,
@@ -27,7 +24,6 @@ const MainPlan = ({
   innerHeight,
 }) => {
   const stageRef = React.useRef();
-  const srcImgRef = React.useRef();
   const [curImg, setCurImg] = React.useState();
 
   const [width, setWidth] = useState();
@@ -40,6 +36,7 @@ const MainPlan = ({
     params: { projectID },
   } = useMatch('/plandesign/:projectID');
   console.log(projectID)
+
   const passProject = () => {
     let id;
     axios
@@ -132,8 +129,11 @@ const MainPlan = ({
     );
   };
   return (
-    <div>
-      <Button onClick={handleExport}>Download Siteplan</Button>
+       <div>
+      <Button onClick={handleExport} 
+                        variant="contained"
+                        startIcon={<SystemUpdateAltIcon />}
+                        >Download Siteplan</Button>
       <div
         /* this div handles the drop */
         onDrop={(e) => {
@@ -167,11 +167,11 @@ const MainPlan = ({
         tabIndex={0}
         onKeyDown={(e) => {
           console.log(e.code);
-          if (e.code == "Delete") {
+          if (e.code === "Delete") {
             console.log("Del initiated on", curImg);
             console.log(images);
 
-            if (images.some((item) => item == curImg)) {
+            if (images.some((item) => item === curImg)) {
               console.log("img found");
               setImages((state) => state.filter((item) => item !== curImg));
 

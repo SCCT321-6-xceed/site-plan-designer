@@ -9,7 +9,6 @@ import {
   CardMedia,
 } from "@mui/material";
 import useStyles from "../pages/styles";
-import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -49,7 +48,7 @@ const Main = () => {
             return projects.projectID !== projectID;
           })
         );
-        window.location.reload();
+        // window.location.reload();
       });
       
   };
@@ -71,11 +70,11 @@ const [projectExp, setProjectExp]=useState([])
 };
 
   //Doesnt work
-  const updateProject = (projectID) => {
-    setProject(projectID);
-    console.log(projectID)
-    history(`/dashboard/${projectID}`)
-};
+//   const updateProject = (projectID) => {
+//     setProject(projectID);
+//     console.log(projectID)
+//     history(`/dashboard/${projectID}`)
+// };
   
   //Update modal
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -192,17 +191,14 @@ const [projectExp, setProjectExp]=useState([])
                         size="small"
                         variant="outlined"
                         startIcon={<EditIcon />}
-                        style={{
-                          border: "1.5px solid #0367a6",
-                          color: "#083359",
-                          fontWeight: "bold",
-                          marginLeft: "10px",
-                        }}
-                        onClick={(e) => {
-                         updateProject(projects.projectID);
-                          openHandler();
-                          getprojectID();
-                        }}
+                     // style={{
+                        //   border: "1.5px solid #0367a6",
+                        //   color: "#083359",
+                        //   fontWeight: "bold",
+                        //   marginLeft: "10px",
+                        // }}
+                        // onClick={openHandler}
+                        disabled
                       >
                         {" "}
                         Edit{" "}
@@ -218,11 +214,14 @@ const [projectExp, setProjectExp]=useState([])
                         size="small"
                         variant="outlined"
                         startIcon={<ExitToAppIcon />}
-                        style={{
-                          border: "1.5px solid #0367a6",
-                          color: "#083359",
-                          fontWeight: "bold",
-                        }}
+                       // style={{
+                        //   border: "1.5px solid #0367a6",
+                        //   color: "#083359",
+                        //   fontWeight: "bold",
+                        //   marginLeft: "10px",
+                        // }}
+                        // onClick={openHandler}
+                        disabled
                       >
                         {" "}
                         Export{" "}
@@ -297,19 +296,20 @@ const [projectExp, setProjectExp]=useState([])
                         size="small"
                         variant="outlined"
                         startIcon={<EditIcon />}
-                        style={{
-                          border: "1.5px solid #0367a6",
-                          color: "#083359",
-                          fontWeight: "bold",
-                          marginLeft: "10px",
-                        }}
-                        onClick={openHandler}
+                        // style={{
+                        //   border: "1.5px solid #0367a6",
+                        //   color: "#083359",
+                        //   fontWeight: "bold",
+                        //   marginLeft: "10px",
+                        // }}
+                        // onClick={openHandler}
+                        disabled
                       >
                         {" "}
                         Edit{" "}
                       </Button>
                       {modalIsOpen && (
-                        <UpdateModal
+                        <UpdateModal 
                           onCancel={closeHandler}
                           onConfirm={closeHandler}
                         />
@@ -319,11 +319,14 @@ const [projectExp, setProjectExp]=useState([])
                         size="small"
                         variant="outlined"
                         startIcon={<ExitToAppIcon />}
-                        style={{
-                          border: "1.5px solid #0367a6",
-                          color: "#083359",
-                          fontWeight: "bold",
-                        }}
+                        // style={{
+                        //   border: "1.5px solid #0367a6",
+                        //   color: "#083359",
+                        //   fontWeight: "bold",
+                        //   marginLeft: "10px",
+                        // }}
+                        // onClick={openHandler}
+                        disabled
                       >
                         {" "}
                         Export{" "}
