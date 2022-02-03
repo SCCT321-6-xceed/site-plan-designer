@@ -9,9 +9,7 @@ import {
 } from "@mui/material";
 import { Collapse } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-
 import { Box } from "@mui/system";
-import { Search } from "./SearchIcon";
 import { useState } from "react";
 import axios from "axios";
 import ImageList from "@mui/material/ImageList";
@@ -108,9 +106,7 @@ const LeftPlan = ({ url, setUrl, type, setType, curItem, setCurItem }) => {
         }
       >
         <Divider />
-        <div>
-          <Search />
-        </div>
+     
 
         {category.map(
           (categories, index1 /* db handling epicness starts here */) => (
