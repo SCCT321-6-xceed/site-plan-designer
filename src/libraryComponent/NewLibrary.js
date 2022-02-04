@@ -282,6 +282,7 @@ function NewLibrary() {
                             className={classes.cardMedia}
                             title={items.name}
                             component="img"
+                            sx={{width: "100%", height: "100%"}}
                             src={
                               process.env.PUBLIC_URL + `/item/${items.image}`
                             }
@@ -335,6 +336,7 @@ function NewLibrary() {
                             className={classes.cardMedia}
                             title={items.name}
                             component="img"
+                            sx={{width: "100%", height: "100%"}}
                             src={
                               process.env.PUBLIC_URL + `/item/${items.image}`
                             }
